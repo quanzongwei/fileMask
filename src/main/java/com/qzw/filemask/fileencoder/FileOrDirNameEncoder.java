@@ -8,6 +8,7 @@ import java.io.File;
 
 /**
  * 加密类型一: 文件名称加密
+ * 原理: 文件名称重命名,把原始文件名称使用encodeMap加密后,保存在私有数据文件中
  * @author quanzongwei
  * @date 2020/1/18
  */
@@ -22,16 +23,15 @@ public class FileOrDirNameEncoder extends AbstractFileEncoder {
     protected byte[][] encryptOriginFile(File fileOrDir, byte[] extraParam) {
         Integer sequence = PrivateDataUtils.getAutoIncrementSequence4ParentDir(fileOrDir);
         if (sequence == null) {
-            log.info("加密方式一, 序列号获取失败, 加密失败");
+            log.info("加密类型一,序列号获取失败,加密失败,{}", fileOrDir.getPath());
             return null;
         }
         String originName = fileOrDir.getName();
         String targetName = (fileOrDir.isDirectory() ? "nDDir" : "nDFiLe") + sequence;
         String targetPath = fileOrDir.getParent() + File.separatorChar + targetName;
-        // todo test change 名字还是原来的名字, 确实是的
         boolean b = fileOrDir.renameTo(new File(targetPath));
         if (!b) {
-            log.info("文件加密(方式一)失败,{}", fileOrDir.getPath());
+            log.info("加密类型一,加密失败,{}", fileOrDir.getPath());
             return null;
         }
         byte[][] result = new byte[2][];

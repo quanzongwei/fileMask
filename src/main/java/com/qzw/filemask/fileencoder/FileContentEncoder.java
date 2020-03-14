@@ -10,6 +10,11 @@ import java.io.RandomAccessFile;
 
 /**
  * 加密类型三: 文件内容加密
+ * 原理:使用encodeMap对全文的字节数据作映射,
+ * 解密时,再通过encodeMap进行解密
+ *
+ * 该方式支持军事机密级别的文件加密,无法通过任何手段进行解密
+ * 请保存好您的密码
  * @author quanzongwei
  * @date 2020/1/18
  */
