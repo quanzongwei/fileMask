@@ -125,44 +125,6 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
         }
     }
 
-
-    /**
-     * 使用xor秘钥对数据进行xor操作
-     * <p>
-     * 1. xor执行两次, 可以恢复原数据
-     * 2. xor加密理论上无法破解(除非是已知明文攻击)
-     *
-     * @param text
-     * @return
-     */
-    protected byte[] xorBySecretKey(byte[] text) {
-        byte[] byte32 = this.get32byteMd5Value();
-        byte[] rst = new byte[text.length];
-        for (int i = 0; i < rst.length; i++) {
-            rst[i] = (byte) (text[i] ^ byte32[i % (byte32.length)]);
-        }
-        return rst;
-    }
-
-
-    /**
-     * 生成私有数据文件夹
-     *
-     * @param fileOrDir 目标文件
-     */
-    protected void mkPrivateDirIfNotExists(File fileOrDir) {
-        File file = PrivateDataUtils.getPrivateDataDir(fileOrDir);
-        if (!file.exists()) {
-            file.mkdir();
-            try {
-                //私有数据文件夹设置为不可见
-                Runtime.getRuntime().exec("attrib " + "\"" + file.getAbsolutePath() + "\"" + " +H");
-            } catch (IOException e) {
-                //fileMask dir is not hid that has no effect
-            }
-        }
-    }
-
     /**
      * 执行加密操作
      *
@@ -266,6 +228,153 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
 
     }
 
+    /**
+     * 执行解密
+     *
+     * @param fileOrDir 目标文件或者文件夹
+     */
+    protected void executeDecrypt(File fileOrDir) {
+        FileEncoderTypeEnum fileEncoderType = getFileEncoderType();
+        if (fileOrDir.isDirectory() && !fileEncoderType.isSupportEncryptDir()) {
+            //加密方式不支持加密文件夹, 直接跳过, 不需要任何日志
+            return;
+        }
+        File privateDataFile = PrivateDataUtils.getPrivateDataFile(fileOrDir);
+
+        if (!privateDataFile.exists()) {
+            log.info("文件从未加密过,无需解密,{}", fileOrDir.getPath());
+            return;
+        }
+        //加密类型一
+        String originName = null;
+        try (RandomAccessFile raf = new RandomAccessFile(privateDataFile, "rw")) {
+            //私有文件长度校验
+            if (raf.length() < 32 + 256) {
+                log.info("私有数据文件长度不合法,无需解密,{}", fileOrDir.getPath());
+                return;
+            }
+            //用户合法性校验
+            raf.seek(0);
+            byte[] md51 = new byte[16];
+            raf.read(md51);
+            md51 = xorBySecretKey(md51);
+            if (!Arrays.equals(md51, getMd51())) {
+                log.info("当前文件已被其他用户加密或该文件未加密,您无法执行解密操作,{}", fileOrDir.getPath());
+                return;
+            }
+            //是否使用指定方式加密
+            fileEncoderType = getFileEncoderType();
+            raf.seek(16);
+            byte[] flagBytes = new byte[3];
+            raf.read(flagBytes);
+            //文件名称加密
+            if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE)) {
+                if (flagBytes[0] != (byte) 0x01) {
+                    log.info("文件未使用加密类型一进行加密,使用加密类型一进行解密失败,{}", fileOrDir.getPath());
+                    return;
+                }
+            }
+            //文件头部加密
+            else if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_HEADER_ENCODE)) {
+                if (flagBytes[1] != (byte) 0x01) {
+                    log.info("文件未使用加密类型二进行加密,使用加密类型二进行解密失败,{}", fileOrDir.getPath());
+                    return;
+                }
+
+            }
+            //文件内容加密
+            else if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_CONTENT_ENCODE)) {
+                if (flagBytes[2] != (byte) 0x01) {
+                    log.info("文件未使用加密类型三进行加密,使用加密类型三进行解密失败,{}", fileOrDir.getPath());
+                    return;
+                }
+            }
+            //执行解密,并处理私有数据
+            raf.seek(32);
+            byte[] encodeMap = new byte[256];
+            raf.read(encodeMap);
+            encodeMap = xorBySecretKey(encodeMap);
+            //加密类型一
+            if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE)) {
+                raf.seek(32 + 256 + 32);
+                byte[] extraParam = new byte[(int) (raf.length() - (32 + 256 + 32))];
+                raf.read(extraParam);
+                extraParam = getResultByMap(extraParam, encodeMap, false);
+                originName = new String(extraParam);
+                if (decryptOriginFile(fileOrDir, extraParam)) {
+                    raf.seek(16);
+                    raf.write(0x00);
+                    //删除历史记录
+                    raf.setLength(32 + 256 + 32);
+                }
+            }
+            //加密类型二
+            if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_HEADER_ENCODE)) {
+                raf.seek(32 + 256);
+                byte[] extraParam = new byte[32];
+                //注: raf对于超出文件长度的内容, 读不出任何数据
+                raf.read(extraParam);
+                extraParam = getResultByMap(extraParam, encodeMap, false);
+                if (decryptOriginFile(fileOrDir, extraParam)) {
+                    raf.seek(16 + 1);
+                    raf.write(0x00);
+                }
+            }
+            //加密类型三
+            if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_CONTENT_ENCODE)) {
+                if (decryptOriginFile(fileOrDir, encodeMap)) {
+                    raf.seek(16 + 2);
+                    raf.write(0x00);
+                }
+            }
+        } catch (IOException ex) {
+            log.info("私有数据文件打开失败,操作终止,{}", fileOrDir.getPath(), ex);
+            return;
+        }
+        //加密类型一: IO操作完成后才可以执行重命名操作
+        if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE)) {
+            //私有数据文件重命名
+            boolean b = privateDataFile.renameTo(new File(privateDataFile.getParent() + File.separatorChar + originName));
+            log.info("私有数据文件是否重命名成功,{}", b);
+
+        }
+    }
+
+    /**
+     * 使用xor秘钥对数据进行xor操作
+     * <p>
+     * 1. xor执行两次, 可以恢复原数据
+     * 2. xor加密理论上无法破解(除非是已知明文攻击)
+     *
+     * @param text
+     * @return
+     */
+    protected byte[] xorBySecretKey(byte[] text) {
+        byte[] byte32 = this.get32byteMd5Value();
+        byte[] rst = new byte[text.length];
+        for (int i = 0; i < rst.length; i++) {
+            rst[i] = (byte) (text[i] ^ byte32[i % (byte32.length)]);
+        }
+        return rst;
+    }
+
+    /**
+     * 生成私有数据文件夹
+     *
+     * @param fileOrDir 目标文件
+     */
+    protected void mkPrivateDirIfNotExists(File fileOrDir) {
+        File file = PrivateDataUtils.getPrivateDataDir(fileOrDir);
+        if (!file.exists()) {
+            file.mkdir();
+            try {
+                //私有数据文件夹设置为不可见
+                Runtime.getRuntime().exec("attrib " + "\"" + file.getAbsolutePath() + "\"" + " +H");
+            } catch (IOException e) {
+                //fileMask dir is not hid that has no effect
+            }
+        }
+    }
 
     /**
      * 根据encodeMap对数据进行转换
@@ -389,118 +498,6 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
         return encodeMap;
     }
 
-
-    /**
-     * 执行解密
-     *
-     * @param fileOrDir 目标文件或者文件夹
-     */
-    protected void executeDecrypt(File fileOrDir) {
-        FileEncoderTypeEnum fileEncoderType = getFileEncoderType();
-        if (fileOrDir.isDirectory() && !fileEncoderType.isSupportEncryptDir()) {
-            //加密方式不支持加密文件夹, 直接跳过, 不需要任何日志
-            return;
-        }
-        File privateDataFile = PrivateDataUtils.getPrivateDataFile(fileOrDir);
-
-        if (!privateDataFile.exists()) {
-            log.info("文件从未加密过,无需解密,{}", fileOrDir.getPath());
-            return;
-        }
-        //加密类型一
-        String originName = null;
-        try (RandomAccessFile raf = new RandomAccessFile(privateDataFile, "rw")) {
-            //私有文件长度校验
-            if (raf.length() < 32 + 256) {
-                log.info("私有数据文件长度不合法,无需解密,{}", fileOrDir.getPath());
-                return;
-            }
-            //用户合法性校验
-            raf.seek(0);
-            byte[] md51 = new byte[16];
-            raf.read(md51);
-            md51 = xorBySecretKey(md51);
-            if (!Arrays.equals(md51, getMd51())) {
-                log.info("当前文件已被其他用户加密或该文件未加密,您无法执行解密操作,{}", fileOrDir.getPath());
-                return;
-            }
-            //是否使用指定方式加密
-            fileEncoderType = getFileEncoderType();
-            raf.seek(16);
-            byte[] flagBytes = new byte[3];
-            raf.read(flagBytes);
-            //文件名称加密
-            if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE)) {
-                if (flagBytes[0] != (byte) 0x01) {
-                    log.info("文件未使用加密类型一进行加密,使用加密类型一进行解密失败,{}", fileOrDir.getPath());
-                    return;
-                }
-            }
-            //文件头部加密
-            else if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_HEADER_ENCODE)) {
-                if (flagBytes[1] != (byte) 0x01) {
-                    log.info("文件未使用加密类型二进行加密,使用加密类型二进行解密失败,{}", fileOrDir.getPath());
-                    return;
-                }
-
-            }
-            //文件内容加密
-            else if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_CONTENT_ENCODE)) {
-                if (flagBytes[2] != (byte) 0x01) {
-                    log.info("文件未使用加密类型三进行加密,使用加密类型三进行解密失败,{}", fileOrDir.getPath());
-                    return;
-                }
-            }
-            //执行解密,并处理私有数据
-            raf.seek(32);
-            byte[] encodeMap = new byte[256];
-            raf.read(encodeMap);
-            encodeMap = xorBySecretKey(encodeMap);
-            //加密类型一
-            if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE)) {
-                raf.seek(32 + 256 + 32);
-                byte[] extraParam = new byte[(int) (raf.length() - (32 + 256 + 32))];
-                raf.read(extraParam);
-                extraParam = getResultByMap(extraParam, encodeMap, false);
-                originName = new String(extraParam);
-                if (decryptOriginFile(fileOrDir, extraParam)) {
-                    raf.seek(16);
-                    raf.write(0x00);
-                    //删除历史记录
-                    raf.setLength(32 + 256 + 32);
-                }
-            }
-            //加密类型二
-            if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_HEADER_ENCODE)) {
-                raf.seek(32 + 256);
-                byte[] extraParam = new byte[32];
-                //注: raf对于超出文件长度的内容, 读不出任何数据
-                raf.read(extraParam);
-                extraParam = getResultByMap(extraParam, encodeMap, false);
-                if (decryptOriginFile(fileOrDir, extraParam)) {
-                    raf.seek(16 + 1);
-                    raf.write(0x00);
-                }
-            }
-            //加密类型三
-            if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_CONTENT_ENCODE)) {
-                if (decryptOriginFile(fileOrDir, encodeMap)) {
-                    raf.seek(16 + 2);
-                    raf.write(0x00);
-                }
-            }
-        } catch (IOException ex) {
-            log.info("私有数据文件打开失败,操作终止,{}", fileOrDir.getPath(), ex);
-            return;
-        }
-        //加密类型一: IO操作完成后才可以执行重命名操作
-        if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE)) {
-            //私有数据文件重命名
-            boolean b = privateDataFile.renameTo(new File(privateDataFile.getParent() + File.separatorChar + originName));
-            log.info("私有数据文件是否重命名成功,{}", b);
-
-        }
-    }
 
     /**
      * 子类实现的加密方法
