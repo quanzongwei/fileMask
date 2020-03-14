@@ -1,9 +1,9 @@
 package com.qzw.filemask;
 
 import com.qzw.filemask.enums.ChooseTypeEnum;
-import com.qzw.filemask.fileencoder.FileContentEncoderV2;
-import com.qzw.filemask.fileencoder.FileHeaderEncoderV2;
-import com.qzw.filemask.fileencoder.FileOrDirNameEncoderV2;
+import com.qzw.filemask.fileencoder.FileContentEncoder;
+import com.qzw.filemask.fileencoder.FileHeaderEncoder;
+import com.qzw.filemask.fileencoder.FileOrDirNameEncoder;
 import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
@@ -42,7 +42,7 @@ public class ButtonActionFactory {
                     return;
                 }
                 try {
-                    new FileOrDirNameEncoderV2().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
+                    new FileOrDirNameEncoder().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
                 }  catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -74,7 +74,7 @@ public class ButtonActionFactory {
                     return;
                 }
                 try {
-                    new FileOrDirNameEncoderV2().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
+                    new FileOrDirNameEncoder().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
                 } catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -108,7 +108,7 @@ public class ButtonActionFactory {
                     return;
                 }
                 try {
-                    new FileOrDirNameEncoderV2().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
+                    new FileOrDirNameEncoder().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
                 }  catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -142,7 +142,7 @@ public class ButtonActionFactory {
                     return;
                 }
                 try {
-                    new FileHeaderEncoderV2().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
+                    new FileHeaderEncoder().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
                 }  catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -176,7 +176,7 @@ public class ButtonActionFactory {
                     return;
                 }
                 try {
-                    new FileHeaderEncoderV2().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
+                    new FileHeaderEncoder().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
                 } catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -210,7 +210,7 @@ public class ButtonActionFactory {
                     return;
                 }
                 try {
-                    new FileHeaderEncoderV2().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
+                    new FileHeaderEncoder().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
                 }  catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -244,7 +244,7 @@ public class ButtonActionFactory {
                     return;
                 }
                 try {
-                    new FileContentEncoderV2().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
+                    new FileContentEncoder().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
                 }  catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -278,7 +278,7 @@ public class ButtonActionFactory {
                     return;
                 }
                 try {
-                    new FileContentEncoderV2().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
+                    new FileContentEncoder().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
                 } catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -312,7 +312,7 @@ public class ButtonActionFactory {
                 }
                 // 加密软件运行中
                 try {
-                    new FileContentEncoderV2().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
+                    new FileContentEncoder().encodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
                 } catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -347,11 +347,11 @@ public class ButtonActionFactory {
                 try {
                     // 解密顺序很重要啊, 如果先使用方式一解密, 那么文件名称被修改, 使用文件二解密会抛出文件不存在异常
                     //方式三
-                    new FileContentEncoderV2().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
+                    new FileContentEncoder().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
                     //方式二
-                    new FileHeaderEncoderV2().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
+                    new FileHeaderEncoder().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
                     //方式一
-                    new FileOrDirNameEncoderV2().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
+                    new FileOrDirNameEncoder().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CASCADE_DIR);
                 } catch (Exception ex) {
                     log.info("解密异常", ex);
                     ta.append(ex.getMessage());
@@ -384,11 +384,11 @@ public class ButtonActionFactory {
                 }
                 try {
                     //方式三
-                    new FileContentEncoderV2().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
+                    new FileContentEncoder().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
                     //方式二
-                    new FileHeaderEncoderV2().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
+                    new FileHeaderEncoder().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
                     //方式一
-                    new FileOrDirNameEncoderV2().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
+                    new FileOrDirNameEncoder().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.CURRENT_DIR_ONLY);
                 } catch (Exception ex) {
                     log.info("解密异常", ex);
                     ta.append(ex.getMessage());
@@ -421,11 +421,11 @@ public class ButtonActionFactory {
                 }
                 try {
                     //方式三
-                    new FileContentEncoderV2().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
+                    new FileContentEncoder().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
                     //方式二
-                    new FileHeaderEncoderV2().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
+                    new FileHeaderEncoder().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
                     //方式一
-                    new FileOrDirNameEncoderV2().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
+                    new FileOrDirNameEncoder().decodeFileOrDir(new File(targetDir), ChooseTypeEnum.FILE_ONLY);
                 }catch (Exception ex) {
                     log.info("解密异常", ex);
                     ta.append(ex.getMessage());

@@ -14,7 +14,7 @@ import java.io.File;
  * @date 2020/1/18
  */
 @Log4j2
-public class FileOrDirNameEncoderV2 extends AbstractFileEncoderV2 {
+public class FileOrDirNameEncoder extends AbstractFileEncoder {
     @Override
     public FileEncoderTypeEnum getFileEncoderType() {
         return FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE;

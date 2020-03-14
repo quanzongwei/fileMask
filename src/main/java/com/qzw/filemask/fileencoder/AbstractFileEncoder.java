@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @date 2020/1/18
  */
 @Log4j2
-public abstract class AbstractFileEncoderV2 implements PasswordHandler, FileEncoderType {
+public abstract class AbstractFileEncoder implements PasswordHandler, FileEncoderType {
 
     /**
      * 确保加解密过程串行执行

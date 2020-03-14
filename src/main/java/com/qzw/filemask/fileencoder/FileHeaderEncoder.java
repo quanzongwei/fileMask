@@ -12,7 +12,7 @@ import java.io.RandomAccessFile;
  * @date 2020/1/18
  */
 @Log4j2
-public class FileHeaderEncoderV2 extends AbstractFileEncoderV2 {
+public class FileHeaderEncoder extends AbstractFileEncoder {
     @Override
     public FileEncoderTypeEnum getFileEncoderType() {
         return FileEncoderTypeEnum.FILE_HEADER_ENCODE;

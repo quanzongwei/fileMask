@@ -13,7 +13,7 @@ import java.io.RandomAccessFile;
  * @date 2020/1/18
  */
 @Log4j2
-public class FileContentEncoderV2 extends AbstractFileEncoderV2 {
+public class FileContentEncoder extends AbstractFileEncoder {
     private static final int SIZE_1024 = 1024;
 
     @Override

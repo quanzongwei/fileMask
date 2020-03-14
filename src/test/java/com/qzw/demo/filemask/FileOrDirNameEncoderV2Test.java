@@ -2,9 +2,9 @@ package com.qzw.demo.filemask;
 
 import com.qzw.filemask.component.PasswordHolder;
 import com.qzw.filemask.enums.ChooseTypeEnum;
-import com.qzw.filemask.fileencoder.FileContentEncoderV2;
-import com.qzw.filemask.fileencoder.FileHeaderEncoderV2;
-import com.qzw.filemask.fileencoder.FileOrDirNameEncoderV2;
+import com.qzw.filemask.fileencoder.FileContentEncoder;
+import com.qzw.filemask.fileencoder.FileHeaderEncoder;
+import com.qzw.filemask.fileencoder.FileOrDirNameEncoder;
 import org.junit.Test;
 
 import java.io.File;
@@ -17,9 +17,9 @@ import java.io.RandomAccessFile;
  */
 public class FileOrDirNameEncoderV2Test extends BaseTest {
 
-    FileOrDirNameEncoderV2 encoder = new FileOrDirNameEncoderV2();
-    FileHeaderEncoderV2 encoder2 = new FileHeaderEncoderV2();
-    FileContentEncoderV2 encoder3 = new FileContentEncoderV2();
+    FileOrDirNameEncoder encoder = new FileOrDirNameEncoder();
+    FileHeaderEncoder encoder2 = new FileHeaderEncoder();
+    FileContentEncoder encoder3 = new FileContentEncoder();
 
     // 必须抛出exception吗, 这个 todo test
     // 依赖: 加密文件总数
