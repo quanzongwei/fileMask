@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
+ * 加密类型二: 文件头部加密
  * @author quanzongwei
  * @date 2020/1/18
  */

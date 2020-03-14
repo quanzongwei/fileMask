@@ -7,9 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import java.io.File;
 
 /**
- *
- * todo 新增的文件重名问题 +2就好了
- * todo sequece保存问题
+ * 加密类型一: 文件名称加密
  * @author quanzongwei
  * @date 2020/1/18
  */
