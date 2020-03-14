@@ -43,4 +43,9 @@ public class Constants {
      */
     public static String FILE_NAME_4_AUTO_INCREMENT_SEQUENCE = ".fmvalue";
 
+    /**
+     * doc path
+     */
+    public static String DOC_PATH = System.getProperty("user.dir") + File.separatorChar + "doc" + File.separatorChar + "readme.html";
+
 }
