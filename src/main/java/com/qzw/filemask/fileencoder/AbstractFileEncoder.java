@@ -501,11 +501,26 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
 
     /**
      * 子类实现的加密方法
+     *
+     * @param extraParam 只有针对文件内容加密时,传入encodeMap,用于全文加密
+     *
+     * 对于返回值:
+     * 1. 文件名称加密: byte[0]为文件原始名称, byte[1]为文件加密后的名称
+     * 2. 文件头部加密: byte[0]为文件头部原始数据
+     * 3. 文件内容加密: byte数据不为null,表示操作成功即可
+     *
+     * 返回null: 代表子类加密操作失败
      */
     protected abstract byte[][] encryptOriginFile(File fileOrDir, byte[] extraParam);
 
     /**
      * 子类实现的解密方法
+     * @param extraParam
+     * 对于参数 extraParam:
+     * 1. 文件名称加密: 值为原始文件名称
+     * 2. 文件头部加密: 值为原始头部数据
+     * 3. 文件内容加密: 值为encodeMap
+     * @return true:操作成功 false:操作失败
      */
     protected abstract boolean decryptOriginFile(File fileOrDir, byte[] extraParam);
 }

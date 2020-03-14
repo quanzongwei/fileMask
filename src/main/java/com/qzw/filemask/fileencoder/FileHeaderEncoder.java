@@ -29,7 +29,7 @@ public class FileHeaderEncoder extends AbstractFileEncoder {
             // 重点测试 todo test
             if (raf.length()< HEAD_BYTE_LEN_32) {
                 // 返回null 表示加密不成功
-                log.info("文件长度小于32字节, 不支持方式2加密",fileOrDir.getPath());
+                log.info("文件长度小于32字节,不支持方式2加密",fileOrDir.getPath());
                 return null;
             }
             raf.seek(0);
