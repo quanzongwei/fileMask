@@ -1,7 +1,6 @@
 package com.qzw.demo.java.filemask.fileencoder;
 
-import com.qzw.demo.java.filehide.ByteUtil;
-import com.qzw.demo.java.filemask.absclass.AbstractFileEncoderV2;
+import com.qzw.demo.java.filemask.util.ByteUtil;
 import com.qzw.demo.java.filemask.component.PasswordHolder;
 import com.qzw.demo.java.filemask.enums.DirChooseEnum;
 import com.qzw.demo.java.filemask.enums.FileEncoderTypeEnum;

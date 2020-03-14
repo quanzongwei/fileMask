@@ -1,4 +1,4 @@
-package com.qzw.demo.java.filehide;
+package com.qzw.demo.java.filemask.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

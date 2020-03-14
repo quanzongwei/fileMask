@@ -1,10 +1,8 @@
-package com.qzw.demo.java.filehide;
+package com.qzw.demo.java.filemask.util;
 
-import lombok.ToString;
 import org.junit.Test;
 
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 /**
  * @author BG388892

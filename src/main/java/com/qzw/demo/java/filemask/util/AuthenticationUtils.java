@@ -1,6 +1,5 @@
 package com.qzw.demo.java.filemask.util;
 
-import com.qzw.demo.java.filehide.MD5Utils;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.File;

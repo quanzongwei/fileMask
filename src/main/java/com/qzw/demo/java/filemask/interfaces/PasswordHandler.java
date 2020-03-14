@@ -1,6 +1,6 @@
 package com.qzw.demo.java.filemask.interfaces;
 
-import com.qzw.demo.java.filehide.MD5Utils;
+import com.qzw.demo.java.filemask.util.MD5Utils;
 import com.qzw.demo.java.filemask.component.PasswordHolder;
 
 /**

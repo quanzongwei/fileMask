@@ -1,6 +1,5 @@
 package com.qzw.demo.java.filemask;
 
-import com.qzw.demo.java.filehide.FileHideException;
 import com.qzw.demo.java.filemask.enums.DirChooseEnum;
 import com.qzw.demo.java.filemask.fileencoder.FileContentEncoderV2;
 import com.qzw.demo.java.filemask.fileencoder.FileHeaderEncoderV2;
@@ -9,7 +8,6 @@ import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -45,13 +43,7 @@ public class ButtonActionFactory {
                 }
                 try {
                     new FileOrDirNameEncoderV2().encodeFileOrDir(new File(targetDir), DirChooseEnum.CASCADE_DIR);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
-                } catch (Exception ex) {
+                }  catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
                     dialog.setVisible(true);
@@ -83,12 +75,6 @@ public class ButtonActionFactory {
                 }
                 try {
                     new FileOrDirNameEncoderV2().encodeFileOrDir(new File(targetDir), DirChooseEnum.CURRENT_DIR_ONLY);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
                 } catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -123,13 +109,7 @@ public class ButtonActionFactory {
                 }
                 try {
                     new FileOrDirNameEncoderV2().encodeFileOrDir(new File(targetDir), DirChooseEnum.FILE_ONLY);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
-                } catch (Exception ex) {
+                }  catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
                     dialog.setVisible(true);
@@ -163,13 +143,7 @@ public class ButtonActionFactory {
                 }
                 try {
                     new FileHeaderEncoderV2().encodeFileOrDir(new File(targetDir), DirChooseEnum.CASCADE_DIR);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
-                } catch (Exception ex) {
+                }  catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
                     dialog.setVisible(true);
@@ -203,12 +177,6 @@ public class ButtonActionFactory {
                 }
                 try {
                     new FileHeaderEncoderV2().encodeFileOrDir(new File(targetDir), DirChooseEnum.CURRENT_DIR_ONLY);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
                 } catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -243,13 +211,7 @@ public class ButtonActionFactory {
                 }
                 try {
                     new FileHeaderEncoderV2().encodeFileOrDir(new File(targetDir), DirChooseEnum.FILE_ONLY);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
-                } catch (Exception ex) {
+                }  catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
                     dialog.setVisible(true);
@@ -283,13 +245,7 @@ public class ButtonActionFactory {
                 }
                 try {
                     new FileContentEncoderV2().encodeFileOrDir(new File(targetDir), DirChooseEnum.CASCADE_DIR);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
-                } catch (Exception ex) {
+                }  catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
                     dialog.setVisible(true);
@@ -323,12 +279,6 @@ public class ButtonActionFactory {
                 }
                 try {
                     new FileContentEncoderV2().encodeFileOrDir(new File(targetDir), DirChooseEnum.CURRENT_DIR_ONLY);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
                 } catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -363,12 +313,6 @@ public class ButtonActionFactory {
                 // 加密软件运行中
                 try {
                     new FileContentEncoderV2().encodeFileOrDir(new File(targetDir), DirChooseEnum.FILE_ONLY);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
                 } catch (Exception ex) {
                     log.info("加密异常", ex);
                     label.setText(ex.getMessage());
@@ -408,12 +352,6 @@ public class ButtonActionFactory {
                     new FileHeaderEncoderV2().decodeFileOrDir(new File(targetDir), DirChooseEnum.CASCADE_DIR);
                     //方式一
                     new FileOrDirNameEncoderV2().decodeFileOrDir(new File(targetDir), DirChooseEnum.CASCADE_DIR);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
                 } catch (Exception ex) {
                     log.info("解密异常", ex);
                     ta.append(ex.getMessage());
@@ -451,12 +389,6 @@ public class ButtonActionFactory {
                     new FileHeaderEncoderV2().decodeFileOrDir(new File(targetDir), DirChooseEnum.CURRENT_DIR_ONLY);
                     //方式一
                     new FileOrDirNameEncoderV2().decodeFileOrDir(new File(targetDir), DirChooseEnum.CURRENT_DIR_ONLY);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
                 } catch (Exception ex) {
                     log.info("解密异常", ex);
                     ta.append(ex.getMessage());
@@ -494,13 +426,7 @@ public class ButtonActionFactory {
                     new FileHeaderEncoderV2().decodeFileOrDir(new File(targetDir), DirChooseEnum.FILE_ONLY);
                     //方式一
                     new FileOrDirNameEncoderV2().decodeFileOrDir(new File(targetDir), DirChooseEnum.FILE_ONLY);
-                } catch (FileHideException ex) {
-                    label.setText(ex.getMessage());
-                    if (ex.getCode().equals(FileHideException.FILE_RENAME_ERROR)) {
-                    }
-                    dialog.setVisible(true);
-                    return;
-                } catch (Exception ex) {
+                }catch (Exception ex) {
                     log.info("解密异常", ex);
                     ta.append(ex.getMessage());
                     dialog.setVisible(true);
