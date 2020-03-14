@@ -32,8 +32,6 @@ public class FileMaskMain {
 
     static JDialog cancelDialog;
 
-    static JButton btn4ContentEncrypt = new JButton("文件内容加密");
-    static JButton btn4ContentDecrypt = new JButton("文件内容解密");
 
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
