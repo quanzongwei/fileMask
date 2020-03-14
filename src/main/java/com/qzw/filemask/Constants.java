@@ -1,7 +1,7 @@
 package com.qzw.filemask;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/1/18
  */
 public class Constants {

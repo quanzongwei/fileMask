@@ -27,7 +27,7 @@ import java.io.*;
  * v7 新增使用帮助文档和联系作者
  * v8 支持中断功能
  *
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/1/3
  */
 @Log4j2
@@ -336,7 +336,7 @@ public class FileHideGUIV7 {
             @Override
             public void actionPerformed(ActionEvent e) {
                 FileSystemView fsv = FileSystemView.getFileSystemView();
-                //C:\Users\BG388892\Desktop\新建文件夹 (4), 获取应用程序运行时所在的文件夹, 可以借此新增配置文件
+                //C:\Users\quanzongwei\Desktop\新建文件夹 (4), 获取应用程序运行时所在的文件夹, 可以借此新增配置文件
                 ta.append(System.getProperty("user.dir"));
                 try {
                     testexe();
@@ -349,7 +349,7 @@ public class FileHideGUIV7 {
     }
 
     public static void testexe() throws IOException {
-//        File file = new File("C:\\Users\\BG388892\\Desktop\\filehideV100.exe");
+//        File file = new File("C:\\Users\\quanzongwei\\Desktop\\filehideV100.exe");
         File file = new File(System.getProperty("user.dir") + "\\filehideV100.exe");
 //        FileOutputStream fileOutputStream = new FileOutputStream(file,true);
 

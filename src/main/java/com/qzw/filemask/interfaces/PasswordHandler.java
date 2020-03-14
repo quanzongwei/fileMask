@@ -4,7 +4,7 @@ import com.qzw.filemask.util.MD5Utils;
 import com.qzw.filemask.component.PasswordHolder;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/1/18
  */
 public interface PasswordHandler {

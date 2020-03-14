@@ -3,7 +3,7 @@ package com.qzw.demo;
 import org.junit.Test;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/3/9
  */
 public class TestLong {

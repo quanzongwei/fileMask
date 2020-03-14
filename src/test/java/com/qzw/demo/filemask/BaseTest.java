@@ -6,7 +6,7 @@ import org.junit.Before;
 import java.io.*;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/1/22
  */
 public class BaseTest {

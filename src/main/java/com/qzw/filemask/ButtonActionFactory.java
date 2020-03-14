@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/2/24
  */
 @Log4j2

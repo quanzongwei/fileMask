@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.nio.ByteBuffer;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/1/12
  */
 public class ByteUtil {

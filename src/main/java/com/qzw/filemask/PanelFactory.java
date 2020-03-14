@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/2/24
  */
 public class PanelFactory {

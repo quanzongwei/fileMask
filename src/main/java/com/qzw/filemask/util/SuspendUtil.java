@@ -1,7 +1,7 @@
 package com.qzw.filemask.util;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/3/8
  */
 public class SuspendUtil {

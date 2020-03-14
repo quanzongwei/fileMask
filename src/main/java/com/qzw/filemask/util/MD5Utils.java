@@ -8,7 +8,7 @@ import java.util.Base64;
  * MD5是16字节的数据
  * base64的长度和原长度成正比,但是会多一些
  *
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/1/9
  */
 public class MD5Utils {

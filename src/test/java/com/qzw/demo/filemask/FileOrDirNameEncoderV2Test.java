@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.RandomAccessFile;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/1/18
  */
 public class FileOrDirNameEncoderV2Test extends BaseTest {

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/3/7
  */
 public class JMyPanel extends JPanel {

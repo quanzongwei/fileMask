@@ -3,7 +3,7 @@ package com.qzw.filemask.enums;
 import lombok.Getter;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/1/18
  */
 public enum FileEncoderTypeEnum {
