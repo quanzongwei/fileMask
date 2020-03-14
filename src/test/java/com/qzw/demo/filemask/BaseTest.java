@@ -1,6 +1,6 @@
 package com.qzw.demo.filemask;
 
-import com.qzw.demo.java.filemask.exception.MaskException;
+import com.qzw.filemask.exception.MaskException;
 import org.junit.Before;
 
 import java.io.*;

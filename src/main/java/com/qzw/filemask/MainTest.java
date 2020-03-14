@@ -1,4 +1,4 @@
-package com.qzw.demo.filemask;
+package com.qzw.filemask;
 
 import com.qzw.filemask.component.PasswordHolder;
 import com.qzw.filemask.enums.DirChooseEnum;
@@ -14,16 +14,6 @@ import java.io.File;
  * @date 2020/1/22
  */
 public class MainTest {
-
-    @Test
-    public void testNull() {
-        String xx = null;
-        test(xx.concat(""));
-    }
-
-    public void test(String a) {
-        System.out.println(a);
-    }
 
 //------------------------------加密方式 一 ----------------------------------------------------//
 

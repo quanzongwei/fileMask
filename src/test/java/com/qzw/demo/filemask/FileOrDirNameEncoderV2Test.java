@@ -1,10 +1,10 @@
 package com.qzw.demo.filemask;
 
-import com.qzw.demo.java.filemask.component.PasswordHolder;
-import com.qzw.demo.java.filemask.enums.DirChooseEnum;
-import com.qzw.demo.java.filemask.fileencoder.FileContentEncoderV2;
-import com.qzw.demo.java.filemask.fileencoder.FileHeaderEncoderV2;
-import com.qzw.demo.java.filemask.fileencoder.FileOrDirNameEncoderV2;
+import com.qzw.filemask.component.PasswordHolder;
+import com.qzw.filemask.enums.DirChooseEnum;
+import com.qzw.filemask.fileencoder.FileContentEncoderV2;
+import com.qzw.filemask.fileencoder.FileHeaderEncoderV2;
+import com.qzw.filemask.fileencoder.FileOrDirNameEncoderV2;
 import org.junit.Test;
 
 import java.io.File;
