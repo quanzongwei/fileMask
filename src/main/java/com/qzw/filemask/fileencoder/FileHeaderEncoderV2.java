@@ -1,10 +1,7 @@
 package com.qzw.filemask.fileencoder;
 
-import com.qzw.filemask.component.PasswordHolder;
-import com.qzw.filemask.enums.DirChooseEnum;
 import com.qzw.filemask.enums.FileEncoderTypeEnum;
 import lombok.extern.log4j.Log4j2;
-import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,17 +64,5 @@ public class FileHeaderEncoderV2 extends AbstractFileEncoderV2 {
             return false;
         }
         return true;
-    }
-
-    @Test
-    public void testEncode() {
-        PasswordHolder.password = "123456";
-        encodeFileOrDir(new File("D:\\Data\\测试\\aa"), DirChooseEnum.CASCADE_DIR);
-    }
-
-    @Test
-    public void testDecode() {
-        PasswordHolder.password = "123456";
-        decodeFileOrDir(new File("D:\\Data\\测试\\aa"), DirChooseEnum.CASCADE_DIR);
     }
 }

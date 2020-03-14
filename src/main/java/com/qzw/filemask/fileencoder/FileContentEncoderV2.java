@@ -1,11 +1,8 @@
 package com.qzw.filemask.fileencoder;
 
-import com.qzw.filemask.util.ByteUtil;
-import com.qzw.filemask.component.PasswordHolder;
-import com.qzw.filemask.enums.DirChooseEnum;
 import com.qzw.filemask.enums.FileEncoderTypeEnum;
+import com.qzw.filemask.util.ByteUtil;
 import lombok.extern.log4j.Log4j2;
-import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -97,17 +94,5 @@ public class FileContentEncoderV2 extends AbstractFileEncoderV2 {
             log.info("文件使用中," + (isEncodeOperation ? "加密" : "解密" + "失败,{}"), file.getPath());
             throw ex;
         }
-    }
-
-    @Test
-    public void testEncode() {
-        PasswordHolder.password = "123456";
-        encodeFileOrDir(new File("D:\\Data\\测试\\cc"), DirChooseEnum.CASCADE_DIR);
-    }
-
-    @Test
-    public void testDecode() {
-        PasswordHolder.password = "123456";
-        decodeFileOrDir(new File("D:\\Data\\测试\\cc"), DirChooseEnum.CASCADE_DIR);
     }
 }

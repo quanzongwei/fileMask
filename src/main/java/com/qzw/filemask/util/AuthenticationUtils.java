@@ -7,6 +7,7 @@ import java.io.RandomAccessFile;
 import java.util.Arrays;
 
 /**
+ * 登录认证
  * @author quanzongwei
  * @date 2020/3/7
  */

@@ -1,7 +1,5 @@
 package com.qzw.filemask.enums;
 
-import lombok.Data;
-
 /**
  * @author quanzongwei
  * @date 2020/1/18

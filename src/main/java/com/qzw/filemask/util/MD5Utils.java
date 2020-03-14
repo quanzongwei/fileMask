@@ -5,9 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 /**
- * MD5是16字节的数据
- * base64的长度和原长度成正比,但是会多一些
- *
+ * MD5工具类(MD5加密后得到16字节的数据)
  * @author quanzongwei
  * @date 2020/1/9
  */

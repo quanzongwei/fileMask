@@ -1,7 +1,7 @@
 package com.qzw.demo.filemask;
 
 import com.qzw.filemask.component.PasswordHolder;
-import com.qzw.filemask.enums.DirChooseEnum;
+import com.qzw.filemask.enums.ChooseTypeEnum;
 import com.qzw.filemask.fileencoder.FileContentEncoderV2;
 import com.qzw.filemask.fileencoder.FileHeaderEncoderV2;
 import com.qzw.filemask.fileencoder.FileOrDirNameEncoderV2;
@@ -31,14 +31,14 @@ public class MainTest {
     public void testEncodeType1() {
         PasswordHolder.password = "123456";
         new FileOrDirNameEncoderV2().
-                encodeFileOrDir(new File("D:\\Data\\测试\\aa"), DirChooseEnum.CASCADE_DIR);
+                encodeFileOrDir(new File("D:\\Data\\测试\\aa"), ChooseTypeEnum.CASCADE_DIR);
     }
 
     @Test
     public void testDecodeType1() {
         PasswordHolder.password = "123456";
         new FileOrDirNameEncoderV2().
-                decodeFileOrDir(new File("D:\\Data\\测试\\nDDir114"), DirChooseEnum.CASCADE_DIR);
+                decodeFileOrDir(new File("D:\\Data\\测试\\nDDir114"), ChooseTypeEnum.CASCADE_DIR);
     }
 
 //------------------------------加密方式 二----------------------------------------------------
@@ -47,14 +47,14 @@ public class MainTest {
     public void testEncodeType2() {
         PasswordHolder.password = "123456";
         new FileHeaderEncoderV2().
-                encodeFileOrDir(new File("D:\\Data\\测试\\aa"), DirChooseEnum.CASCADE_DIR);
+                encodeFileOrDir(new File("D:\\Data\\测试\\aa"), ChooseTypeEnum.CASCADE_DIR);
     }
 
     @Test
     public void testDecodeType2() {
         PasswordHolder.password = "123456";
         new FileHeaderEncoderV2().
-                decodeFileOrDir(new File("D:\\Data\\测试\\nDDir114"), DirChooseEnum.CASCADE_DIR);
+                decodeFileOrDir(new File("D:\\Data\\测试\\nDDir114"), ChooseTypeEnum.CASCADE_DIR);
     }
 //------------------------------加密方式 三----------------------------------------------------
 
@@ -62,13 +62,13 @@ public class MainTest {
     public void testEncodeType3() {
         PasswordHolder.password = "123456";
         new FileContentEncoderV2().
-                encodeFileOrDir(new File("D:\\Data\\测试\\aa"), DirChooseEnum.CASCADE_DIR);
+                encodeFileOrDir(new File("D:\\Data\\测试\\aa"), ChooseTypeEnum.CASCADE_DIR);
     }
 
     @Test
     public void testDecodeType3() {
         PasswordHolder.password = "123456";
         new FileContentEncoderV2().
-                decodeFileOrDir(new File("D:\\Data\\测试\\nDDir114"), DirChooseEnum.CASCADE_DIR);
+                decodeFileOrDir(new File("D:\\Data\\测试\\nDDir114"), ChooseTypeEnum.CASCADE_DIR);
     }
 }

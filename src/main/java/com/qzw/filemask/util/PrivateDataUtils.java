@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
+ * fileMask私有数据
+ * 作用: 用于保存加密后的秘钥, 或者被加密信息的原文
  * @author quanzongwei
  * @date 2020/3/3
  */

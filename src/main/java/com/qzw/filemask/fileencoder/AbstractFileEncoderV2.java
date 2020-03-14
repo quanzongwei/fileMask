@@ -1,21 +1,25 @@
 package com.qzw.filemask.fileencoder;
 
-import com.qzw.filemask.util.ByteUtil;
-import com.qzw.filemask.enums.DirChooseEnum;
+import com.qzw.filemask.enums.ChooseTypeEnum;
 import com.qzw.filemask.enums.FileEncoderTypeEnum;
 import com.qzw.filemask.exception.MaskException;
 import com.qzw.filemask.interfaces.FileEncoderType;
 import com.qzw.filemask.interfaces.PasswordHandler;
+import com.qzw.filemask.util.ByteUtil;
 import com.qzw.filemask.util.PrivateDataUtils;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
+ * 加密解密抽象类
  * @author quanzongwei
  * @date 2020/1/18
  */
@@ -23,16 +27,14 @@ import java.util.stream.Collectors;
 public abstract class AbstractFileEncoderV2 implements PasswordHandler, FileEncoderType {
 
     /**
-     * 确保加解密串行执行
-     * <p>
-     * 一只合格小白鼠在测试的时候, 说一看是程序卡住了,估计是多点了几下, 出现了无法解密的情况; 经过仔细分析,只有可能加解密过程未加锁
-     * 导致了并发的访问,造成的错误,这个比较难复现,加上lock是最保险的做法
+     * 确保加解密过程串行执行
      */
     public static Object lock = new Object();
+
     /**
-     * entry method
+     * 加密入口
      */
-    public void encodeFileOrDir(File fileOrDir, DirChooseEnum dirChooseEnum) {
+    public void encodeFileOrDir(File fileOrDir, ChooseTypeEnum dirChooseEnum) {
         synchronized (lock) {
             if (!fileOrDir.exists()) {
                 throw new MaskException(1000, "文件或者文件夹不存在解密加密失败," + fileOrDir.getPath());
@@ -41,11 +43,11 @@ public abstract class AbstractFileEncoderV2 implements PasswordHandler, FileEnco
                 log.info("私有数据文件无需处理, {}", fileOrDir.getPath());
                 return;
             }
-            if (dirChooseEnum.equals(DirChooseEnum.FILE_ONLY)) {
+            if (dirChooseEnum.equals(ChooseTypeEnum.FILE_ONLY)) {
 
                 this.mkPrivateDirIfNotExists(fileOrDir);
                 executeEncrypt(fileOrDir);
-            } else if (dirChooseEnum.equals(DirChooseEnum.CURRENT_DIR_ONLY)) {
+            } else if (dirChooseEnum.equals(ChooseTypeEnum.CURRENT_DIR_ONLY)) {
                 this.mkPrivateDirIfNotExists(fileOrDir);
                 File[] files = fileOrDir.listFiles();
                 if (files != null && files.length > 0) {
@@ -55,7 +57,7 @@ public abstract class AbstractFileEncoderV2 implements PasswordHandler, FileEnco
                     }
                 }
                 executeEncrypt(fileOrDir);
-            } else if (dirChooseEnum.equals(DirChooseEnum.CASCADE_DIR)) {
+            } else if (dirChooseEnum.equals(ChooseTypeEnum.CASCADE_DIR)) {
                 this.mkPrivateDirIfNotExists(fileOrDir);
                 File[] files = fileOrDir.listFiles();
                 if (files != null && files.length > 0) {
@@ -63,7 +65,7 @@ public abstract class AbstractFileEncoderV2 implements PasswordHandler, FileEnco
                     for (File file : files) {
                         //cascade directory
                         if (file.isDirectory()) {
-                            encodeFileOrDir(file, DirChooseEnum.CASCADE_DIR);
+                            encodeFileOrDir(file, ChooseTypeEnum.CASCADE_DIR);
                             continue;
                         }
                         executeEncrypt(file);
@@ -75,9 +77,9 @@ public abstract class AbstractFileEncoderV2 implements PasswordHandler, FileEnco
     }
 
     /**
-     * entry method
+     * 解密入口
      */
-    public void decodeFileOrDir(File fileOrDir, DirChooseEnum dirChooseEnum) {
+    public void decodeFileOrDir(File fileOrDir, ChooseTypeEnum dirChooseEnum) {
         synchronized (lock) {
             if (!fileOrDir.exists()) {
                 throw new MaskException(10000, "文件或者文件夹不存在,解密失败, " + fileOrDir.getPath());
@@ -86,9 +88,9 @@ public abstract class AbstractFileEncoderV2 implements PasswordHandler, FileEnco
                 log.info("私有数据文件无需处理, {}", fileOrDir.getPath());
                 return;
             }
-            if (dirChooseEnum.equals(DirChooseEnum.FILE_ONLY)) {
+            if (dirChooseEnum.equals(ChooseTypeEnum.FILE_ONLY)) {
                 executeDecrypt(fileOrDir);
-            } else if (dirChooseEnum.equals(DirChooseEnum.CURRENT_DIR_ONLY)) {
+            } else if (dirChooseEnum.equals(ChooseTypeEnum.CURRENT_DIR_ONLY)) {
                 File[] files = fileOrDir.listFiles();
                 if (files != null && files.length > 0) {
                     for (File file : files) {
@@ -96,13 +98,13 @@ public abstract class AbstractFileEncoderV2 implements PasswordHandler, FileEnco
                     }
                 }
                 executeDecrypt(fileOrDir);
-            } else if (dirChooseEnum.equals(DirChooseEnum.CASCADE_DIR)) {
+            } else if (dirChooseEnum.equals(ChooseTypeEnum.CASCADE_DIR)) {
                 File[] files = fileOrDir.listFiles();
                 if (files != null && files.length > 0) {
                     for (File file : files) {
                         //cascade directory
                         if (file.isDirectory()) {
-                            decodeFileOrDir(file, DirChooseEnum.CASCADE_DIR);
+                            decodeFileOrDir(file, ChooseTypeEnum.CASCADE_DIR);
                             continue;
                         }
                         executeDecrypt(file);
@@ -456,7 +458,13 @@ public abstract class AbstractFileEncoderV2 implements PasswordHandler, FileEnco
         }
     }
 
+    /**
+     * 子类实现的加密方法
+     */
     protected abstract byte[][] encryptOriginFile(File fileOrDir, byte[] extraParam);
 
+    /**
+     * 子类实现的加密方法
+     */
     protected abstract boolean decryptOriginFile(File fileOrDir, byte[] extraParam);
 }
