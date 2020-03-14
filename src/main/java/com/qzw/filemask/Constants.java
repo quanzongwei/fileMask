@@ -27,4 +27,20 @@ public class Constants {
      */
     public static final String FILE_MASK_PREFIX = "nDFile";
 
+
+    /**
+     * 私有数据文件夹
+     */
+    public static String PRIVATE_DATA_DIR = ".fileMask";
+
+    /**
+     * 项目名称
+     */
+    public static String PRAVATE_String = "fileMask";
+
+    /**
+     * 保存文件夹自增数据的文件名称
+     */
+    public static String FILE_NAME_4_AUTO_INCREMENT_SEQUENCE = ".fmvalue";
+
 }
