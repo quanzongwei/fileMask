@@ -1,7 +1,5 @@
 package com.qzw.filemask.util;
 
-import org.junit.Test;
-
 import java.nio.ByteBuffer;
 
 /**
@@ -24,7 +22,9 @@ public class ByteUtil {
         return buffer.getLong();
     }
 
-    // 将byte转化为16进制
+    /**
+     * 将byte转化为16进制
+     */
     public static String byteToHex(byte[] bs) {
         if (0 == bs.length) {
             return "";
@@ -41,8 +41,9 @@ public class ByteUtil {
         }
     }
 
-
-    // 将16进制转化为byte
+    /**
+     * 将16进制转化为byte
+     */
     public static byte[] hexToByte(String ciphertext) {
         byte[] cipherBytes = ciphertext.getBytes();
         if ((cipherBytes.length % 2) != 0) {
@@ -80,27 +81,4 @@ public class ByteUtil {
     public static long getUnsignedIntt(int data) {     //将int数据转换为0~4294967295 (0xFFFFFFFF即DWORD)。
         return data & 0x0FFFFFFFF;
     }
-
-
-
-
-    @Test
-    public void test() {
-        byte[] bytes = longToBytes(1L);
-        long l = bytesToLong(bytes);
-        System.out.println(l);
-    }
-
-    @Test
-    public void testByteBuffer() {
-        // 默认是大端序, 和人类理解的思维一样
-        ByteBuffer bf = ByteBuffer.allocate(2);
-//        bf.order(ByteOrder.BIG_ENDIAN);
-        bf.put((byte) 0x00);
-        bf.put((byte) 0x01);
-        short aShort = bf.getShort(0);
-        System.out.println(aShort);
-
-    }
-
 }
