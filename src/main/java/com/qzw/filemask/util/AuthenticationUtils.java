@@ -17,7 +17,7 @@ public class AuthenticationUtils {
 
 
     public static boolean isExistUserPassword() {
-        String dir = System.getProperty("user.dir") + Constants.AUTH_DIR_NAME;
+        String dir = getAuthDirName();
         File file = new File(dir);
         if (!file.exists()) {
             file.mkdir();
@@ -39,7 +39,7 @@ public class AuthenticationUtils {
     }
 
     public static boolean isCurrentUser(String password) {
-        String dir = System.getProperty("user.dir") + Constants.AUTH_DIR_NAME;
+        String dir = getAuthDirName();
         File file = new File(dir);
         if (!file.exists()) {
             file.mkdir();
@@ -69,7 +69,7 @@ public class AuthenticationUtils {
     }
 
     public static void setUserMd5Byte(String password) {
-        String dir = System.getProperty("user.dir") + Constants.AUTH_DIR_NAME;
+        String dir = getAuthDirName();
         File file = new File(dir);
         if (!file.exists()) {
             file.mkdir();
@@ -82,5 +82,9 @@ public class AuthenticationUtils {
         } catch (Exception ex) {
             log.error("认证文件访问失败, path", authFile, ex);
         }
+    }
+
+    private static String getAuthDirName() {
+        return System.getProperty("user.dir") + Constants.AUTH_DIR_NAME;
     }
 }

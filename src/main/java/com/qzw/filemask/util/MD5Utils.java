@@ -10,7 +10,8 @@ import java.security.NoSuchAlgorithmException;
  */
 public class MD5Utils {
     /**
-     * Md5加密后的数据: 16字节
+     * Md5加密后的数据
+     * @return 16字节的数据
      */
     public static byte[] getMd5Bytes(String input) {
         try {
