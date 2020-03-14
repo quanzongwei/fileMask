@@ -1,5 +1,6 @@
 package com.qzw.filemask.util;
 
+import com.qzw.filemask.Constants;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
@@ -14,15 +15,14 @@ import java.util.Arrays;
 @Log4j2
 public class AuthenticationUtils {
 
-    static String AUTH_FILE_NAME = File.separatorChar + "auth.fileMask";
-    static String AUTH_DIR_NAME = File.separatorChar + "authentication";
+
     public static boolean isExistUserPassword() {
-        String dir = System.getProperty("user.dir") + AUTH_DIR_NAME;
+        String dir = System.getProperty("user.dir") + Constants.AUTH_DIR_NAME;
         File file = new File(dir);
         if (!file.exists()) {
             file.mkdir();
         }
-        String authFilePath = dir + AUTH_FILE_NAME;
+        String authFilePath = dir + Constants.AUTH_FILE_NAME;
         File authFile = new File(authFilePath);
         if (!authFile.exists()) {
             return false;
@@ -39,12 +39,12 @@ public class AuthenticationUtils {
     }
 
     public static boolean isCurrentUser(String password) {
-        String dir = System.getProperty("user.dir") + AUTH_DIR_NAME;
+        String dir = System.getProperty("user.dir") + Constants.AUTH_DIR_NAME;
         File file = new File(dir);
         if (!file.exists()) {
             file.mkdir();
         }
-        String authFilePath = dir + AUTH_FILE_NAME;
+        String authFilePath = dir + Constants.AUTH_FILE_NAME;
         File authFile = new File(authFilePath);
         if (!authFile.exists()) {
             return false;
@@ -69,12 +69,12 @@ public class AuthenticationUtils {
     }
 
     public static void setUserMd5Byte(String password) {
-        String dir = System.getProperty("user.dir") + AUTH_DIR_NAME;
+        String dir = System.getProperty("user.dir") + Constants.AUTH_DIR_NAME;
         File file = new File(dir);
         if (!file.exists()) {
             file.mkdir();
         }
-        String authFilePath = dir + AUTH_FILE_NAME;
+        String authFilePath = dir + Constants.AUTH_FILE_NAME;
         File authFile = new File(authFilePath);
         try (RandomAccessFile raf = new RandomAccessFile(authFile, "rw")) {
             raf.setLength(0);

@@ -1,5 +1,6 @@
 package com.qzw.filemask.fileencoder;
 
+import com.qzw.filemask.Constants;
 import com.qzw.filemask.enums.FileEncoderTypeEnum;
 import com.qzw.filemask.util.PrivateDataUtils;
 import lombok.extern.log4j.Log4j2;
@@ -15,14 +16,7 @@ import java.io.File;
 @Log4j2
 public class FileOrDirNameEncoder extends AbstractFileEncoder {
 
-    /**
-     * 文件夹名称加密后的前缀
-     */
-    private static final String DIR_MASK_PREFIX = "nDDir";
-    /**
-     * 文件名称加密后的前缀
-     */
-    private static final String FILE_MASK_PREFIX = "nDFile";
+
 
     @Override
     public FileEncoderTypeEnum getFileEncoderType() {
@@ -37,7 +31,7 @@ public class FileOrDirNameEncoder extends AbstractFileEncoder {
             return null;
         }
         String originName = fileOrDir.getName();
-        String targetName = (fileOrDir.isDirectory() ? DIR_MASK_PREFIX : FILE_MASK_PREFIX) + sequence;
+        String targetName = (fileOrDir.isDirectory() ? Constants.DIR_MASK_PREFIX : Constants.FILE_MASK_PREFIX) + sequence;
         String targetPath = fileOrDir.getParent() + File.separatorChar + targetName;
         boolean b = fileOrDir.renameTo(new File(targetPath));
         if (!b) {
