@@ -14,6 +14,16 @@ import java.io.File;
  */
 @Log4j2
 public class FileOrDirNameEncoder extends AbstractFileEncoder {
+
+    /**
+     * 文件夹名称加密后的前缀
+     */
+    private static final String DIR_MASK_PREFIX = "nDDir";
+    /**
+     * 文件名称加密后的前缀
+     */
+    private static final String FILE_MASK_PREFIX = "nDFile";
+
     @Override
     public FileEncoderTypeEnum getFileEncoderType() {
         return FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE;
@@ -27,7 +37,7 @@ public class FileOrDirNameEncoder extends AbstractFileEncoder {
             return null;
         }
         String originName = fileOrDir.getName();
-        String targetName = (fileOrDir.isDirectory() ? "nDDir" : "nDFiLe") + sequence;
+        String targetName = (fileOrDir.isDirectory() ? DIR_MASK_PREFIX : FILE_MASK_PREFIX) + sequence;
         String targetPath = fileOrDir.getParent() + File.separatorChar + targetName;
         boolean b = fileOrDir.renameTo(new File(targetPath));
         if (!b) {
