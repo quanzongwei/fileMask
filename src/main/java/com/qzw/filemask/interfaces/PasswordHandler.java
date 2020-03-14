@@ -1,7 +1,7 @@
 package com.qzw.filemask.interfaces;
 
-import com.qzw.filemask.util.MD5Utils;
 import com.qzw.filemask.component.PasswordHolder;
+import com.qzw.filemask.util.MD5Utils;
 
 /**
  * 密码处理
@@ -13,6 +13,11 @@ public interface PasswordHandler {
         return PasswordHolder.password;
     }
 
+    /**
+     * 生成xor加密的秘钥
+     *
+     * @return 16 byte value
+     */
     default byte[] get32byteMd5Value() {
         byte[] bytes32 = new byte[32];
         byte[] md5Bytes1 = MD5Utils.getMd5Bytes(getPassword()+2);
@@ -23,7 +28,7 @@ public interface PasswordHandler {
     }
 
     /**
-     *
+     * 登录时校验用户身份
      * @return 16 byte value
      */
     default byte[] getMd5() {
@@ -32,7 +37,7 @@ public interface PasswordHandler {
     }
 
     /**
-     *
+     * 加密解密文件时候校验用户身份
      * @return 16 byte value
      */
     default byte[] getMd51() {
