@@ -55,7 +55,12 @@ public class FileMaskMain {
         int y = (Toolkit.getDefaultToolkit().getScreenSize().height - f.getSize().height) / 2;
         f.setLocation(x, y);
         f.setIconImage(Toolkit.getDefaultToolkit().createImage("qq.png"));
-        f.addWindowListener(new MyWinAdapter());
+        f.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
         f.setResizable(true);
 
         cancelDialog = new JDialog(f, "提示");
@@ -209,7 +214,6 @@ public class FileMaskMain {
     }
 
     private static String passDialog(JFrame f) {
-        //todo qzw 输入校验
         String pass1 = JOptionPane.showInputDialog(f, "您第一次使用该软件, 请设置密码:");
         if (pass1 == null || pass1.equals("")) {
             return nullCHeck(f, 0);
@@ -270,12 +274,5 @@ public class FileMaskMain {
         }
         System.exit(0);
         return null;
-    }
-
-    public static class MyWinAdapter extends WindowAdapter {
-        @Override
-        public void windowClosing(WindowEvent e) {
-            System.exit(0);
-        }
     }
 }
