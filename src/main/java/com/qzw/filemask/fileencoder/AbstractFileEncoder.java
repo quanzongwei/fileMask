@@ -2,6 +2,7 @@ package com.qzw.filemask.fileencoder;
 
 import com.qzw.filemask.enums.ChooseTypeEnum;
 import com.qzw.filemask.enums.FileEncoderTypeEnum;
+import com.qzw.filemask.enums.MaskExceptionEnum;
 import com.qzw.filemask.exception.MaskException;
 import com.qzw.filemask.interfaces.FileEncoderType;
 import com.qzw.filemask.interfaces.PasswordHandler;
@@ -37,7 +38,7 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
     public void encodeFileOrDir(File fileOrDir, ChooseTypeEnum dirChooseEnum) {
         synchronized (lock) {
             if (!fileOrDir.exists()) {
-                throw new MaskException(1000, "文件或者文件夹不存在解密加密失败," + fileOrDir.getPath());
+                throw new MaskException(MaskExceptionEnum.FILE_NOT_EXISTS.getType(), "文件或者文件夹不存在,加密失败," + fileOrDir.getPath());
             }
             if (PrivateDataUtils.isFileMaskFile(fileOrDir)) {
                 log.info("私有数据文件无需处理, {}", fileOrDir.getPath());
@@ -82,7 +83,7 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
     public void decodeFileOrDir(File fileOrDir, ChooseTypeEnum dirChooseEnum) {
         synchronized (lock) {
             if (!fileOrDir.exists()) {
-                throw new MaskException(10000, "文件或者文件夹不存在,解密失败, " + fileOrDir.getPath());
+                throw new MaskException(MaskExceptionEnum.FILE_NOT_EXISTS.getType(), "文件或者文件夹不存在,解密失败, " + fileOrDir.getPath());
             }
             if (PrivateDataUtils.isFileMaskFile(fileOrDir)) {
                 log.info("私有数据文件无需处理, {}", fileOrDir.getPath());
@@ -464,7 +465,7 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
     protected abstract byte[][] encryptOriginFile(File fileOrDir, byte[] extraParam);
 
     /**
-     * 子类实现的加密方法
+     * 子类实现的解密方法
      */
     protected abstract boolean decryptOriginFile(File fileOrDir, byte[] extraParam);
 }

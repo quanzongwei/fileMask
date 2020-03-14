@@ -4,10 +4,26 @@ package com.qzw.filemask.enums;
  * @author quanzongwei
  * @date 2020/1/18
  */
-public enum MaskEnum {
-    FILE_NOT_EXISTS(101, "文件不存在"),
+public enum MaskExceptionEnum {
+    /**
+     * 文件不存在
+     */
+    FILE_NOT_EXISTS(10000, "文件不存在");
 
-    USER_INVALID(102,"用户不合法");
+    /**
+     * 异常类型
+     */
+    private int type;
+
+    /**
+     * 异常内容
+     */
+    private String message;
+
+    MaskExceptionEnum(int type, String message) {
+        this.type = type;
+        this.message = message;
+    }
 
     public int getType() {
         return type;
@@ -22,14 +38,6 @@ public enum MaskEnum {
     }
 
     public void setMessage(String message) {
-        this.message = message;
-    }
-
-    private int type;
-    private String message;
-
-    MaskEnum(int type, String message) {
-        this.type = type;
         this.message = message;
     }
 }

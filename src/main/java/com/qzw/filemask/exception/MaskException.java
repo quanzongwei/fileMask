@@ -1,6 +1,6 @@
 package com.qzw.filemask.exception;
 
-import com.qzw.filemask.enums.MaskEnum;
+import com.qzw.filemask.enums.MaskExceptionEnum;
 
 /**
  * fileMask 项目异常
@@ -15,7 +15,7 @@ public class MaskException extends RuntimeException {
         this.type = type;
     }
 
-    public MaskException(MaskEnum maskEnum) {
+    public MaskException(MaskExceptionEnum maskEnum) {
         super(maskEnum.getMessage());
         this.type = maskEnum.getType();
     }
