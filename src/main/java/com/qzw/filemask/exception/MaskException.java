@@ -3,7 +3,7 @@ package com.qzw.filemask.exception;
 import com.qzw.filemask.enums.MaskExceptionEnum;
 
 /**
- * fileMask 项目异常
+ * fileMask异常
  * @author quanzongwei
  * @date 2020/1/18
  */

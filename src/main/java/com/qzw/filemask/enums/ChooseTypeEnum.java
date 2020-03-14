@@ -1,7 +1,6 @@
 package com.qzw.filemask.enums;
 
 /**
- *
  * 选择方式
  * @author quanzongwei
  * @date 2020/1/18

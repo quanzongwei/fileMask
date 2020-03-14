@@ -1,6 +1,7 @@
 package com.qzw.filemask.enums;
 
 /**
+ * 异常枚举
  * @author quanzongwei
  * @date 2020/1/18
  */

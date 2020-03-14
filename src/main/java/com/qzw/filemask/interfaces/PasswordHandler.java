@@ -9,6 +9,9 @@ import com.qzw.filemask.util.MD5Utils;
  * @date 2020/1/18
  */
 public interface PasswordHandler {
+    /**
+     * 获取用户密码
+     */
     default String getPassword() {
         return PasswordHolder.password;
     }
