@@ -8,11 +8,8 @@ import lombok.extern.log4j.Log4j2;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.*;
 
 /**
  * fileMask main class
@@ -147,6 +144,7 @@ public class FileMaskMain {
         dialog = new JDialog(f, "提示", true);
         dialog.setLayout(new BorderLayout());
         dialogOkBtn = new JButton("OK");
+        dialogOkBtn.addActionListener(e -> dialog.setVisible(false));
         label = new JLabel();
         dialog.add(label, BorderLayout.NORTH);
 
@@ -160,10 +158,11 @@ public class FileMaskMain {
         int x1 = (f.getSize().width - dialog.getSize().width) / 2 + (int) f.getLocation().getX();
         int y1 = (f.getSize().height - dialog.getSize().height) / 2 + (int) f.getLocation().getY();
         dialog.setLocation(x1, y1);
-        //
-        eventResolver();
-        // btn事件绑定
-
+        // menuItem action bind
+        MenuActionFactory.menuItem4Exit(menuItem4Exit);
+        MenuActionFactory.menuItem4Help(menuItem4Help);
+        MenuActionFactory.menuItem4Contact(menuItem4Contact);
+        //btn事件绑定
         ButtonActionFactory.btn11(btn11);
         ButtonActionFactory.btn12(btn12);
         ButtonActionFactory.btn13(btn13);
@@ -273,103 +272,6 @@ public class FileMaskMain {
         }
         System.exit(0);
         return null;
-    }
-
-    private static void eventResolver() {
-        //事件
-        menuItem4Exit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-
-        //事件
-        menuItem4Help.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame jFrame = new JFrame("使用说明文档");
-                jFrame.setMaximumSize(new Dimension(300,300));
-                jFrame.setMinimumSize(new Dimension(300,300));
-
-                JPanel jpanel = new JPanel(new FlowLayout());
-                jpanel.setMaximumSize(new Dimension(300, 300));
-                jpanel.setMinimumSize(new Dimension(300, 300));
-
-                //
-                JTextPane jTextPane = new JTextPane();
-                jTextPane.setAutoscrolls(true);
-                jpanel.add(jTextPane);
-
-
-                Container container = jFrame.getContentPane();
-                JScrollPane scrollPane = new JScrollPane(jTextPane);
-                StringBuilder text = new StringBuilder("");
-                File file = new File(Constants.DOC_PATH);
-                scrollPane.add(jpanel);
-                try (BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"))) {
-                    String s = "";
-                    while ((s = bf.readLine())!= null) {
-                        text.append(s);
-                        text.append("\n");
-
-                    }
-                } catch (FileNotFoundException ex) {
-                    log.error("doc not found !!", ex);
-                } catch (IOException ex) {
-                    log.error("file open error !!", ex);
-                }
-
-                jTextPane.setContentType("text/html");
-                jTextPane.setText(text.toString());
-                container.add(scrollPane);
-
-                jFrame.setSize(800, 800);
-                int x = (Toolkit.getDefaultToolkit().getScreenSize().width - jFrame.getSize().width) / 2;
-                int y = (Toolkit.getDefaultToolkit().getScreenSize().height - jFrame.getSize().height) / 2;
-                jFrame.setLocation(x, y>f.getLocation().getY()? (int) f.getLocation().getY() :y);
-                //
-                jFrame.setVisible(true);
-
-            }
-        });
-
-        menuItem4Contact.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame jFrame = new JFrame("有任何问题,欢迎联系作者~~");
-                jFrame.setSize(new Dimension(400,200));
-
-                Container container = jFrame.getContentPane();
-                container.setLayout(new BorderLayout(0,0));
-                container.setSize(new Dimension(400,400));
-
-                JTextPane jTextPane =new JTextPane();
-                jTextPane.setContentType("text/html");
-
-                jTextPane.setText("<html>\n" +
-                        "<p>\n" +
-                        "<h2 align=\"center\">作者邮箱: <font color=\"red\">552114141@qq.com</font></h2>\n" +
-                        "<h2 align=\"center\">作者微信: <font color=\"red\">quanzongwei</font></h2>\n" +
-                        "</p>\n" +
-                        "</html>");
-
-                container.add(jTextPane);
-
-                int x = (Toolkit.getDefaultToolkit().getScreenSize().width - jFrame.getSize().width) / 2;
-                int y = (Toolkit.getDefaultToolkit().getScreenSize().height - jFrame.getSize().height) / 2;
-                jFrame.setLocation(x, y);
-                //
-                jFrame.setVisible(true);
-            }
-        });
-
-        dialogOkBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.setVisible(false);
-            }
-        });
     }
 
     public static class MyWinAdapter extends WindowAdapter {
