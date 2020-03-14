@@ -31,7 +31,7 @@ import java.io.*;
  * @date 2020/1/3
  */
 @Log4j2
-public class FileHideGUIV7 {
+public class FileMaskMain {
     Logger loggerFactory = LoggerFactory.getLogger("");
     public static String LINE_SEPARATOR = System.getProperty("line.separator");
     // 修改为jFrame就成了swing的了, 就能使用jButton了

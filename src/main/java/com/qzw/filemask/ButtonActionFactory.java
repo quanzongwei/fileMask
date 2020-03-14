@@ -19,11 +19,11 @@ import java.io.File;
 @Log4j2
 public class ButtonActionFactory {
 
-    static JLabel label = FileHideGUIV7.label;
-    static JTextArea ta = FileHideGUIV7.ta;
+    static JLabel label = FileMaskMain.label;
+    static JTextArea ta = FileMaskMain.ta;
 
-    static JDialog dialog = FileHideGUIV7.dialog;
-    static JFrame f = FileHideGUIV7.f;
+    static JDialog dialog = FileMaskMain.dialog;
+    static JFrame f = FileMaskMain.f;
 
 
     public static void btn11(JButton btn) {
