@@ -20,67 +20,35 @@ import java.awt.event.WindowEvent;
 public class FileMaskMain {
     public static JFrame f = null;
     public static JTextArea ta;
-    public static JDialog dialog;
-    static JButton dialogOkBtn;
-    public static JLabel label;
-    static JMenuBar menuBar;
-    static JMenu menu;
-    static JMenu menu2;
-    static JMenuItem menuItem4Exit = null;
-    static JMenuItem menuItem4Help = null;
-    static JMenuItem menuItem4Contact = null;
-
-    static JDialog cancelDialog;
-
 
     public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
-        UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        //设置主题
-        PlasticLookAndFeel.setPlasticTheme(new DesertBluer());
-        try {
-            //设置观感
-            //UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
-            UIManager.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
-            //UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
-            //UIManager.setLookAndFeel("com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
-            //UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
-        } catch (Exception e) {
-            log.error("UI样式设置出错", e);
-        }
-        f = new JFrame("FileMask");
-        f.setLayout(new BorderLayout(0, 15));
-        // 位置
-        f.setSize(650, 640);
-        int x = (Toolkit.getDefaultToolkit().getScreenSize().width - f.getSize().width) / 2;
-        int y = (Toolkit.getDefaultToolkit().getScreenSize().height - f.getSize().height) / 2;
-        f.setLocation(x, y);
-        f.setIconImage(Toolkit.getDefaultToolkit().createImage("qq.png"));
-        f.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
-        f.setResizable(true);
+        //设置样式
+        setLookAndFeel();
 
-        cancelDialog = new JDialog(f, "提示");
+        //初始化
+        f = initializationJFrame();
 
-        menuBar = new JMenuBar();
-        menu = new JMenu("文件");
-        menu2 = new JMenu("使用帮助");
-        menuItem4Exit = new JMenuItem("退出");
-        menuItem4Help = new JMenuItem("使用帮助");
-        menuItem4Contact = new JMenuItem("联系作者");
+        //菜单栏
+        JMenuBar jMenuBar = initializationMenu();
+        f.setJMenuBar(jMenuBar);
 
-        menu.add(menuItem4Exit);
-        menu2.add(menuItem4Help);
-        menu2.add(menuItem4Contact);
+        //文本输出框
+        JScrollPane scrollPane = setScrollPanel();
+        f.add(scrollPane, BorderLayout.CENTER);
 
-        menuBar.add(menu);
-        menuBar.add(menu2);
+        //按钮展示区域
+        JPanel jPanel = setNorthPanel();
+        f.add(jPanel, BorderLayout.NORTH);
 
-        f.setJMenuBar(menuBar);
-        f.setBackground(Color.black);
+        f.setVisible(true);
+        //登录
+        LoginService.doLogin(f);
+    }
+
+    /**
+     * 按钮区域
+     */
+    public static JPanel setNorthPanel() {
         // button and panel
         JButton btn11 = new JButton("文件夹级联加密");
         JButton btn12 = new JButton("文件夹加密");
@@ -123,64 +91,105 @@ public class FileMaskMain {
         panelCombine1.setMaximumSize(new Dimension(650, 220));
         panelCombine1.setMinimumSize(new Dimension(650, 220));
 
-        // north
-        f.add(panelCombine3, BorderLayout.NORTH);
 
-        //中
+        //事件绑定: 加密类型一(文件名称加密)
+        ButtonActionFactory.btn11(btn11);
+        ButtonActionFactory.btn12(btn12);
+        ButtonActionFactory.btn13(btn13);
+        //事件绑定: 加密类型二(文件头部加密)
+        ButtonActionFactory.btn21(btn21);
+        ButtonActionFactory.btn22(btn22);
+        ButtonActionFactory.btn23(btn23);
+        //事件绑定: 加密类型三(文件内容加密)
+        ButtonActionFactory.btn31(btn31);
+        ButtonActionFactory.btn32(btn32);
+        ButtonActionFactory.btn33(btn33);
+        //事件绑定: 解密
+        ButtonActionFactory.btn41(btn41);
+        ButtonActionFactory.btn42(btn42);
+        ButtonActionFactory.btn43(btn43);
+        return panelCombine3;
+    }
+
+    /**
+     * 文本框区域
+     */
+    private static JScrollPane setScrollPanel() {
         ta = new JTextArea();
         ta.setAutoscrolls(true);
         ta.setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED), "输出日志:"));
         ta.setForeground(new Color(56, 131, 56));
-
         JScrollPane scrollPane = new JScrollPane(ta);
         scrollPane.setHorizontalScrollBarPolicy(
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setVerticalScrollBarPolicy(
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        f.add(scrollPane, BorderLayout.CENTER);
+        return scrollPane;
+    }
 
-        dialog = new JDialog(f, "提示", true);
-        dialog.setLayout(new BorderLayout());
-        dialogOkBtn = new JButton("OK");
-        dialogOkBtn.addActionListener(e -> dialog.setVisible(false));
-        label = new JLabel();
-        dialog.add(label, BorderLayout.NORTH);
+    /**
+     * 初始化菜单
+     */
+    private static JMenuBar initializationMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        JMenu menuFile = new JMenu("文件");
+        JMenu menuHelp = new JMenu("使用帮助");
 
-        JPanel dialogPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        dialogPanel.add(dialogOkBtn);
+        JMenuItem menuItem4Exit = new JMenuItem("退出");
+        JMenuItem menuItem4Help = new JMenuItem("使用帮助");
+        JMenuItem menuItem4Contact = new JMenuItem("联系作者");
 
-        dialog.add(dialogPanel, BorderLayout.CENTER);
-        dialog.setSize(200, 100);
+        menuFile.add(menuItem4Exit);
+        menuHelp.add(menuItem4Help);
+        menuHelp.add(menuItem4Contact);
 
-        // 对话框位置
-        int x1 = (f.getSize().width - dialog.getSize().width) / 2 + (int) f.getLocation().getX();
-        int y1 = (f.getSize().height - dialog.getSize().height) / 2 + (int) f.getLocation().getY();
-        dialog.setLocation(x1, y1);
-        // menuItem action bind
+        menuBar.add(menuFile);
+        menuBar.add(menuHelp);
+
+        //时间绑定
         MenuActionFactory.menuItem4Exit(menuItem4Exit);
         MenuActionFactory.menuItem4Help(menuItem4Help);
         MenuActionFactory.menuItem4Contact(menuItem4Contact);
-        //btn事件绑定
-        ButtonActionFactory.btn11(btn11);
-        ButtonActionFactory.btn12(btn12);
-        ButtonActionFactory.btn13(btn13);
-
-        ButtonActionFactory.btn21(btn21);
-        ButtonActionFactory.btn22(btn22);
-        ButtonActionFactory.btn23(btn23);
-
-        ButtonActionFactory.btn31(btn31);
-        ButtonActionFactory.btn32(btn32);
-        ButtonActionFactory.btn33(btn33);
-
-        ButtonActionFactory.btn41(btn41);
-        ButtonActionFactory.btn42(btn42);
-        ButtonActionFactory.btn43(btn43);
-
-        f.setVisible(true);
-        //登录
-        LoginService.doLogin(f);
+        return menuBar;
     }
 
+    /**
+     * 初始化JFrame
+     */
+    private static JFrame initializationJFrame() {
+        JFrame frame = new JFrame("FileMask");
+        frame.setLayout(new BorderLayout(0, 15));
+        frame.setSize(650, 640);
+        int x = (Toolkit.getDefaultToolkit().getScreenSize().width - frame.getSize().width) / 2;
+        int y = (Toolkit.getDefaultToolkit().getScreenSize().height - frame.getSize().height) / 2;
+        frame.setLocation(x, y);
+        frame.setIconImage(Toolkit.getDefaultToolkit().createImage("fileMask.png"));
+        frame.setResizable(true);
+        frame.setBackground(Color.black);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
+        return frame;
+    }
 
+    /**
+     * 设置样式
+     */
+    private static void setLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+            PlasticLookAndFeel.setPlasticTheme(new DesertBluer());
+            //设置观感
+            UIManager.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
+            //UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+            //UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
+            //UIManager.setLookAndFeel("com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
+            //UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
+        } catch (Exception e) {
+            log.error("UI样式设置出错", e);
+        }
+    }
 }
