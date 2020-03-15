@@ -18,14 +18,9 @@ import java.io.File;
 @Log4j2
 public class ButtonActionFactory {
 
-    private static JLabel label = FileMaskMain.label;
     private static JTextArea ta = FileMaskMain.ta;
-    private static JDialog dialog = FileMaskMain.dialog;
-
     private static JFrame f = FileMaskMain.f;
     private static JFileChooser jFileChooser = new JFileChooser();
-
-
 
     public static void btn11(JButton btn) {
         btn.addActionListener(e -> {
@@ -141,8 +136,7 @@ public class ButtonActionFactory {
             return;
         }
         if (!isValidPath(targetFileOrDir)) {
-            label.setText("解密路径不合法, 请重新选择!");
-            dialog.setVisible(true);
+            JOptionPane.showConfirmDialog(f, "解密路径不合法, 请重新选择!", "提示", JOptionPane.DEFAULT_OPTION);
             return;
         }
         try {
