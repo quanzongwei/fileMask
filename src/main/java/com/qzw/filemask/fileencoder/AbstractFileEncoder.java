@@ -266,8 +266,8 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
             raf.read(md51);
             md51 = xorBySecretKey(md51);
             if (!Arrays.equals(md51, getMd51())) {
-                log.info("当前文件已被其他用户加密或该文件未加密,您无法执行解密操作,{}", fileOrDir.getPath());
-                ta.append("当前文件已被其他用户加密或该文件未加密,您无法执行解密操作," + fileOrDir.getPath() + "\r\n");
+                log.info("当前文件已被其他用户加密,您无法执行解密操作,{}", fileOrDir.getPath());
+                ta.append("当前文件已被其他用户加密,您无法执行解密操作," + fileOrDir.getPath() + "\r\n");
                 return;
             }
             //是否使用指定方式加密
