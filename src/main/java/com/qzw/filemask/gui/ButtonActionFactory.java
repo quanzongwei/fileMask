@@ -23,6 +23,9 @@ public class ButtonActionFactory {
     private static JFrame f = FileMaskMain.f;
     private static JFileChooser jFileChooser = new JFileChooser();
 
+    /**
+     * 加密类型一(文件名称加密):文件夹级联加密
+     */
     public static void btn11(JButton btn) {
         btn.addActionListener(e -> {
             String targetDir = directoryAndFileChoose(JFileChooser.DIRECTORIES_ONLY, "请选择文件夹...");
@@ -31,6 +34,9 @@ public class ButtonActionFactory {
     }
 
 
+    /**
+     * 加密类型一(文件名称加密):文件夹加密
+     */
     public static void btn12(JButton btn) {
         btn.addActionListener(e -> {
             String targetDir = directoryAndFileChoose(JFileChooser.DIRECTORIES_ONLY, "请选择文件夹...");
@@ -38,6 +44,9 @@ public class ButtonActionFactory {
         });
     }
 
+    /**
+     * 加密类型一(文件名称加密):文件加密
+     */
     public static void btn13(JButton btn) {
         btn.addActionListener(e -> {
             String targetDir = directoryAndFileChoose(JFileChooser.FILES_ONLY, "请选择文件...");
@@ -45,6 +54,9 @@ public class ButtonActionFactory {
         });
     }
 
+    /**
+     * 加密类型二(文件头部加密):文件夹级联加密
+     */
     public static void btn21(JButton btn) {
         btn.addActionListener(e -> {
             String targetDir = directoryAndFileChoose(JFileChooser.DIRECTORIES_ONLY, "请选择文件夹...");
@@ -52,6 +64,9 @@ public class ButtonActionFactory {
         });
     }
 
+    /**
+     * 加密类型二(文件头部加密):文件夹加密
+     */
     public static void btn22(JButton btn) {
         btn.addActionListener(e -> {
             String targetDir = directoryAndFileChoose(JFileChooser.DIRECTORIES_ONLY, "请选择文件夹...");
@@ -59,6 +74,9 @@ public class ButtonActionFactory {
         });
     }
 
+    /**
+     * 加密类型二(文件头部加密):文件加密
+     */
     public static void btn23(JButton btn) {
         btn.addActionListener(e -> {
             String targetDir = directoryAndFileChoose(JFileChooser.FILES_ONLY, "请选择文件...");
@@ -66,6 +84,9 @@ public class ButtonActionFactory {
         });
     }
 
+    /**
+     * 加密类型三(文件内容加密):文件夹级联加密
+     */
     public static void btn31(JButton btn) {
         btn.addActionListener(e -> {
             String targetDir = directoryAndFileChoose(JFileChooser.DIRECTORIES_ONLY, "请选择文件夹...");
@@ -73,6 +94,9 @@ public class ButtonActionFactory {
         });
     }
 
+    /**
+     * 加密类型三(文件内容加密):文件夹加密
+     */
     public static void btn32(JButton btn) {
         btn.addActionListener(e -> {
             String targetDir = directoryAndFileChoose(JFileChooser.DIRECTORIES_ONLY, "请选择文件夹...");
@@ -80,6 +104,9 @@ public class ButtonActionFactory {
         });
     }
 
+    /**
+     * 加密类型三(文件内容加密):文件加密
+     */
     public static void btn33(JButton btn) {
         btn.addActionListener(e -> {
             String targetDir = directoryAndFileChoose(JFileChooser.FILES_ONLY, "请选择文件...");
@@ -87,6 +114,9 @@ public class ButtonActionFactory {
         });
     }
 
+    /**
+     * 加密
+     */
     private static void doEncrypt(String targetFileOrDir, AbstractFileEncoder fileEncoder, ChooseTypeEnum chooseTypeEnum) {
         long begin = System.currentTimeMillis();
         if (targetFileOrDir == null) {
@@ -109,6 +139,9 @@ public class ButtonActionFactory {
         JOptionPane.showConfirmDialog(f, "加密成功!", "提示", JOptionPane.DEFAULT_OPTION);
     }
 
+    /**
+     * 解密:文件夹级联解密
+     */
     public static void btn41(JButton button) {
         button.addActionListener(e -> {
             String targetFileOrDir = directoryAndFileChoose(JFileChooser.DIRECTORIES_ONLY, "请选择文件夹...");
@@ -116,6 +149,9 @@ public class ButtonActionFactory {
         });
     }
 
+    /**
+     * 解密:文件夹解密
+     */
     public static void btn42(JButton button) {
         button.addActionListener(e -> {
             String targetFileOrDir = directoryAndFileChoose(JFileChooser.DIRECTORIES_ONLY, "请选择文件夹...");
@@ -123,6 +159,9 @@ public class ButtonActionFactory {
         });
     }
 
+    /**
+     * 解密:文件解密
+     */
     public static void btn43(JButton button) {
         button.addActionListener(e -> {
             String targetFileOrDir = directoryAndFileChoose(JFileChooser.FILES_ONLY, "请选择文件...");
@@ -130,6 +169,9 @@ public class ButtonActionFactory {
         });
     }
 
+    /**
+     * 解密
+     */
     private static void doDecrypt(String targetFileOrDir, ChooseTypeEnum chooseTypeEnum) {
         long begin = System.currentTimeMillis();
         if (targetFileOrDir == null) {
@@ -157,6 +199,9 @@ public class ButtonActionFactory {
         JOptionPane.showConfirmDialog(f, "解密成功!", "提示", JOptionPane.DEFAULT_OPTION);
     }
 
+    /**
+     * GUI文件选择组件
+     */
     private static String directoryAndFileChoose(int fileSelectMode, String message) {
         //选择文件夹
         JFileChooser fileChooser = jFileChooser;
@@ -181,6 +226,10 @@ public class ButtonActionFactory {
         }
     }
 
+    /**
+     * 判断选择路径是否合法
+     * 为了系统安全, C:\ D:\ E:\ F:\ 这类长度太短的路径不支持加密
+     */
     private static boolean isValidPath(String targetPath) {
         if (targetPath.length() <= 3) {
             return false;
