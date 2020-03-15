@@ -22,7 +22,7 @@ import java.awt.event.WindowEvent;
 @Log4j2
 public class FileMaskMain {
     public static JFrame f = null;
-    public static JTextArea ta;
+    public static JTextArea ta = new JTextArea();
 
     public static void main(String[] args) {
         //设置样式
@@ -35,13 +35,13 @@ public class FileMaskMain {
         JMenuBar jMenuBar = initializationMenu();
         f.setJMenuBar(jMenuBar);
 
-        //文本输出框
-        JScrollPane scrollPane = setScrollPanel();
-        f.add(scrollPane, BorderLayout.CENTER);
-
         //按钮展示区域
         JPanel jPanel = setNorthPanel();
         f.add(jPanel, BorderLayout.NORTH);
+
+        //文本输出框
+        JScrollPane scrollPane = setScrollPanel();
+        f.add(scrollPane, BorderLayout.CENTER);
 
         f.setVisible(true);
         //登录
@@ -117,7 +117,6 @@ public class FileMaskMain {
      * 文本框区域
      */
     private static JScrollPane setScrollPanel() {
-        ta = new JTextArea();
         ta.setAutoscrolls(true);
         ta.setBorder(BorderFactory.createTitledBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED), "输出日志:"));
         ta.setForeground(new Color(56, 131, 56));

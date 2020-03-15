@@ -1,5 +1,6 @@
 package com.qzw.filemask.fileencoder;
 
+import com.qzw.filemask.FileMaskMain;
 import com.qzw.filemask.enums.ChooseTypeEnum;
 import com.qzw.filemask.enums.FileEncoderTypeEnum;
 import com.qzw.filemask.enums.MaskExceptionEnum;
@@ -10,6 +11,7 @@ import com.qzw.filemask.util.ByteUtil;
 import com.qzw.filemask.util.PrivateDataUtils;
 import lombok.extern.log4j.Log4j2;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -26,6 +28,8 @@ import java.util.stream.Collectors;
  */
 @Log4j2
 public abstract class AbstractFileEncoder implements PasswordHandler, FileEncoderType {
+    private static JTextArea ta = FileMaskMain.ta;
+
 
     /**
      * 确保加解密过程串行执行
@@ -164,6 +168,7 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
                     md51 = xorBySecretKey(md51);
                     if (!Arrays.equals(md51, getMd51())) {
                         log.info("文件已经被其他用户加密,您无法执行加密操作,{}", fileOrDir.getPath());
+                        ta.append("文件已经被其他用户加密,您无法执行加密操作," + fileOrDir.getPath() + "\r\n");
                         return;
                     }
                     //检测是否重复加密
@@ -260,6 +265,7 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
             md51 = xorBySecretKey(md51);
             if (!Arrays.equals(md51, getMd51())) {
                 log.info("当前文件已被其他用户加密或该文件未加密,您无法执行解密操作,{}", fileOrDir.getPath());
+                ta.append("当前文件已被其他用户加密或该文件未加密,您无法执行解密操作," + fileOrDir.getPath() + "\r\n");
                 return;
             }
             //是否使用指定方式加密
