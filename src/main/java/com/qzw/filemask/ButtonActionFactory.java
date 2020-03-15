@@ -21,6 +21,8 @@ public class ButtonActionFactory {
     private static JLabel label = FileMaskMain.label;
     private static JTextArea ta = FileMaskMain.ta;
     private static JDialog dialog = FileMaskMain.dialog;
+
+    private static JFrame f = FileMaskMain.f;
     private static JFileChooser jFileChooser = new JFileChooser();
 
 
@@ -96,23 +98,19 @@ public class ButtonActionFactory {
             return;
         }
         if (!isValidPath(targetFileOrDir)) {
-            label.setText("加密路径太短, 请重新选择则!");
-            dialog.setVisible(true);
-            JOptionPane jOptionPane = new JOptionPane();
+            JOptionPane.showConfirmDialog(f, "加密路径太短, 请重新选择则!", "提示", JOptionPane.DEFAULT_OPTION);
             return;
         }
         try {
             fileEncoder.encodeFileOrDir(new File(targetFileOrDir), chooseTypeEnum);
         } catch (Exception ex) {
-            log.info("encrypt exception", ex);
-            ta.append("encrypt exception:" + ex.getMessage() + "\r\n");
-            label.setText("encrypt exception!!!");
-            dialog.setVisible(true);
+            log.info("加密异常", ex);
+            ta.append("加异异常:" + ex.getMessage() + "\r\n");
+            JOptionPane.showConfirmDialog(f, "加密出错!!!", "提示", JOptionPane.DEFAULT_OPTION);
             return;
         }
         ta.append("加密成功,耗时:" + (System.currentTimeMillis() - begin) + "ms; 文件名: " + targetFileOrDir + "\r\n");
-        label.setText("加密成功!");
-        dialog.setVisible(true);
+        JOptionPane.showConfirmDialog(f, "加密成功!", "提示", JOptionPane.DEFAULT_OPTION);
     }
 
     public static void btn41(JButton button) {
@@ -155,22 +153,19 @@ public class ButtonActionFactory {
             //方式一
             new FileOrDirNameEncoder().decodeFileOrDir(new File(targetFileOrDir), chooseTypeEnum);
         } catch (Exception ex) {
-            log.info("decrypt exception", ex);
-            ta.append("decrypt exception:" + ex.getMessage() + "\r\n");
-            label.setText("decrypt exception!!!");
-            dialog.setVisible(true);
+            log.info("解密出错", ex);
+            ta.append("解密出错:" + ex.getMessage() + "\r\n");
+            JOptionPane.showConfirmDialog(f, "加密出错!!!", "提示", JOptionPane.DEFAULT_OPTION);
             return;
         }
         ta.append("解密成功,耗时:" + (System.currentTimeMillis() - begin) + "ms; 文件名: " + targetFileOrDir + "\r\n");
-        label.setText("解密成功!");
-        dialog.setVisible(true);
+        JOptionPane.showConfirmDialog(f, "解密成功!", "提示", JOptionPane.DEFAULT_OPTION);
     }
 
     private static String directoryAndFileChoose(int fileSelectMode, String message) {
         //选择文件夹
         JFileChooser fileChooser = jFileChooser;
         FileSystemView fsv = FileSystemView.getFileSystemView();
-//        System.out.println(fsv.getHomeDirectory());
         File tmpDir = new File(fsv.getDefaultDirectory().getPath() + File.separatorChar + "fileMask");
         if (!tmpDir.exists()) {
             tmpDir.mkdir();
@@ -182,7 +177,6 @@ public class ButtonActionFactory {
         int result = fileChooser.showOpenDialog(null);
         if (JFileChooser.APPROVE_OPTION == result) {
             String path = fileChooser.getSelectedFile().getPath();
-//            System.out.println("path: " + path);
             fileChooser.setEnabled(false);
             return path;
         } else if (JFileChooser.CANCEL_OPTION == result) {
