@@ -16,8 +16,8 @@ public class LoginService {
     public static void doLogin(JFrame f) {
         //第一次启用该软件,初始化密码
         if (!AuthenticationUtils.isExistUserPassword()) {
-            String pass = passwordInitializationDialog(f);
-            AuthenticationUtils.setUserMd5Byte(pass);
+            String password = passwordInitializationDialog(f);
+            AuthenticationUtils.setUserMd5Byte(password);
             return;
         }
         //登录认证
