@@ -29,14 +29,14 @@ public class MainTest {
 
     @Test
     public void testEncodeType1() {
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         new FileOrDirNameEncoder().
                 encodeFileOrDir(new File("D:\\Data\\测试\\aa"), ChooseTypeEnum.CASCADE_DIR);
     }
 
     @Test
     public void testDecodeType1() {
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         new FileOrDirNameEncoder().
                 decodeFileOrDir(new File("D:\\Data\\测试\\nDDir114"), ChooseTypeEnum.CASCADE_DIR);
     }
@@ -45,14 +45,14 @@ public class MainTest {
 
     @Test
     public void testEncodeType2() {
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         new FileHeaderEncoder().
                 encodeFileOrDir(new File("D:\\Data\\测试\\aa"), ChooseTypeEnum.CASCADE_DIR);
     }
 
     @Test
     public void testDecodeType2() {
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         new FileHeaderEncoder().
                 decodeFileOrDir(new File("D:\\Data\\测试\\nDDir114"), ChooseTypeEnum.CASCADE_DIR);
     }
@@ -60,14 +60,14 @@ public class MainTest {
 
     @Test
     public void testEncodeType3() {
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         new FileContentEncoder().
                 encodeFileOrDir(new File("D:\\Data\\测试\\aa"), ChooseTypeEnum.CASCADE_DIR);
     }
 
     @Test
     public void testDecodeType3() {
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         new FileContentEncoder().
                 decodeFileOrDir(new File("D:\\Data\\测试\\nDDir114"), ChooseTypeEnum.CASCADE_DIR);
     }

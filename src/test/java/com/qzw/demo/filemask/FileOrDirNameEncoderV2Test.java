@@ -26,11 +26,11 @@ public class FileOrDirNameEncoderV2Test extends BaseTest {
     @Test
     public void testEncodeType1() throws Exception {
         removeFileAndDir(getBaseFile(), true);
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         int fileamount = createDirAndFile(getBaseFile().getPath(), 3);
         //
         encoder.encodeFileOrDir(firstDirFile(), ChooseTypeEnum.CASCADE_DIR);
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
 
         validateFileNameFalse(firstDirFileEncryptedByType1(fileamount));
         encoder.decodeFileOrDir(firstDirFileEncryptedByType1(fileamount), ChooseTypeEnum.CASCADE_DIR);
@@ -42,33 +42,33 @@ public class FileOrDirNameEncoderV2Test extends BaseTest {
     @Test
     public void testEncodeType2() throws Exception {
 //        removeFileAndDir(getBaseFile(), true);
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         int fileamount = createDirAndFile(getBaseFile().getPath(), 2);
         //
         encoder2.encodeFileOrDir(firstFileFile(), ChooseTypeEnum.FILE_ONLY);
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         encoder2.decodeFileOrDir(firstFileFile(), ChooseTypeEnum.FILE_ONLY);
     }
 
     @Test
     public void testEncodeType2File() throws Exception {
         removeFileAndDir(getBaseFile(), true);
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         int fileamount = createDirAndFile(getBaseFile().getPath(), 2);
         //
         encoder2.encodeFileOrDir(firstFileFile(), ChooseTypeEnum.FILE_ONLY);
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         encoder2.decodeFileOrDir(firstFileFile(), ChooseTypeEnum.FILE_ONLY);
     }
 
     @Test
     public void testEncodeType2File4Dir() throws Exception {
         removeFileAndDir(getBaseFile(), true);
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         int fileamount = createDirAndFile(getBaseFile().getPath(), 2);
         //
         encoder2.encodeFileOrDir(firstDirFile(), ChooseTypeEnum.FILE_ONLY);
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         encoder2.decodeFileOrDir(firstDirFile(), ChooseTypeEnum.FILE_ONLY);
     }
 
@@ -89,12 +89,12 @@ public class FileOrDirNameEncoderV2Test extends BaseTest {
     @Test
     public void testEncodeType3() throws Exception {
         removeFileAndDir(getBaseFile(), true);
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         int fileamount = createDirAndFile(getBaseFile().getPath(), 3);
         //
         encoder3.encodeFileOrDir(firstDirFile(), ChooseTypeEnum.CURRENT_DIR_ONLY);
 //        encoder2.encodeFileOrDir(new File("D:\\Data\\测试\\test\\dir\\file.txt"),DirChooseEnum.FILE_ONLY);
-        GlobalPasswordHolder.password = "123456";
+        GlobalPasswordHolder.setPassword("123456");
         encoder3.decodeFileOrDir(firstDirFile(), ChooseTypeEnum.CASCADE_DIR);
     }
 }
