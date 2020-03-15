@@ -252,6 +252,8 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
         }
         //加密类型一
         String originName = null;
+        //加密类型一是否加密成功
+        boolean fileNameEncodeSuccess = false;
         try (RandomAccessFile raf = new RandomAccessFile(privateDataFile, "rw")) {
             //私有文件长度校验
             if (raf.length() < 32 + 256) {
@@ -307,7 +309,7 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
                 raf.read(extraParam);
                 extraParam = getResultByMap(extraParam, encodeMap, false);
                 originName = new String(extraParam);
-                if (decryptOriginFile(fileOrDir, extraParam)) {
+                if (fileNameEncodeSuccess = decryptOriginFile(fileOrDir, extraParam)) {
                     raf.seek(16);
                     raf.write(0x00);
                     //删除历史记录
@@ -338,7 +340,7 @@ public abstract class AbstractFileEncoder implements PasswordHandler, FileEncode
             return;
         }
         //加密类型一: IO操作完成后才可以执行重命名操作
-        if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE)) {
+        if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE) && fileNameEncodeSuccess) {
             //私有数据文件重命名
             boolean b = privateDataFile.renameTo(new File(privateDataFile.getParent() + File.separatorChar + originName));
             log.info("私有数据文件是否重命名成功,{}", b);
