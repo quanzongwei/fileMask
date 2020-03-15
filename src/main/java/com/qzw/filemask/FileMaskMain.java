@@ -75,7 +75,6 @@ public class FileMaskMain {
         JPanel panelCombine1 = new JPanel(new BorderLayout(0, 20));
         panelCombine1.setMaximumSize(new Dimension(650, 100));
         panelCombine1.setMinimumSize(new Dimension(650, 100));
-
         panelCombine1.add(panel1, BorderLayout.NORTH);
         panelCombine1.add(panel2, BorderLayout.CENTER);
 
