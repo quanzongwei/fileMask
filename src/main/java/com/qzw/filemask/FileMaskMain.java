@@ -2,7 +2,7 @@ package com.qzw.filemask;
 
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.DesertBluer;
-import com.qzw.filemask.util.AuthenticationUtils;
+import com.qzw.filemask.service.LoginService;
 import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
@@ -117,11 +117,6 @@ public class FileMaskMain {
         panelCombine2.add(panel3, BorderLayout.NORTH);
         panelCombine2.add(panel4, BorderLayout.CENTER);
 
-//        // 北
-//        f.add(panelCombine1, BorderLayout.NORTH);
-//        // 中
-//        f.add(panelCombine2, BorderLayout.CENTER);
-
         JPanel panelCombine3 = new JPanel(new BorderLayout(0, 20));
         panelCombine3.add(panelCombine1, BorderLayout.NORTH);
         panelCombine3.add(panelCombine2, BorderLayout.CENTER);
@@ -183,96 +178,9 @@ public class FileMaskMain {
         ButtonActionFactory.btn43(btn43);
 
         f.setVisible(true);
-
-        // 用户认证
-        // 第一次使用
-        if (!AuthenticationUtils.isExistUserPassword()) {
-            String pass = null;
-            pass = passDialog(f);
-            AuthenticationUtils.setUserMd5Byte(pass);
-            return;
-        }
-        //校验是否是当前用户
-        check4SecondTime(f);
-
-        // 如果用户已经设置设置完密码了, 同时也是当前合法用户, 那么,程序正常运行
-        return;
-
+        //登录
+        LoginService.doLogin(f);
     }
 
-    private static void check4SecondTime(JFrame f) {
-        String pass2 = passDialog4SecondTimes(f);
-        if (pass2 == null || pass2.equals("")) {
-            nullCHeck(f, 1);
-        } else {
 
-            if (!AuthenticationUtils.isCurrentUser(pass2)) {
-                JOptionPane.showConfirmDialog(f, "对不起密码错误,请重新输入", "提示", JOptionPane.DEFAULT_OPTION);
-                check4SecondTime(f);
-            }
-        }
-    }
-
-    private static String passDialog(JFrame f) {
-        String pass1 = JOptionPane.showInputDialog(f, "您第一次使用该软件, 请设置密码:");
-        if (pass1 == null || pass1.equals("")) {
-            return nullCHeck(f, 0);
-        } else {
-            if (!isValidPassword(pass1)) {
-                JOptionPane.showConfirmDialog(f, "密码不合法,请重新输入!(只允许包含数字和字母,位数是1-20位)", "提示", JOptionPane.DEFAULT_OPTION);
-                return passDialog4SecondTimes(f);
-            }
-
-            String pass2 = JOptionPane.showInputDialog(f, "请再次确认密码(忘记密码会导致文件无法解密)!");
-            if (pass2 == null || pass2.equals("")) {
-                return nullCHeck(f, 0);
-            } else {
-                if (!pass1.equals(pass2)) {
-                    JOptionPane.showConfirmDialog(f, "两次密码不相同, 请重新输入!", "提示", JOptionPane.DEFAULT_OPTION);
-                    return passDialog(f);
-                }
-            }
-        }
-        return pass1;
-    }
-
-    private static String passDialog4SecondTimes(JFrame f) {
-        String pass1 = JOptionPane.showInputDialog(f, "请输入密码:");
-        if (pass1 == null || pass1.equals("")) {
-
-            return nullCHeck(f, 1);
-        }
-        if (!isValidPassword(pass1)) {
-            JOptionPane.showConfirmDialog(f, "密码不合法,请重新输入!(只允许包含数字和字母,位数是1-20位)", "提示", JOptionPane.DEFAULT_OPTION);
-            return passDialog4SecondTimes(f);
-        }
-
-        return pass1;
-    }
-
-    public static boolean isValidPassword(String pass) {
-        if (pass.matches("[A-Za-z0-9]{1,20}")) {
-            return true;
-        }
-        return false;
-    }
-
-    private static String nullCHeck(JFrame f, int opType) {
-        int value = JOptionPane.showConfirmDialog(f, "您未输入任何有效的数据,软件即将退出!(点击取消可以返回重新输入)", "提示", JOptionPane.OK_CANCEL_OPTION);
-        if (value == JOptionPane.CANCEL_OPTION) {
-            // 初始化
-            if (opType == 0) {
-                return passDialog(f);
-            } else if (opType == 1) {
-                return passDialog4SecondTimes(f);
-            }
-        }
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-        }
-        System.exit(0);
-        return null;
-    }
 }

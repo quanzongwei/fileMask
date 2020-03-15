@@ -16,6 +16,9 @@ import java.util.Arrays;
 public class AuthenticationUtils {
 
 
+    /**
+     * 用户密码是否已经配置
+     */
     public static boolean isExistUserPassword() {
         String dir = getAuthDirName();
         File file = new File(dir);
@@ -68,6 +71,9 @@ public class AuthenticationUtils {
         return false;
     }
 
+    /**
+     * 设置用户密码
+     */
     public static void setUserMd5Byte(String password) {
         String dir = getAuthDirName();
         File file = new File(dir);

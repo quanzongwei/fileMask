@@ -98,6 +98,7 @@ public class ButtonActionFactory {
         if (!isValidPath(targetFileOrDir)) {
             label.setText("加密路径太短, 请重新选择则!");
             dialog.setVisible(true);
+            JOptionPane jOptionPane = new JOptionPane();
             return;
         }
         try {
@@ -169,7 +170,7 @@ public class ButtonActionFactory {
         //选择文件夹
         JFileChooser fileChooser = jFileChooser;
         FileSystemView fsv = FileSystemView.getFileSystemView();
-        System.out.println(fsv.getHomeDirectory());
+//        System.out.println(fsv.getHomeDirectory());
         File tmpDir = new File(fsv.getDefaultDirectory().getPath() + File.separatorChar + "fileMask");
         if (!tmpDir.exists()) {
             tmpDir.mkdir();
@@ -181,7 +182,7 @@ public class ButtonActionFactory {
         int result = fileChooser.showOpenDialog(null);
         if (JFileChooser.APPROVE_OPTION == result) {
             String path = fileChooser.getSelectedFile().getPath();
-            System.out.println("path: " + path);
+//            System.out.println("path: " + path);
             fileChooser.setEnabled(false);
             return path;
         } else if (JFileChooser.CANCEL_OPTION == result) {
