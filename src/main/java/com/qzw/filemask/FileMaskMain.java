@@ -163,8 +163,8 @@ public class FileMaskMain {
         int x = (Toolkit.getDefaultToolkit().getScreenSize().width - frame.getSize().width) / 2;
         int y = (Toolkit.getDefaultToolkit().getScreenSize().height - frame.getSize().height) / 2;
         frame.setLocation(x, y);
-        frame.setIconImage(Toolkit.getDefaultToolkit().createImage("fileMask.png"));
         frame.setResizable(true);
+        frame.setIconImage(Toolkit.getDefaultToolkit().createImage("fileMask.png"));
         frame.setBackground(Color.black);
         frame.addWindowListener(new WindowAdapter() {
             @Override
