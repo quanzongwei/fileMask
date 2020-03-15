@@ -68,34 +68,6 @@
           <version>3.3.5</version>
       </dependency>
 
-<!--      <dependency>-->
-<!--          <groupId>org.apache.logging.log4j</groupId>-->
-<!--          <artifactId>log4j-api</artifactId>-->
-<!--          <version>2.6.1</version>-->
-<!--      </dependency>-->
-<!--      <dependency>-->
-<!--          <groupId>org.apache.logging.log4j</groupId>-->
-<!--          <artifactId>log4j-core</artifactId>-->
-<!--          <version>2.6.1</version>-->
-<!--      </dependency>-->
-<!--      <dependency>-->
-<!--          <groupId>org.apache.logging.log4j</groupId>-->
-<!--          <artifactId>log4j-slf4j-impl</artifactId>-->
-<!--          <version>2.6.1</version>-->
-<!--      </dependency>-->
-<!--      <dependency>-->
-<!--          <groupId>org.slf4j</groupId>-->
-<!--          <artifactId>slf4j-log4j12</artifactId>-->
-<!--          <version>1.7.26</version>-->
-<!--      </dependency>-->
-
-<!--      <dependency>-->
-<!--          <groupId>org.apache.logging.log4j</groupId>-->
-<!--          <artifactId>log4j-slf4j-impl</artifactId>-->
-<!--          <version>2.9.0</version>-->
-<!--      </dependency>-->
-
-
       <dependency>
           <groupId>org.apache.commons</groupId>
           <artifactId>commons-lang3</artifactId>
@@ -109,6 +81,7 @@
           <version>2.5.0</version>
       </dependency>
 
+      <!-- 样式 begin-->
       <dependency>
           <groupId>com.jgoodies</groupId>
           <artifactId>jgoodies-common</artifactId>
@@ -120,30 +93,7 @@
           <artifactId>looks</artifactId>
           <version>2.2.2</version>
       </dependency>
-<!--      <dependency>-->
-<!--          <groupId>org.apache.commons</groupId>-->
-<!--          <artifactId>commons-lang3</artifactId>-->
-<!--          <version>3.1</version>-->
-<!--      </dependency>-->
-
-      <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-      <version>4.5.12</version>
-      </dependency>
-
-      <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
-      <dependency>
-          <groupId>javax.mail</groupId>
-          <artifactId>mail</artifactId>
-          <version>1.4.7</version>
-      </dependency>
-      <!-- https://mvnrepository.com/artifact/activation/activation -->
-      <dependency>
-          <groupId>activation</groupId>
-          <artifactId>activation</artifactId>
-          <version>1.0.2</version>
-      </dependency>
+      <!-- 样式 end-->
 
   </dependencies>
 
