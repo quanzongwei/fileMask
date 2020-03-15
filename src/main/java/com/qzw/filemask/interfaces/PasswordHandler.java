@@ -1,6 +1,8 @@
 package com.qzw.filemask.interfaces;
 
-import com.qzw.filemask.component.PasswordHolder;
+import com.qzw.filemask.component.GlobalPasswordHolder;
+import com.qzw.filemask.enums.MaskExceptionEnum;
+import com.qzw.filemask.exception.MaskException;
 import com.qzw.filemask.util.MD5Utils;
 
 /**
@@ -13,7 +15,12 @@ public interface PasswordHandler {
      * 获取用户密码
      */
     default String getPassword() {
-        return PasswordHolder.password;
+
+        String password = GlobalPasswordHolder.getPassword();
+        if (password == null) {
+            throw new MaskException(MaskExceptionEnum.PASSWORD_NOT_EXISTS);
+        }
+        return GlobalPasswordHolder.getPassword();
     }
 
     /**

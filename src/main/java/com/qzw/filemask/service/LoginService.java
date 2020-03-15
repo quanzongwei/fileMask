@@ -1,5 +1,6 @@
 package com.qzw.filemask.service;
 
+import com.qzw.filemask.component.GlobalPasswordHolder;
 import com.qzw.filemask.util.AuthenticationUtils;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ public class LoginService {
         if (!AuthenticationUtils.isExistUserPassword()) {
             String password = passwordInitializationDialog(f);
             AuthenticationUtils.setUserMd5Byte(password);
+            GlobalPasswordHolder.setPassword(password);
             return;
         }
         //登录认证
@@ -39,6 +41,8 @@ public class LoginService {
                 authentication(f);
             }
         }
+        //认证成功,设置全局密码
+        GlobalPasswordHolder.setPassword(password);
     }
 
     /**

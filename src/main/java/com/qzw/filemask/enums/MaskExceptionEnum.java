@@ -9,7 +9,8 @@ public enum MaskExceptionEnum {
     /**
      * 文件不存在
      */
-    FILE_NOT_EXISTS(10000, "文件不存在");
+    FILE_NOT_EXISTS(10000, "文件不存在"),
+    PASSWORD_NOT_EXISTS(10001, "全局密码不存在");
 
     /**
      * 异常类型
