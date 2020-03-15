@@ -21,15 +21,16 @@ import java.io.RandomAccessFile;
  */
 @Log4j2
 public class FileHeaderEncoder extends AbstractFileEncoder {
+    /**
+     * 加密类型二, 加密的文件首部字节数
+     */
+    private final int HEAD_BYTE_LEN_32 = 32;
+
     @Override
     public FileEncoderTypeEnum getFileEncoderType() {
         return FileEncoderTypeEnum.FILE_HEADER_ENCODE;
     }
 
-    /**
-     * 加密类型二, 加密的文件首部字节数
-     */
-    private final int HEAD_BYTE_LEN_32 = 32;
     @Override
     protected byte[][] encryptOriginFile(File fileOrDir, byte[] extraParam) {
         try (RandomAccessFile raf = new RandomAccessFile(fileOrDir, "rw")) {
