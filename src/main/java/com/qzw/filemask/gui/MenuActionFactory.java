@@ -1,5 +1,7 @@
-package com.qzw.filemask;
+package com.qzw.filemask.gui;
 
+import com.qzw.filemask.FileMaskMain;
+import com.qzw.filemask.constant.Constants;
 import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;

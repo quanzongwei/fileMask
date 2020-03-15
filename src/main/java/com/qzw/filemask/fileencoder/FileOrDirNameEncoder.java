@@ -1,6 +1,6 @@
 package com.qzw.filemask.fileencoder;
 
-import com.qzw.filemask.Constants;
+import com.qzw.filemask.constant.Constants;
 import com.qzw.filemask.enums.FileEncoderTypeEnum;
 import com.qzw.filemask.util.PrivateDataUtils;
 import lombok.extern.log4j.Log4j2;

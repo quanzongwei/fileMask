@@ -1,4 +1,4 @@
-package com.qzw.filemask;
+package com.qzw.filemask.gui;
 
 import javax.swing.*;
 import java.awt.*;

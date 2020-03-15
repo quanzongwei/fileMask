@@ -1,6 +1,6 @@
 package com.qzw.filemask.util;
 
-import com.qzw.filemask.Constants;
+import com.qzw.filemask.constant.Constants;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.File;

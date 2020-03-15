@@ -1,5 +1,6 @@
-package com.qzw.filemask;
+package com.qzw.filemask.gui;
 
+import com.qzw.filemask.FileMaskMain;
 import com.qzw.filemask.enums.ChooseTypeEnum;
 import com.qzw.filemask.fileencoder.AbstractFileEncoder;
 import com.qzw.filemask.fileencoder.FileContentEncoder;

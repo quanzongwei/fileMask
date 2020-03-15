@@ -1,4 +1,4 @@
-package com.qzw.filemask;
+package com.qzw.filemask.constant;
 
 import java.io.File;
 
