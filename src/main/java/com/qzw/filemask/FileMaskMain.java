@@ -8,11 +8,14 @@ import com.qzw.filemask.gui.PanelFactory;
 import com.qzw.filemask.service.LoginService;
 import lombok.extern.log4j.Log4j2;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * fileMask main class
@@ -167,12 +170,7 @@ public class FileMaskMain {
         frame.setResizable(true);
         frame.setIconImage(Toolkit.getDefaultToolkit().createImage("fileMask.png"));
         frame.setBackground(Color.black);
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         return frame;
     }
 
