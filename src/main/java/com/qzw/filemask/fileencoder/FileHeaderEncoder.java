@@ -47,6 +47,7 @@ public class FileHeaderEncoder extends AbstractFileEncoder {
             raf.writeByte(254);
             raf.writeByte(0);
             raf.writeByte(0);
+            raf.write(new byte[32 - 4]);
             byte[][] result = new byte[2][];
             result[0] = originHead;
             // not used
