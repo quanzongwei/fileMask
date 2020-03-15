@@ -21,7 +21,7 @@ public class FileMaskMain {
     public static JFrame f = null;
     public static JTextArea ta;
 
-    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) {
         //设置样式
         setLookAndFeel();
 
