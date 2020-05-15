@@ -198,6 +198,13 @@ public class TailService {
         }
         //解密
         else {
+            //目前只有数字命名才可能是加密后的文件夹名称
+            try {
+                Integer.valueOf(fileOrDir.getName());
+            } catch (Exception ex) {
+                log.info("文件夹未加密,无需加密,{}", fileOrDir);
+                return;
+            }
             File privateDataFile = PrivateDataUtils.getPrivateDataFileReleaseV2(fileOrDir, Integer.valueOf(fileOrDir.getName()));
             if (!privateDataFile.exists()) {
                 log.info("文件夹未加密,无需加密,{}", fileOrDir);
