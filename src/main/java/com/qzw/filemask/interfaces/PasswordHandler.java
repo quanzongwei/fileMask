@@ -10,12 +10,11 @@ import com.qzw.filemask.util.MD5Utils;
  * @author quanzongwei
  * @date 2020/1/18
  */
-public interface PasswordHandler {
+public class PasswordHandler {
     /**
      * 获取用户密码
      */
-    default String getPassword() {
-
+    private static String getPassword() {
         String password = GlobalPasswordHolder.getPassword();
         if (password == null) {
             throw new MaskException(MaskExceptionEnum.PASSWORD_NOT_EXISTS);
@@ -23,35 +22,46 @@ public interface PasswordHandler {
         return GlobalPasswordHolder.getPassword();
     }
 
-    /**
-     * 生成xor加密的秘钥
-     *
-     * @return 16 byte value
-     */
-    default byte[] get32byteMd5Value() {
-        byte[] bytes32 = new byte[32];
-        byte[] md5Bytes1 = MD5Utils.getMd5Bytes(getPassword()+2);
-        byte[] md5Bytes2 = MD5Utils.getMd5Bytes(getPassword()+3);
-        System.arraycopy(md5Bytes1,0,bytes32,0,16);
-        System.arraycopy(md5Bytes2,0,bytes32,16,16);
-        return bytes32;
-    }
 
     /**
      * 登录时校验用户身份
      * @return 16 byte value
      */
-    default byte[] getMd5() {
-        byte[] md5Bytes1 = MD5Utils.getMd5Bytes(getPassword());
-        return md5Bytes1;
+    public static byte[] getMd5ForLogin() {
+        byte[] md5Bytes0 = MD5Utils.getMd5Bytes(getPassword());
+        return md5Bytes0;
     }
 
     /**
      * 加密解密文件时候校验用户身份
      * @return 16 byte value
      */
-    default byte[] getMd51() {
+    public static byte[] getMd51ForFileAuthentication() {
         byte[] md5Bytes1 = MD5Utils.getMd5Bytes(getPassword()+1);
         return md5Bytes1;
+    }
+
+    /**
+     * 生成xor加密的秘钥
+     *
+     * @return 32 byte value
+     */
+    public static byte[] getMd523ForContentEncrypt() {
+        byte[] bytes32 = new byte[32];
+        byte[] md5Bytes1 = MD5Utils.getMd5Bytes(getPassword() + 2);
+        byte[] md5Bytes2 = MD5Utils.getMd5Bytes(getPassword() + 3);
+        System.arraycopy(md5Bytes1, 0, bytes32, 0, 16);
+        System.arraycopy(md5Bytes2, 0, bytes32, 16, 16);
+        return bytes32;
+    }
+
+    /**
+     * 加密解密文件时候校验用户身份
+     *
+     * @return 16 byte value
+     */
+    public static byte[] getMd54ForUuidEncrypt() {
+        byte[] md5Bytes4 = MD5Utils.getMd5Bytes(getPassword() + 4);
+        return md5Bytes4;
     }
 }

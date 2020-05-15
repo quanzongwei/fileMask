@@ -2,6 +2,7 @@ package com.qzw.filemask.gui;
 
 import com.qzw.filemask.FileMaskMain;
 import com.qzw.filemask.enums.ChooseTypeEnum;
+import com.qzw.filemask.enums.FileEncoderTypeEnum;
 import com.qzw.filemask.fileencoder.AbstractFileEncoder;
 import com.qzw.filemask.fileencoder.FileContentEncoder;
 import com.qzw.filemask.fileencoder.FileHeaderEncoder;
@@ -184,11 +185,14 @@ public class ButtonActionFactory {
         }
         try {
             //方式三
-            new FileContentEncoder().decodeFileOrDir(new File(targetFileOrDir), chooseTypeEnum);
-            //方式二
-            new FileHeaderEncoder().decodeFileOrDir(new File(targetFileOrDir), chooseTypeEnum);
-            //方式一
-            new FileOrDirNameEncoder().decodeFileOrDir(new File(targetFileOrDir), chooseTypeEnum);
+            new AbstractFileEncoder(){
+                @Override
+                public FileEncoderTypeEnum getFileEncoderType() {
+                    //解密用不到这个参数
+                    return null;
+                }
+            }.decodeFileOrDir(new File(targetFileOrDir), chooseTypeEnum);
+
         } catch (Exception ex) {
             log.info("解密出错", ex);
             ta.append("解密出错:" + ex.getMessage() + "\r\n");

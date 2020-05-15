@@ -1,17 +1,14 @@
 package com.qzw.filemask.fileencoder;
 
 import com.qzw.filemask.enums.FileEncoderTypeEnum;
-import com.qzw.filemask.util.ByteUtil;
 import lombok.extern.log4j.Log4j2;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 
 /**
  * 加密类型三: 文件内容加密
- * 原理:使用encodeMap对全文的字节数据作映射,
- * 解密时,再通过encodeMap进行解密
+ * 原理:xor加密理论上无法破解,唯一的缺陷是无法抵御已知明文攻击;
+ * 改加密类型使用xor+uuid的方式,防止已知明文攻击获取用户秘钥,
+ * 具有极快的加密速度和绝对的安全性
+ *
  *
  * 该方式支持军事机密级别的文件加密,无法通过任何手段进行解密
  * 请保存好您的密码
@@ -25,80 +22,5 @@ public class FileContentEncoder extends AbstractFileEncoder {
     @Override
     public FileEncoderTypeEnum getFileEncoderType() {
         return FileEncoderTypeEnum.FILE_CONTENT_ENCODE;
-    }
-
-
-    @Override
-    protected byte[][] encryptOriginFile(File fileOrDir, byte[] extraParam) {
-        try {
-            encodeOrDecodeFile(fileOrDir, extraParam, true);
-            byte[][] result = new byte[2][];
-            // just return a not null value that indicates encrypt operation completed
-            return result;
-        } catch (IOException e) {
-            log.info("文件使用中,加密失败,{}", fileOrDir.getPath());
-            return null;
-        }
-    }
-
-    @Override
-    protected boolean decryptOriginFile(File fileOrDir, byte[] extraParam) {
-        try {
-            encodeOrDecodeFile(fileOrDir, extraParam, false);
-            // decryption success
-            return true;
-        } catch (IOException e) {
-            log.info("文件使用中,解密失败,{}", fileOrDir.getPath());
-            return false;
-        }
-    }
-
-
-    /**
-     * @param encodeMap encodeMap.length=256
-     * @throws IOException
-     */
-    private void encodeOrDecodeFile(File file, byte[] encodeMap, boolean isEncodeOperation) throws IOException {
-        byte[] decodeMap = new byte[256];
-        for (int i = 0; i < encodeMap.length; i++) {
-            decodeMap[ByteUtil.getUnsignedByte(encodeMap[i])] = (byte) i;
-        }
-        try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
-            long length = raf.length();
-            long blockNum = length / SIZE_1024;
-            Long remain = length % SIZE_1024;
-            for (long i = 0; i < blockNum; i++) {
-                byte[] b1 = new byte[SIZE_1024];
-                raf.seek(0 + i * SIZE_1024);
-                raf.read(b1, 0, SIZE_1024);
-                for (int j = 0; j < b1.length; j++) {
-                    if (isEncodeOperation) {
-                        b1[j] = encodeMap[ByteUtil.getUnsignedByte(b1[j])];
-                    } else {
-                        b1[j] = decodeMap[ByteUtil.getUnsignedByte(b1[j])];
-                    }
-                }
-                raf.seek(0 + i * SIZE_1024);
-                raf.write(b1);
-            }
-            // 尾部数据处理
-            if (remain > 0) {
-                byte[] b3 = new byte[remain.intValue()];
-                raf.seek(0 + blockNum * SIZE_1024);
-                raf.read(b3, 0, remain.intValue());
-                for (int j = 0; j < b3.length; j++) {
-                    if (isEncodeOperation) {
-                        b3[j] = encodeMap[ByteUtil.getUnsignedByte(b3[j])];
-                    } else {
-                        b3[j] = decodeMap[ByteUtil.getUnsignedByte(b3[j])];
-                    }
-                }
-                raf.seek(0 + blockNum * SIZE_1024);
-                raf.write(b3);
-            }
-        } catch (IOException ex) {
-            log.info("文件使用中," + (isEncodeOperation ? "加密" : "解密" + "失败,{}"), file.getPath());
-            throw ex;
-        }
     }
 }

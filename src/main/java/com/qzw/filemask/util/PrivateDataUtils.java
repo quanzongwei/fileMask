@@ -4,6 +4,7 @@ import com.qzw.filemask.constant.Constants;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
@@ -18,7 +19,17 @@ public class PrivateDataUtils {
      * 获取目标文件对应的私有数据文件夹
      */
     public static File getPrivateDataDir(File targetFileOrDir) {
-        return new File(targetFileOrDir.getParent() + File.separatorChar + Constants.PRIVATE_DATA_DIR);
+        File file = new File(targetFileOrDir.getParent() + File.separatorChar + Constants.PRIVATE_DATA_DIR);
+        if (!file.exists()) {
+            file.mkdir();
+        }
+        String sets = "attrib +H \"" + file.getAbsolutePath() + "\"";
+        try {
+            Runtime.getRuntime().exec(sets);
+        } catch (IOException e) {
+            log.info("文件隐藏失败:filePath" + file.getAbsolutePath());
+        }
+        return file;
     }
 
     /**
@@ -26,6 +37,14 @@ public class PrivateDataUtils {
      */
     public static File getPrivateDataFile(File targetFileOrDir) {
         return new File(targetFileOrDir.getParent() + File.separatorChar + Constants.PRIVATE_DATA_DIR + File.separatorChar + targetFileOrDir.getName());
+    }
+
+    /**
+     * 获取目标文件对应的私有数据文件
+     * 用于:release v2 版本
+     */
+    public static File getPrivateDataFileReleaseV2(File targetFileOrDir, Integer sequence) {
+        return new File(targetFileOrDir.getParent() + File.separatorChar + Constants.PRIVATE_DATA_DIR + File.separatorChar + sequence);
     }
 
     /**
