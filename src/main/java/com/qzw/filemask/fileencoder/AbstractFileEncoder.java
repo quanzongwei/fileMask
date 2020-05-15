@@ -6,7 +6,7 @@ import com.qzw.filemask.enums.FileEncoderTypeEnum;
 import com.qzw.filemask.enums.MaskExceptionEnum;
 import com.qzw.filemask.exception.MaskException;
 import com.qzw.filemask.interfaces.FileEncoderType;
-import com.qzw.filemask.interfaces.PasswordHandler;
+import com.qzw.filemask.service.TailService;
 import com.qzw.filemask.util.PrivateDataUtils;
 import lombok.extern.log4j.Log4j2;
 
@@ -124,7 +124,7 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
             //加密方式不支持加密文件夹, 直接跳过, 不需要任何日志
             return;
         }
-        TailUtil.encryptByType(fileOrDir, fileEncoderType);
+        TailService.encryptByType(fileOrDir, fileEncoderType);
     }
 
 
@@ -133,6 +133,6 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
             log.info("私有数据文件无需处理,{}", fileOrDir.getPath());
             return;
         }
-        TailUtil.decryptAllType(fileOrDir);
+        TailService.decryptAllType(fileOrDir);
     }
 }

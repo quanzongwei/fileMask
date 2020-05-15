@@ -1,10 +1,10 @@
-package com.qzw.filemask.fileencoder;
+package com.qzw.filemask.model;
 
 import lombok.Data;
 
 /**
  * 文件尾部数据结构
- *
+ * <p>
  * 数据结构
  * 16字节: 用户md5
  * 16字节: 加密类型
@@ -22,19 +22,18 @@ import lombok.Data;
 @Data
 public class TailModel {
     public static Integer USER_MD5_LENGTH_16 = 16;
-    public   static Integer ENCODE_TYPE_FLAG_16 = 16;
-    public   static Integer UUID_32 = 32;
-    public    static Integer HEAD_4 = 4;
+    public static Integer ENCODE_TYPE_FLAG_16 = 16;
+    public static Integer UUID_32 = 32;
+    public static Integer HEAD_4 = 4;
 
-    public    static Integer ORIGIN_SIZE_8 = 8;
-    public  static Integer TAIL_FLAG_16 = 16;
+    public static Integer ORIGIN_SIZE_8 = 8;
+    public static Integer TAIL_FLAG_16 = 16;
 
-
-    public  byte[] belongUserMd516;
-    public  byte[] encodeType16;
-    public   byte[] uuid32;
-    public  byte[] head4;
-    public  byte[] fileNameX;
-    public  byte[] originTextSize8;
-    public   byte[] tailFlag16;
+    public byte[] belongUserMd516;
+    public byte[] encodeType16;
+    public byte[] uuid32;
+    public byte[] head4;
+    public byte[] fileNameX;
+    public byte[] originTextSize8;
+    public byte[] tailFlag16;
 }
