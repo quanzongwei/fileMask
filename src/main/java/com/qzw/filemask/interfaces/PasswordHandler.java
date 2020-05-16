@@ -42,7 +42,7 @@ public class PasswordHandler {
     }
 
     /**
-     * 生成xor加密的秘钥
+     * 用于生成加密文件内容的秘钥
      *
      * @return 32 byte value
      */
@@ -56,12 +56,16 @@ public class PasswordHandler {
     }
 
     /**
-     * 加密解密文件时候校验用户身份
+     * 用于生成加密uuid字符串的秘钥
      *
-     * @return 16 byte value
+     * @return 32 byte value
      */
-    public static byte[] getMd54ForUuidEncrypt() {
-        byte[] md5Bytes4 = MD5Utils.getMd5Bytes(getPassword() + 4);
+    public static byte[] getMd545ForUuidEncrypt() {
+        byte[] md5Bytes4 = new byte[32];
+        byte[] md5Bytes1 = MD5Utils.getMd5Bytes(getPassword() + 4);
+        byte[] md5Bytes2 = MD5Utils.getMd5Bytes(getPassword() + 5);
+        System.arraycopy(md5Bytes1, 0, md5Bytes4, 0, 16);
+        System.arraycopy(md5Bytes2, 0, md5Bytes4, 16, 16);
         return md5Bytes4;
     }
 }

@@ -4,6 +4,7 @@ import com.qzw.filemask.enums.FileEncoderTypeEnum;
 import com.qzw.filemask.interfaces.PasswordHandler;
 import com.qzw.filemask.model.TailModel;
 import com.qzw.filemask.util.ByteUtil;
+import com.qzw.filemask.util.EncryptUtil;
 import com.qzw.filemask.util.PrivateDataUtils;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -67,7 +68,7 @@ public class TailService {
             boolean existsTail = TailService.existsTailModel(raf);
             //不存在
             if (!existsTail) {
-                TailService.resetTailDataStructure(fileOrDir, raf, fileEncoderType, true);
+                TailService.doEncryptFileAndResetTailModel(fileOrDir, raf, fileEncoderType, true);
             }
             //存在
             else {
@@ -82,7 +83,7 @@ public class TailService {
                     log.info("文件已加密,无需重复加密,{}", fileOrDir);
                     return;
                 }
-                TailService.resetTailDataStructure(fileOrDir, raf, fileEncoderType, false);
+                TailService.doEncryptFileAndResetTailModel(fileOrDir, raf, fileEncoderType, false);
             }
         } catch (Exception ex) {
             log.info("文件操作失败,加密操作不成功,{}", fileOrDir.getPath());
@@ -142,10 +143,8 @@ public class TailService {
             }
             //最后直接删除尾部文件,数据恢复正常
             raf.setLength(ByteUtil.bytesToLong(model.getOriginTextSize8()));
-            // 有没有必要同步落到盘中
-            // raf.getFD().sync();
+
         } catch (Exception ex) {
-            //如果文件被binaryViewer打开的话,无法执行成功,应该是被占用了
             log.info("文件操作失败,解密操作不成功,{},{}", fileOrDir.getPath(), ex.getMessage());
             return;
         }
@@ -178,7 +177,7 @@ public class TailService {
                 }
             }
             try (RandomAccessFile raf = new RandomAccessFile(privateDataFile, "rw")) {
-                TailService.resetTailDataStructure(fileOrDir, raf, FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE, true);
+                TailService.doEncryptFileAndResetTailModel(fileOrDir, raf, FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE, true);
             } catch (Exception ex) {
                 log.info("私有数据文件设置重命名数据失败,{}", fileOrDir);
                 return;
@@ -245,50 +244,6 @@ public class TailService {
     }
 
     /**
-     * 执行加密操作
-     *
-     * @param uuid       32位
-     * @param md532      32位 由password引申出的值
-     * @param originText 需要加密的数据
-     * @return 加密后的和原来数据等字节的数据
-     */
-    private static byte[] encrypt(byte[] uuid, byte[] md532, byte[] originText) {
-
-        byte[] dataEncodeKey = new byte[uuid.length];
-        for (int i = 0; i < uuid.length; i++) {
-            dataEncodeKey[i] = (byte) (uuid[i] ^ md532[i]);
-        }
-
-        byte[] result = new byte[originText.length];
-
-        for (int i = 0; i < result.length; i++) {
-            result[i] = (byte) (originText[i] ^ dataEncodeKey[i % (dataEncodeKey.length)]);
-        }
-
-        return result;
-    }
-
-    /**
-     * 执行解密操作
-     * @param uuid          32位
-     * @param md532         32位 由password引申出的值
-     * @param encryptedText 需要加密的数据
-     * @return 解密后的字节数据
-     */
-    private static byte[] decrypt(byte[] uuid, byte[] md532, byte[] encryptedText) {
-        byte[] dataEncodeKey = new byte[uuid.length];
-        for (int i = 0; i < uuid.length; i++) {
-            dataEncodeKey[i] = (byte) (uuid[i] ^ md532[i]);
-        }
-
-        byte[] result = new byte[encryptedText.length];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = (byte) (encryptedText[i] ^ dataEncodeKey[i % (dataEncodeKey.length)]);
-        }
-        return result;
-    }
-
-    /**
      * 获取原始文本大小
      */
     private static long getOriginTextLength(RandomAccessFile raf) throws IOException {
@@ -333,7 +288,7 @@ public class TailService {
      *
      * @param firstSetTail 是否是首次设置尾部数据 true:尾部数据结构不存在 false:尾部数据结构已存在
      */
-    private static void resetTailDataStructure(File fileOrDir, RandomAccessFile raf, FileEncoderTypeEnum fileEncoderType, boolean firstSetTail) throws IOException {
+    private static void doEncryptFileAndResetTailModel(File fileOrDir, RandomAccessFile raf, FileEncoderTypeEnum fileEncoderType, boolean firstSetTail) throws IOException {
         TailModel model = new TailModel();
         if (firstSetTail) {
             String uuid = UUID.randomUUID().toString().replaceAll("-", "");
@@ -355,7 +310,7 @@ public class TailService {
             type16[FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE.getPosition()] = ENCODED_FLAG;
             model.setEncodeType16(type16);
             //设置加密文件名
-            model.setFileNameX(TailService.encrypt(model.getUuid32(), PasswordHandler.getMd523ForContentEncrypt(), fileOrDir.getName().getBytes("UTF-8")));
+            model.setFileNameX(EncryptUtil.encryptContent(model.getUuid32(), PasswordHandler.getMd523ForContentEncrypt(), fileOrDir.getName().getBytes("UTF-8")));
         }
 
         //文件头部加密
@@ -372,7 +327,7 @@ public class TailService {
                 //设置加密头部数据
                 byte[] originHead4 = new byte[4];
                 raf.read(originHead4);
-                model.setHead4(TailService.encrypt(model.getUuid32(), PasswordHandler.getMd523ForContentEncrypt(), originHead4));
+                model.setHead4(EncryptUtil.encryptContent(model.getUuid32(), PasswordHandler.getMd523ForContentEncrypt(), originHead4));
                 //执行加密操作
                 raf.seek(0);
                 raf.writeByte(255);
@@ -434,9 +389,9 @@ public class TailService {
             raf.seek(0 + i * SIZE_1024);
             raf.read(bBlock, 0, SIZE_1024);
             if (isEncodeOperation) {
-                bBlock = encrypt(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bBlock);
+                bBlock = EncryptUtil.encryptContent(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bBlock);
             } else {
-                bBlock = decrypt(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bBlock);
+                bBlock = EncryptUtil.decryptContent(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bBlock);
             }
             raf.seek(0 + i * SIZE_1024);
             raf.write(bBlock);
@@ -447,9 +402,9 @@ public class TailService {
             raf.seek(0 + blockNum * SIZE_1024);
             raf.read(bRemain, 0, remain.intValue());
             if (isEncodeOperation) {
-                bRemain = decrypt(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bRemain);
+                bRemain = EncryptUtil.encryptContent(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bRemain);
             } else {
-                bRemain = decrypt(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bRemain);
+                bRemain = EncryptUtil.decryptContent(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bRemain);
             }
             raf.seek(0 + blockNum * SIZE_1024);
             raf.write(bRemain);
@@ -481,13 +436,12 @@ public class TailService {
         model.setBelongUserMd516(userMd5);
         model.setEncodeType16(encodeType16);
         model.setUuid32(uuid32);
-        model.setHead4(decrypt(uuid32, PasswordHandler.getMd523ForContentEncrypt(), head4));
-        model.setFileNameX(decrypt(uuid32, PasswordHandler.getMd523ForContentEncrypt(), fileNameX));
+        model.setHead4(EncryptUtil.decryptContent(uuid32, PasswordHandler.getMd523ForContentEncrypt(), head4));
+        model.setFileNameX(EncryptUtil.decryptContent(uuid32, PasswordHandler.getMd523ForContentEncrypt(), fileNameX));
         model.setOriginTextSize8(originSize8);
         model.setTailFlag16(tailFlag16);
 
         return model;
-
     }
 
     /**
@@ -495,14 +449,5 @@ public class TailService {
      */
     private static boolean isCurrentUser(byte[] belongUserMd516, byte[] md51ForFileAuthentication) {
         return Arrays.equals(belongUserMd516, md51ForFileAuthentication);
-    }
-
-    /**
-     * 可以复制0字节数据
-     */
-    public static void main(String[] args) {
-        byte[] a = new byte[10];
-        byte[] bytes = Arrays.copyOfRange(a, 1, 1);
-        System.out.println(bytes.length);
     }
 }
