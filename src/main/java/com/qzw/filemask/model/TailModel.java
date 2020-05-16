@@ -1,6 +1,7 @@
 package com.qzw.filemask.model;
 
 import lombok.Data;
+import sun.applet.Main;
 
 /**
  * 文件尾部数据结构
@@ -29,6 +30,12 @@ public class TailModel {
     public static Integer ORIGIN_SIZE_8 = 8;
     public static Integer TAIL_FLAG_16 = 16;
 
+
+    /**
+     * 最小尾部数据长度92
+     */
+    public static Integer MIN_LENGTH = USER_MD5_LENGTH_16 + ENCODE_TYPE_FLAG_16 + UUID_32 + HEAD_4 + ORIGIN_SIZE_8 + TAIL_FLAG_16;
+
     public byte[] belongUserMd516;
     public byte[] encodeType16;
     public byte[] uuid32;
@@ -36,4 +43,8 @@ public class TailModel {
     public byte[] fileNameX;
     public byte[] originTextSize8;
     public byte[] tailFlag16;
+
+    public static void main(String[] args) {
+        System.out.println(MIN_LENGTH);
+    }
 }

@@ -35,12 +35,6 @@ import java.util.UUID;
 @Log4j2
 public class TailService {
     static String FILE_MASK_TAIL_FLAG = "FileMaskTailFlag";
-    static Long minLength = 16 + 16 + 32 + 4 + 8 + 16L;
-
-    static int FileNameEncodeTagPosition = FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE.getPosition();
-    static int FileHeadEncodeTagPosition = FileEncoderTypeEnum.FILE_HEADER_ENCODE.getPosition();
-    static int FileContentEncodeTagPosition = FileEncoderTypeEnum.FILE_CONTENT_ENCODE.getPosition();
-
     /**
      * 已经加密标志
      */
@@ -239,7 +233,7 @@ public class TailService {
      */
     private static boolean existsTailModel(RandomAccessFile raf) throws IOException {
         long length = raf.length();
-        if (length < minLength) {
+        if (length < TailModel.MIN_LENGTH) {
             return false;
         }
         raf.seek(length - FILE_MASK_TAIL_FLAG.length());
@@ -270,7 +264,6 @@ public class TailService {
         }
 
         byte[] result = new byte[originText.length];
-
 
         for (int i = 0; i < result.length; i++) {
             result[i] = (byte) (originText[i] ^ dataEncodeKey[i % (dataEncodeKey.length)]);
@@ -363,7 +356,7 @@ public class TailService {
         if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE)) {
             //设置标记位
             byte[] type16 = new byte[16];
-            type16[FileNameEncodeTagPosition] = ENCODED_FLAG;
+            type16[FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE.getPosition()] = ENCODED_FLAG;
             model.setEncodeType16(type16);
             //设置加密文件名
             model.setFileNameX(TailService.encrypt(model.getUuid32(), PasswordHandler.getMd523ForContentEncrypt(), fileOrDir.getName().getBytes("UTF-8")));
@@ -377,7 +370,7 @@ public class TailService {
             } else {
                 //设置标记位
                 byte[] type16 = new byte[16];
-                type16[FileHeadEncodeTagPosition] = ENCODED_FLAG;
+                type16[FileEncoderTypeEnum.FILE_HEADER_ENCODE.getPosition()] = ENCODED_FLAG;
                 model.setEncodeType16(type16);
                 raf.seek(0);
                 //设置加密头部数据
@@ -396,7 +389,7 @@ public class TailService {
         if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_CONTENT_ENCODE)) {
             //设置标记位
             byte[] type16 = new byte[16];
-            type16[FileContentEncodeTagPosition] = ENCODED_FLAG;
+            type16[FileEncoderTypeEnum.FILE_CONTENT_ENCODE.getPosition()] = ENCODED_FLAG;
             model.setEncodeType16(type16);
             //全文加密
             doFileContentEncryptionOrDecryption(raf, true, model.getUuid32(), raf.length());
@@ -469,7 +462,6 @@ public class TailService {
 
     /**
      * 获取已经存在的TailModel数据结构
-     * todo 这块比较复杂, 有机会详细测试
      * @param raf
      * @return 调用这个方法之前, 需要保证尾部数据结构一定存在的
      * @throws IOException
@@ -486,8 +478,7 @@ public class TailService {
         byte[] uuid32 = Arrays.copyOfRange(tailModelByte, 0 + TailModel.USER_MD5_LENGTH_16 + TailModel.ENCODE_TYPE_FLAG_16, 0 + TailModel.USER_MD5_LENGTH_16 + TailModel.ENCODE_TYPE_FLAG_16 + TailModel.UUID_32);
         byte[] head4 = Arrays.copyOfRange(tailModelByte, 0 + TailModel.USER_MD5_LENGTH_16 + TailModel.ENCODE_TYPE_FLAG_16 + TailModel.UUID_32, 0 + TailModel.USER_MD5_LENGTH_16 + TailModel.ENCODE_TYPE_FLAG_16 + TailModel.UUID_32 + TailModel.HEAD_4);
         // 可以copy 0 字节数据
-        byte[] fileNameX = Arrays.copyOfRange(tailModelByte, 0 + TailModel.USER_MD5_LENGTH_16 + TailModel.ENCODE_TYPE_FLAG_16 + TailModel.UUID_32 + TailModel.HEAD_4, (int) (0 + TailModel.USER_MD5_LENGTH_16 + TailModel.ENCODE_TYPE_FLAG_16 + TailModel.UUID_32 + TailModel.HEAD_4 + tailModelByte.length - minLength));
-
+        byte[] fileNameX = Arrays.copyOfRange(tailModelByte, 0 + TailModel.USER_MD5_LENGTH_16 + TailModel.ENCODE_TYPE_FLAG_16 + TailModel.UUID_32 + TailModel.HEAD_4, 0 + TailModel.USER_MD5_LENGTH_16 + TailModel.ENCODE_TYPE_FLAG_16 + TailModel.UUID_32 + TailModel.HEAD_4 + tailModelByte.length - TailModel.MIN_LENGTH);
         byte[] originSize8 = Arrays.copyOfRange(tailModelByte, tailModelByte.length - TailModel.TAIL_FLAG_16 - TailModel.ORIGIN_SIZE_8, tailModelByte.length - TailModel.TAIL_FLAG_16);
         byte[] tailFlag16 = Arrays.copyOfRange(tailModelByte, tailModelByte.length - TailModel.TAIL_FLAG_16, tailModelByte.length);
 
