@@ -1,4 +1,4 @@
-package com.qzw.filemask.interfaces;
+package com.qzw.filemask.util;
 
 import com.qzw.filemask.component.GlobalPasswordHolder;
 import com.qzw.filemask.enums.MaskExceptionEnum;
@@ -10,7 +10,7 @@ import com.qzw.filemask.util.MD5Utils;
  * @author quanzongwei
  * @date 2020/1/18
  */
-public class PasswordHandler {
+public class PasswordUtil {
     /**
      * 获取用户密码
      */
