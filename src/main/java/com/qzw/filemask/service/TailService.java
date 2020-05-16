@@ -1,8 +1,8 @@
 package com.qzw.filemask.service;
 
 import com.qzw.filemask.enums.FileEncoderTypeEnum;
-import com.qzw.filemask.fileencoder.TailModel;
 import com.qzw.filemask.interfaces.PasswordHandler;
+import com.qzw.filemask.model.TailModel;
 import com.qzw.filemask.util.ByteUtil;
 import com.qzw.filemask.util.PrivateDataUtils;
 import lombok.Data;
