@@ -1,10 +1,9 @@
 package com.qzw.filemask.model;
 
 import lombok.Data;
-import sun.applet.Main;
 
 /**
- * 文件尾部数据结构
+ * 文件尾部数据结构(未加密的原始数据)
  * <p>
  * 数据结构
  * 16字节: 用户md5

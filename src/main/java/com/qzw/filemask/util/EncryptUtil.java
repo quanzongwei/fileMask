@@ -61,7 +61,7 @@ public class EncryptUtil {
      * @param uuid  32位
      * @return 加密后的和原来数据等字节的数据
      */
-    private static byte[] encryptUuid(byte[] md545, byte[] uuid) {
+    public static byte[] encryptUuid(byte[] md545, byte[] uuid) {
         return doXorForUuid(md545, uuid);
     }
 
@@ -74,7 +74,7 @@ public class EncryptUtil {
      * @param uuid  32位
      * @return 加密后的和原来数据等字节的数据
      */
-    private static byte[] decryptUuid(byte[] md545, byte[] uuid) {
+    public static byte[] decryptUuid(byte[] md545, byte[] uuid) {
         return doXorForUuid(md545, uuid);
     }
 

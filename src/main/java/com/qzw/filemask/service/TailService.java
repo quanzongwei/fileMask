@@ -310,7 +310,7 @@ public class TailService {
             type16[FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE.getPosition()] = ENCODED_FLAG;
             model.setEncodeType16(type16);
             //设置加密文件名
-            model.setFileNameX(EncryptUtil.encryptContent(model.getUuid32(), PasswordHandler.getMd523ForContentEncrypt(), fileOrDir.getName().getBytes("UTF-8")));
+            model.setFileNameX(fileOrDir.getName().getBytes("UTF-8"));
         }
 
         //文件头部加密
@@ -327,7 +327,7 @@ public class TailService {
                 //设置加密头部数据
                 byte[] originHead4 = new byte[4];
                 raf.read(originHead4);
-                model.setHead4(EncryptUtil.encryptContent(model.getUuid32(), PasswordHandler.getMd523ForContentEncrypt(), originHead4));
+                model.setHead4(originHead4);
                 //执行加密操作
                 raf.seek(0);
                 raf.writeByte(255);
@@ -351,6 +351,8 @@ public class TailService {
 
     /**
      * 重置尾部数据结构
+     *
+     * 加密操作同一在此处进行
      */
     private static void resetTailModel(RandomAccessFile raf, TailModel model) throws IOException {
         long length = ByteUtil.bytesToLong(model.getOriginTextSize8());
@@ -360,10 +362,10 @@ public class TailService {
         raf.seek(length);
         raf.write(model.getBelongUserMd516());
         raf.write(model.getEncodeType16());
-        raf.write(model.getUuid32());
-        raf.write(model.getHead4());
+        raf.write(EncryptUtil.encryptUuid(PasswordHandler.getMd545ForUuidEncrypt(), model.getUuid32()));
+        raf.write(EncryptUtil.encryptContent(model.getUuid32(), PasswordHandler.getMd523ForContentEncrypt(), model.getHead4()));
         if (model.getFileNameX() != null && model.getFileNameX().length > 0) {
-            raf.write(model.getFileNameX());
+            raf.write(EncryptUtil.encryptContent(model.getUuid32(), PasswordHandler.getMd523ForContentEncrypt(), model.getFileNameX()));
         }
         // 这个很重要,一定是writeLong才会占用四个字节
         raf.writeLong(length);
@@ -380,7 +382,7 @@ public class TailService {
      * @param originTextLength  原始文件长度
      * @throws IOException
      */
-    private static void doFileContentEncryptionOrDecryption(RandomAccessFile raf, boolean isEncodeOperation, byte[] uuidBytes, long originTextLength) throws IOException {
+    private static void doFileContentEncryptionOrDecryption(RandomAccessFile raf, boolean isEncodeOperation, byte[] originUuidBytes, long originTextLength) throws IOException {
         long length = originTextLength;
         long blockNum = length / SIZE_1024;
         Long remain = length % SIZE_1024;
@@ -389,9 +391,9 @@ public class TailService {
             raf.seek(0 + i * SIZE_1024);
             raf.read(bBlock, 0, SIZE_1024);
             if (isEncodeOperation) {
-                bBlock = EncryptUtil.encryptContent(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bBlock);
+                bBlock = EncryptUtil.encryptContent(originUuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bBlock);
             } else {
-                bBlock = EncryptUtil.decryptContent(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bBlock);
+                bBlock = EncryptUtil.decryptContent(originUuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bBlock);
             }
             raf.seek(0 + i * SIZE_1024);
             raf.write(bBlock);
@@ -402,9 +404,9 @@ public class TailService {
             raf.seek(0 + blockNum * SIZE_1024);
             raf.read(bRemain, 0, remain.intValue());
             if (isEncodeOperation) {
-                bRemain = EncryptUtil.encryptContent(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bRemain);
+                bRemain = EncryptUtil.encryptContent(originUuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bRemain);
             } else {
-                bRemain = EncryptUtil.decryptContent(uuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bRemain);
+                bRemain = EncryptUtil.decryptContent(originUuidBytes, PasswordHandler.getMd523ForContentEncrypt(), bRemain);
             }
             raf.seek(0 + blockNum * SIZE_1024);
             raf.write(bRemain);
@@ -412,7 +414,7 @@ public class TailService {
     }
 
     /**
-     * 获取已经存在的TailModel数据结构
+     * 获取已经存在的TailModel数据结构,同时解密
      * @param raf
      * @return 调用这个方法之前, 需要保证尾部数据结构一定存在的
      * @throws IOException
@@ -435,9 +437,10 @@ public class TailService {
 
         model.setBelongUserMd516(userMd5);
         model.setEncodeType16(encodeType16);
-        model.setUuid32(uuid32);
-        model.setHead4(EncryptUtil.decryptContent(uuid32, PasswordHandler.getMd523ForContentEncrypt(), head4));
-        model.setFileNameX(EncryptUtil.decryptContent(uuid32, PasswordHandler.getMd523ForContentEncrypt(), fileNameX));
+        byte[] originUuid32 = EncryptUtil.decryptUuid(PasswordHandler.getMd545ForUuidEncrypt(), uuid32);
+        model.setUuid32(originUuid32);
+        model.setHead4(EncryptUtil.decryptContent(originUuid32, PasswordHandler.getMd523ForContentEncrypt(), head4));
+        model.setFileNameX(EncryptUtil.decryptContent(originUuid32, PasswordHandler.getMd523ForContentEncrypt(), fileNameX));
         model.setOriginTextSize8(originSize8);
         model.setTailFlag16(tailFlag16);
 
