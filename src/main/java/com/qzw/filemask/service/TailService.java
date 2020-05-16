@@ -308,10 +308,14 @@ public class TailService {
             model = getExistsTailModelInfo(raf);
         }
 
+        byte[] type16 = model.getEncodeType16();
+        if (type16 == null||type16.length==0) {
+            type16 = new byte[TailModel.ENCODE_TYPE_FLAG_16];
+        }
+
         //文件名称加密
         if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE)) {
             //设置标记位
-            byte[] type16 = new byte[TailModel.ENCODE_TYPE_FLAG_16];
             type16[FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE.getPosition()] = ENCODED_FLAG;
             model.setEncodeType16(type16);
             //设置加密文件名
@@ -325,7 +329,6 @@ public class TailService {
                 fileEncoderType = FileEncoderTypeEnum.FILE_CONTENT_ENCODE;
             } else {
                 //设置标记位
-                byte[] type16 = new byte[TailModel.ENCODE_TYPE_FLAG_16];
                 type16[FileEncoderTypeEnum.FILE_HEADER_ENCODE.getPosition()] = ENCODED_FLAG;
                 model.setEncodeType16(type16);
                 raf.seek(0);
@@ -344,7 +347,6 @@ public class TailService {
         //文件全文加密
         if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_CONTENT_ENCODE)) {
             //设置标记位
-            byte[] type16 = new byte[TailModel.ENCODE_TYPE_FLAG_16];
             type16[FileEncoderTypeEnum.FILE_CONTENT_ENCODE.getPosition()] = ENCODED_FLAG;
             model.setEncodeType16(type16);
             //全文加密
