@@ -50,6 +50,10 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
                 File[] files = fileOrDir.listFiles();
                 if (files != null && files.length > 0) {
                     for (File file : files) {
+                        if (PrivateDataUtils.isFileMaskFile(file)) {
+                            log.info("私有数据文件无需处理, {}", file.getPath());
+                            continue;
+                        }
                         executeEncrypt(file);
                     }
                 }
@@ -94,6 +98,10 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
                 File[] files = fileOrDir.listFiles();
                 if (files != null && files.length > 0) {
                     for (File file : files) {
+                        if (PrivateDataUtils.isFileMaskFile(file)) {
+                            log.info("私有数据文件无需处理, {}", file.getPath());
+                            continue;
+                        }
                         executeDecrypt(file);
                     }
                 }
