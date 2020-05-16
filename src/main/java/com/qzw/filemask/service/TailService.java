@@ -196,16 +196,12 @@ public class TailService {
             try {
                 Integer.valueOf(fileOrDir.getName());
             } catch (Exception ex) {
-                log.info("文件夹未加密,无需加密,{}", fileOrDir);
+                log.info("文件夹未加密,无需解密,{}", fileOrDir);
                 return;
             }
             File privateDataFile = PrivateDataUtils.getPrivateDataFileReleaseV2(fileOrDir, Integer.valueOf(fileOrDir.getName()));
             if (!privateDataFile.exists()) {
-                log.info("文件夹未加密,无需加密,{}", fileOrDir);
-
-                //不存在的文件, 没有createNewFie和new RandomAccessFile 操作的话是不会新建的; 所以也不需要删除
-                //privateDataFile.delete();
-
+                log.info("文件夹未加密,无需解密,{}", fileOrDir);
                 return;
             }
             TailModel model;
