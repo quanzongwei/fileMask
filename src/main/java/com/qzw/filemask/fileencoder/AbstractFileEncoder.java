@@ -16,7 +16,6 @@ import java.io.File;
 /**
  * 加密解密抽象类
  *
- * todo , 监听关闭事件, 完成文件原子操作
  * @author quanzongwei
  * @date 2020/1/18
  */
