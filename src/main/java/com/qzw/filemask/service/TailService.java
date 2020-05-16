@@ -1,11 +1,8 @@
 package com.qzw.filemask.service;
 
 import com.qzw.filemask.enums.FileEncoderTypeEnum;
-import com.qzw.filemask.util.PasswordUtil;
 import com.qzw.filemask.model.TailModel;
-import com.qzw.filemask.util.ByteUtil;
-import com.qzw.filemask.util.EncryptUtil;
-import com.qzw.filemask.util.PrivateDataUtils;
+import com.qzw.filemask.util.*;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -35,7 +32,7 @@ import java.util.UUID;
 @Data
 @Log4j2
 public class TailService {
-    static String FILE_MASK_TAIL_FLAG = "FileMaskTailFlag";
+    public static String FILE_MASK_TAIL_FLAG = "FileMaskTailFlag";
     /**
      * 已经加密标志
      */
@@ -230,7 +227,7 @@ public class TailService {
      * 是否存在尾部数据结构
      * 通过: FileMaskTailFlag标识
      */
-    private static boolean existsTailModel(RandomAccessFile raf) throws IOException {
+    public static boolean existsTailModel(RandomAccessFile raf) throws IOException {
         long length = raf.length();
         if (length < TailModel.MIN_LENGTH) {
             return false;
@@ -250,7 +247,7 @@ public class TailService {
     /**
      * 获取原始文本大小
      */
-    private static long getOriginTextLength(RandomAccessFile raf) throws IOException {
+    public static long getOriginTextLength(RandomAccessFile raf) throws IOException {
         raf.seek(raf.length() - TailModel.ORIGIN_SIZE_8 - TailModel.TAIL_FLAG_16);
         byte[] tailSizeByte = new byte[TailModel.ORIGIN_SIZE_8];
         raf.read(tailSizeByte);
@@ -295,7 +292,11 @@ public class TailService {
     private static void doEncryptFileAndResetTailModel(File fileOrDir, RandomAccessFile raf, FileEncoderTypeEnum fileEncoderType, boolean firstSetTail) throws IOException {
         TailModel model = new TailModel();
         if (firstSetTail) {
-            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+            //如果TestUtil中的uuid不空的话,表示代码正在走单元测试,这个值固定写死; 正常代码逻辑中该值必须为空
+            String uuid = TestUtil.uuid;
+            if (StringUtils.isBlank(uuid)) {
+                uuid = UUID.randomUUID().toString().replaceAll("-", "");
+            }
             byte[] md51 = PasswordUtil.getMd51ForFileAuthentication();
             model.setBelongUserMd516(md51);
             model.setEncodeType16(new byte[TailModel.ENCODE_TYPE_FLAG_16]);
@@ -423,7 +424,7 @@ public class TailService {
      * @return 调用这个方法之前, 需要保证尾部数据结构一定存在的
      * @throws IOException
      */
-    private static TailModel getExistsTailModelInfo(RandomAccessFile raf) throws IOException {
+    public static TailModel getExistsTailModelInfo(RandomAccessFile raf) throws IOException {
         TailModel model = new TailModel();
         long originTextSize = getOriginTextLength(raf);
         raf.seek(originTextSize);

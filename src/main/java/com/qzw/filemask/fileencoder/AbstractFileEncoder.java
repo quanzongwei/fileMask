@@ -117,7 +117,8 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
         }
     }
 
-    private void executeEncrypt(File fileOrDir) {
+
+    public void executeEncrypt(File fileOrDir) {
         FileEncoderTypeEnum fileEncoderType = getFileEncoderType();
         if (fileOrDir.isDirectory() && !fileEncoderType.isSupportEncryptDir()) {
             //加密方式不支持加密文件夹, 直接跳过, 不需要任何日志
