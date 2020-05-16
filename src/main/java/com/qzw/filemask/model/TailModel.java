@@ -29,7 +29,6 @@ public class TailModel {
     public static Integer ORIGIN_SIZE_8 = 8;
     public static Integer TAIL_FLAG_16 = 16;
 
-
     /**
      * 最小尾部数据长度92
      */
