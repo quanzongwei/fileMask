@@ -8,14 +8,9 @@ import com.qzw.filemask.gui.PanelFactory;
 import com.qzw.filemask.service.LoginService;
 import lombok.extern.log4j.Log4j2;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
 /**
  * fileMask main class
@@ -45,6 +40,10 @@ public class FileMaskMain {
         //文本输出框
         JScrollPane scrollPane = setScrollPanel();
         f.add(scrollPane, BorderLayout.CENTER);
+
+        //设置icon
+        ImageIcon imageIcon = new ImageIcon(FileMaskMain.class.getResource("/fileMask.png"));
+        f.setIconImage(imageIcon.getImage());
 
         f.setVisible(true);
         //登录
