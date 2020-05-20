@@ -13,7 +13,7 @@
 ## 二 软件主界面
 ### 2.1 首次运行
 
-![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/DBB1C99B7E5B47C79464FA4ED2A443D6/53495)
+![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/DBB1C99B7E5B47C79464FA4ED2A443D6/53495)  
 首次运行需要输入用户密码，并且确认密码。请牢记您的密码，当一个文件被加密后，只有持有该密码的用户才能解密。
 
 ### 2.2 主界面
