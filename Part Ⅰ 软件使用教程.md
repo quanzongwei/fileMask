@@ -46,31 +46,31 @@
 
 ## 三 文件加解密示例
 #### 3.1 加密类型选择加密类型一(文件名称加密)，加密方式使用文件夹级联加密  
-**加密前**
+**加密前**  
 ![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/1DABF5D251104C65BB9D867ED5058F7D/53540)  
-**加密后**
+**加密后**  
 ![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/6081BFF7A8234DAB93506C1AAADBEAEA/53544)  
 加密后文件和文件夹的名称变成一个递增序号，每个文件夹下会多出一个.fileMask文件夹，用于保存递增的序号信息以及加密过的文件夹原始名称信息  
-**解密后**
+**解密后**  
 ![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/CF884E6F2D65445394934F6B93DBC9CF/53559)    
 文件解密后，文件和文件夹名称恢复原样
 
 #### 3.2 加密类型选择加密类型二(文件头部加密)，加密方式使用文件加密  
-**加密前**
+**加密前**  
 ![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/367D3E8C9EBC463D8F30F30BAE9E9FEC/53567)  
-**加密后**
+**加密后**  
 ![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/BCFAC094CE0E4282B7EF6B3DFAB51504/53569)    
-加密后文件内容变成乱码 
-**解密后**
+加密后文件内容变成乱码   
+**解密后**  
 ![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/367D3E8C9EBC463D8F30F30BAE9E9FEC/53567)    
 文件解密后，文件数据恢复原样，如果解密后依然显示乱码，只需要关闭该文件并重新打开即可
 
 #### 3.3 加密类型选择加密类型三(文件全文加密)，加密方式使用文件加密  
-**加密前**
+**加密前**  
 ![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/B2B74974FBF8409A840FFC39E775F337/53576)  
-**加密后**
+**加密后**  
 ![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/DCF9640196A44898B4192E0C04DD05BD/53571)  
-加密后文件内容变成乱码  
-**解密后**
+加密后文件内容变成乱码    
+**解密后**  
 ![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/B2B74974FBF8409A840FFC39E775F337/53576)    
 文件解密后，文件数据恢复原样，如果解密后依然显示乱码，只需要关闭该文件并重新打开即可
