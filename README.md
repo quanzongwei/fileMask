@@ -46,5 +46,5 @@
 **<font color=#ff0000>然后</font>**，如果您是公司高管，军政要员，需要极高安全性的加密，此时可以使用类型三（全文加密）进行加密，该方式，无法通过任何手段进行解密（包括暴力破解），速度相对于类型一和类型二，较慢，单文件预计耗时（100M耗时1秒，1G耗时10秒，12G耗时4分钟）。但是，相对于市场上其他的全文加密软件，作者使用了很巧妙的思路和方法，最大化的提高了加密的速度。
 
 ## 九 更多阅读 
-1. [Part Ⅰ 软件使用教程](hhttps://github.com/quanzongwei/fileMask/blob/master/Part%20%E2%85%A0%20%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.md)
-2. [Part Ⅱ 核心加密思想](hhttps://github.com/quanzongwei/fileMask/blob/master/Part%20%E2%85%A1%20%E6%A0%B8%E5%BF%83%E5%8A%A0%E5%AF%86%E6%80%9D%E6%83%B3.md)
+1. [Part Ⅰ 软件使用教程](https://github.com/quanzongwei/fileMask/blob/master/Part%20%E2%85%A0%20%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.md)
+2. [Part Ⅱ 核心加密思想](https://github.com/quanzongwei/fileMask/blob/master/Part%20%E2%85%A1%20%E6%A0%B8%E5%BF%83%E5%8A%A0%E5%AF%86%E6%80%9D%E6%83%B3.md)
