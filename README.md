@@ -1,3 +1,7 @@
+## 下载地址
+### 最新版本(release-v3)
+链接：[https://pan.baidu.com/s/1qrEZZ4AlG8akcZRvADqLbw](https://pan.baidu.com/s/1qrEZZ4AlG8akcZRvADqLbw)  
+提取码：2t3v
 ## 一 fileMask软件简介
 该软件主要专注于文件和文件夹的加密和解密
 
