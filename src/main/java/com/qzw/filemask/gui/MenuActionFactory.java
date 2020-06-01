@@ -77,16 +77,19 @@ public class MenuActionFactory {
 
             Container container = jFrame.getContentPane();
             container.setLayout(new BorderLayout(0, 0));
-            container.setSize(new Dimension(400, 400));
+            container.setSize(new Dimension(550, 400));
+            container.setMaximumSize(new Dimension(550, 400));
+            container.setMinimumSize(new Dimension(550, 400));
 
             JTextPane jTextPane = new JTextPane();
             jTextPane.setContentType("text/html");
 
             jTextPane.setText("<html>\n" +
-                    "<p>\n" +
+                    "" +
                     "<h2 align=\"center\">作者邮箱: <font color=\"red\">552114141@qq.com</font></h2>\n" +
-                    "<h2 align=\"center\">作者微信: <font color=\"red\">quanzongwei</font></h2>\n" +
-                    "</p>\n" +
+                    "<h2 align=\"center\">作者微信: <font color=\"red\">quanzongwei</font></h2>\n"+
+                    "<h4 align=\"center\">github repository: <font color=\"red\">https://github.com/quanzongwei/fileMask</font></h4>\n" +
+                    "</p>" +
                     "</html>");
 
             container.add(jTextPane);
