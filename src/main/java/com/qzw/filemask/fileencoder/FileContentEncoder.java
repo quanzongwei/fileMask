@@ -17,7 +17,6 @@ import lombok.extern.log4j.Log4j2;
  */
 @Log4j2
 public class FileContentEncoder extends AbstractFileEncoder {
-    private static final int SIZE_1024 = 1024;
 
     @Override
     public FileEncoderTypeEnum getFileEncoderType() {

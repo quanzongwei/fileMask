@@ -88,13 +88,13 @@ public class DisplayInHumanUtils {
             s += gPart + "G";
         }
         if (mPart > 0L) {
-            s += mPart + ",M";
+            s += ","+mPart + "M";
         }
         if (kPart > 0L) {
-            s += kPart + ",K";
+            s += ","+kPart + "K";
         }
         if (bPart > 0L) {
-            s += bPart + "字节";
+            s += ","+bPart + "字节";
         }
         if (s.equals("")) {
             s = "0字节";
