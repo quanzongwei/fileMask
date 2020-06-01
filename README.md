@@ -9,7 +9,7 @@
 号称是世界上最简洁，最快速，最安全，用户体验最好,最富有思想的文件和文件夹加密软件
 
 ## 三 软件界面
-![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/499EA7FC766E4070B1CCAF0700F2BE45/53321)  
+![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/E5409C9FFF384967A40C06716A110B0D/54346)  
 ## 四 加密类型
 ### 4.1 三种加密类型
 * <strong><font color=#FF0000> 类型一: 文件名称加密 </font></strong>   
