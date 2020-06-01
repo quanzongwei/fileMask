@@ -32,6 +32,9 @@ public class DisplayInHumanUtils {
         if (secPart > 0L) {
             s += secPart + "秒";
         }
+        if (s.equals("")) {
+            s = "0字节";
+        }
         return s;
     }
 
@@ -92,6 +95,9 @@ public class DisplayInHumanUtils {
         }
         if (bPart > 0L) {
             s += bPart + "字节";
+        }
+        if (s.equals("")) {
+            s = "0字节";
         }
         return s;
     }
