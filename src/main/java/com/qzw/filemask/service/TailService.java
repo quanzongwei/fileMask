@@ -168,6 +168,12 @@ public class TailService {
         // 加密
         if (ifEncodeOperation) {
             Integer sequence = PrivateDataUtils.getAutoIncrementSequence4ParentDir(fileOrDir);
+            File existsPrivateDataFile = PrivateDataUtils.getPrivateDataFileReleaseV2(fileOrDir, fileOrDir.getName());
+            if (existsPrivateDataFile.exists()) {
+                log.info("文件夹已加密成功,无需重复加密,{}", fileOrDir);
+                return;
+            }
+
             File privateDataFile = PrivateDataUtils.getPrivateDataFileReleaseV2(fileOrDir, sequence);
             if (!privateDataFile.exists()) {
                 try {
@@ -176,9 +182,6 @@ public class TailService {
                     log.info("创建私有数据文件失败,{}", fileOrDir);
                     return;
                 }
-            } else {
-                log.info("文件夹已被加密,无需重复解密,{}", fileOrDir);
-                return;
             }
 
             try (RandomAccessFile raf = new RandomAccessFile(privateDataFile, "rw")) {

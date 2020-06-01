@@ -42,8 +42,9 @@ public class PrivateDataUtils {
     /**
      * 获取目标文件对应的私有数据文件
      * 用于:release v2 版本
+     * Object String or Integer
      */
-    public static File getPrivateDataFileReleaseV2(File targetFileOrDir, Integer sequence) {
+    public static File getPrivateDataFileReleaseV2(File targetFileOrDir, Object sequence) {
         return new File(targetFileOrDir.getParent() + File.separatorChar + Constants.PRIVATE_DATA_DIR + File.separatorChar + sequence);
     }
 
