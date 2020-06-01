@@ -31,7 +31,7 @@ import java.util.UUID;
  */
 @Data
 @Log4j2
-public class TailService {
+public class TailModelService {
     public static String FILE_MASK_TAIL_FLAG = "FileMaskTailFlag";
     /**
      * 已经加密标志
@@ -66,25 +66,25 @@ public class TailService {
 
         // 流程:尾部数据结构是否存在? 是否存在是当前用户? 是否是使用同一种方式加密? 是否互斥?
         try (RandomAccessFile raf = new RandomAccessFile(fileOrDir, "rw")) {
-            boolean existsTail = TailService.existsTailModel(raf);
+            boolean existsTail = TailModelService.existsTailModel(raf);
             //不存在
             if (!existsTail) {
-                TailService.doEncryptFileAndResetTailModel(fileOrDir, raf, fileEncoderType, true);
+                TailModelService.doEncryptFileAndResetTailModel(fileOrDir, raf, fileEncoderType, true);
             }
             //存在
             else {
                 TailModel tailModel = getExistsTailModelInfo(raf);
-                boolean isCurrentUser = TailService.isCurrentUser(tailModel.getBelongUserMd516(), PasswordService.getMd51ForFileAuthentication());
+                boolean isCurrentUser = TailModelService.isCurrentUser(tailModel.getBelongUserMd516(), PasswordService.getMd51ForFileAuthentication());
                 if (!isCurrentUser) {
                     log.info("文件认证用户失败,{}", fileOrDir);
                     return;
                 }
-                boolean hasEncryptedByTypeOrConflict = TailService.isEncryptedByTypeOrConflict(tailModel, fileEncoderType);
+                boolean hasEncryptedByTypeOrConflict = TailModelService.isEncryptedByTypeOrConflict(tailModel, fileEncoderType);
                 if (hasEncryptedByTypeOrConflict) {
                     log.info("文件已加密,无需重复加密,{}", fileOrDir);
                     return;
                 }
-                TailService.doEncryptFileAndResetTailModel(fileOrDir, raf, fileEncoderType, false);
+                TailModelService.doEncryptFileAndResetTailModel(fileOrDir, raf, fileEncoderType, false);
             }
         } catch (Exception ex) {
             log.info("文件操作失败,加密操作不成功,{}", fileOrDir.getPath());
@@ -185,7 +185,7 @@ public class TailService {
             }
 
             try (RandomAccessFile raf = new RandomAccessFile(privateDataFile, "rw")) {
-                TailService.doEncryptFileAndResetTailModel(fileOrDir, raf, FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE, true);
+                TailModelService.doEncryptFileAndResetTailModel(fileOrDir, raf, FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE, true);
             } catch (Exception ex) {
                 log.info("私有数据文件设置重命名数据失败,{}", fileOrDir);
                 return;
@@ -215,7 +215,7 @@ public class TailService {
             try (RandomAccessFile raf = new RandomAccessFile(privateDataFile, "rw")) {
                 model = getExistsTailModelInfo(raf);
             }
-            boolean isCurrentUser = TailService.isCurrentUser(model.getBelongUserMd516(), PasswordService.getMd51ForFileAuthentication());
+            boolean isCurrentUser = TailModelService.isCurrentUser(model.getBelongUserMd516(), PasswordService.getMd51ForFileAuthentication());
             if (!isCurrentUser) {
                 log.info("当前文件夹已被其他用户加密,解密失败,{}", fileOrDir);
                 return;
@@ -315,7 +315,7 @@ public class TailService {
             model.setUuid32(uuid.getBytes());
             model.setHead4(new byte[TailModel.HEAD_4]);
             model.setOriginTextSize8(ByteUtil.longToBytes(raf.length()));
-            model.setTailFlag16(TailService.FILE_MASK_TAIL_FLAG.getBytes());
+            model.setTailFlag16(TailModelService.FILE_MASK_TAIL_FLAG.getBytes());
         } else {
             model = getExistsTailModelInfo(raf);
         }

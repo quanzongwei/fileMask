@@ -6,7 +6,7 @@ import com.qzw.filemask.enums.MaskExceptionEnum;
 import com.qzw.filemask.exception.MaskException;
 import com.qzw.filemask.interfaces.FileEncoderType;
 import com.qzw.filemask.service.StatisticsService;
-import com.qzw.filemask.service.TailService;
+import com.qzw.filemask.service.TailModelService;
 import com.qzw.filemask.service.status.StopCommandStatusService;
 import com.qzw.filemask.service.PrivateDataService;
 import lombok.extern.log4j.Log4j2;
@@ -176,7 +176,7 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
         StatisticsService.setCurrentFileBytes(fileOrDir.isDirectory() ? 0 : fileOrDir.length());
 
         //核心逻辑: 执行加密 不抛出异常
-        TailService.encryptByType(fileOrDir, fileEncoderType);
+        TailModelService.encryptByType(fileOrDir, fileEncoderType);
 
         long end = System.currentTimeMillis();
         //[统计] 已完成文件总数+1
@@ -211,7 +211,7 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
         StatisticsService.setCurrentFileBytes(fileOrDir.isDirectory() ? 0 : fileOrDir.length());
 
         //核心逻辑: 执行解密 不抛出异常
-        TailService.decryptAllType(fileOrDir);
+        TailModelService.decryptAllType(fileOrDir);
 
         long end = System.currentTimeMillis();
         //[统计] 已完成文件总数+1

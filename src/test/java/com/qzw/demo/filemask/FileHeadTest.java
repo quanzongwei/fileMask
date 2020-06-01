@@ -3,7 +3,7 @@ package com.qzw.demo.filemask;
 import com.qzw.filemask.component.GlobalPasswordHolder;
 import com.qzw.filemask.fileencoder.FileHeaderEncoder;
 import com.qzw.filemask.model.TailModel;
-import com.qzw.filemask.service.TailService;
+import com.qzw.filemask.service.TailModelService;
 import com.qzw.filemask.util.ByteUtil;
 import com.qzw.filemask.service.PasswordService;
 import com.qzw.filemask.service.PrivateDataService;
@@ -69,20 +69,20 @@ public class FileHeadTest {
 
         System.out.println();
         try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
-            TailModel model = TailService.getExistsTailModelInfo(raf);
+            TailModel model = TailModelService.getExistsTailModelInfo(raf);
             Assert.assertEquals(base64(PasswordService.getMd51ForFileAuthentication()), base64(model.getBelongUserMd516()));
             Assert.assertEquals(ByteUtil.byteToHex(model.getEncodeType16()), getHexFlagString(false, true, false));
             Assert.assertEquals(new String(model.getUuid32()), TestUtil.uuid);
             Assert.assertTrue(Arrays.equals(model.getHead4(), Arrays.copyOfRange(headContent.getBytes("UTF-8"), 0, 4)));
             Assert.assertTrue(model.getFileNameX().length == 0);
             Assert.assertEquals(ByteUtil.bytesToLong(model.getOriginTextSize8()), headContent.getBytes("UTF-8").length);
-            Assert.assertEquals(new String(model.getTailFlag16()), TailService.FILE_MASK_TAIL_FLAG);
+            Assert.assertEquals(new String(model.getTailFlag16()), TailModelService.FILE_MASK_TAIL_FLAG);
 
         }
         //解密验证
         headEncoder.executeDecrypt(file);
         try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
-            boolean exists = TailService.existsTailModel(raf);
+            boolean exists = TailModelService.existsTailModel(raf);
             Assert.assertEquals(exists, false);
             Assert.assertEquals(raf.length(), headContent.getBytes(Charset.forName("UTF-8")).length);
             byte[] content = new byte[(int) raf.length()];

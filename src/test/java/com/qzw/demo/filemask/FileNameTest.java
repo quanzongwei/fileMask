@@ -3,7 +3,7 @@ package com.qzw.demo.filemask;
 import com.qzw.filemask.component.GlobalPasswordHolder;
 import com.qzw.filemask.fileencoder.FileOrDirNameEncoder;
 import com.qzw.filemask.model.TailModel;
-import com.qzw.filemask.service.TailService;
+import com.qzw.filemask.service.TailModelService;
 import com.qzw.filemask.util.ByteUtil;
 import com.qzw.filemask.service.PasswordService;
 import com.qzw.filemask.service.PrivateDataService;
@@ -70,20 +70,20 @@ public class FileNameTest {
         Integer sequence = PrivateDataService.getAutoIncrementSequence4ParentDir(file);
         sequence--;
         try (RandomAccessFile raf = new RandomAccessFile(file.getParent() + File.separatorChar + sequence, "rw")) {
-            TailModel model = TailService.getExistsTailModelInfo(raf);
+            TailModel model = TailModelService.getExistsTailModelInfo(raf);
             Assert.assertEquals(base64(PasswordService.getMd51ForFileAuthentication()), base64(model.getBelongUserMd516()));
             Assert.assertEquals(ByteUtil.byteToHex(model.getEncodeType16()), getHexFlagString(true, false, false));
             Assert.assertEquals(new String(model.getUuid32()), TestUtil.uuid);
             Assert.assertEquals(base64(model.getHead4()), base64(new byte[]{0, 0, 0, 0}));
             Assert.assertTrue(model.getFileNameX().length == "aaaa.txt".getBytes("UTF-8").length);
             Assert.assertEquals(ByteUtil.bytesToLong(model.getOriginTextSize8()), contentText.getBytes("UTF-8").length);
-            Assert.assertEquals(new String(model.getTailFlag16()), TailService.FILE_MASK_TAIL_FLAG);
+            Assert.assertEquals(new String(model.getTailFlag16()), TailModelService.FILE_MASK_TAIL_FLAG);
             raf.getFD().sync();
         }
         //解密验证
         nameEncoder.executeDecrypt(new File(file.getParent() + File.separatorChar + sequence));
         try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
-            boolean exists = TailService.existsTailModel(raf);
+            boolean exists = TailModelService.existsTailModel(raf);
             Assert.assertEquals(exists, false);
             Assert.assertEquals(raf.length(), contentText.getBytes("UTF-8").length);
             byte[] content = new byte[(int) raf.length()];

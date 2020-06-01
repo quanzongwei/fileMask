@@ -279,7 +279,7 @@ public class WorkFlowService {
     private static boolean computeBytes4ContentEncrypt(File file, FileEncoderTypeEnum fileEncoderType, boolean isEncryptOperation) {
         if (!file.isDirectory()) {
             try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
-                boolean existsTail = TailService.existsTailModel(raf);
+                boolean existsTail = TailModelService.existsTailModel(raf);
                 //不存在
                 if (!existsTail) {
                     if (isEncryptOperation) {
@@ -288,9 +288,9 @@ public class WorkFlowService {
                 }
                 //存在
                 else {
-                    TailModel tailModel = TailService.getExistsTailModelInfo(raf);
-                    boolean isCurrentUser = TailService.isCurrentUser(tailModel.getBelongUserMd516(), PasswordService.getMd51ForFileAuthentication());
-                    boolean hasEncryptedByTypeOrConflict = TailService.isEncryptedByTypeOrConflict(tailModel, fileEncoderType);
+                    TailModel tailModel = TailModelService.getExistsTailModelInfo(raf);
+                    boolean isCurrentUser = TailModelService.isCurrentUser(tailModel.getBelongUserMd516(), PasswordService.getMd51ForFileAuthentication());
+                    boolean hasEncryptedByTypeOrConflict = TailModelService.isEncryptedByTypeOrConflict(tailModel, fileEncoderType);
                     byte[] encodeTypeFlagByte = tailModel.getEncodeType16();
                     byte flag = encodeTypeFlagByte[fileEncoderType.getPosition()];
 
@@ -300,7 +300,7 @@ public class WorkFlowService {
                             StatisticsService.todoFileTotalBytes = StatisticsService.todoFileTotalBytes + raf.length();
                         }
                     } else {
-                        if (flag == TailService.ENCODED_FLAG && isCurrentUser) {
+                        if (flag == TailModelService.ENCODED_FLAG && isCurrentUser) {
                             StatisticsService.todoFileTotalBytes = StatisticsService.todoFileTotalBytes + raf.length();
                         }
                     }
