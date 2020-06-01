@@ -4,13 +4,13 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.qzw.demo</groupId>
-  <artifactId>base-algorithm</artifactId>
+    <groupId>com.qzw.software</groupId>
+    <artifactId>fileMask</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>javaBase</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+    <name>fileMask</name>
+    <!--    项目地址-->
+    <url>https://github.com/quanzongwei/fileMask</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
