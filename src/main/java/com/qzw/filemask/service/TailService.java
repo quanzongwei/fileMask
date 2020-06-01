@@ -176,7 +176,11 @@ public class TailService {
                     log.info("创建私有数据文件失败,{}", fileOrDir);
                     return;
                 }
+            } else {
+                log.info("文件夹已被加密,无需重复解密,{}", fileOrDir);
+                return;
             }
+
             try (RandomAccessFile raf = new RandomAccessFile(privateDataFile, "rw")) {
                 TailService.doEncryptFileAndResetTailModel(fileOrDir, raf, FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE, true);
             } catch (Exception ex) {
@@ -207,6 +211,11 @@ public class TailService {
             TailModel model;
             try (RandomAccessFile raf = new RandomAccessFile(privateDataFile, "rw")) {
                 model = getExistsTailModelInfo(raf);
+            }
+            boolean isCurrentUser = TailService.isCurrentUser(model.getBelongUserMd516(), PasswordUtil.getMd51ForFileAuthentication());
+            if (!isCurrentUser) {
+                log.info("当前文件夹已被其他用户加密,解密失败,{}", fileOrDir);
+                return;
             }
             byte[] fileNameX = model.getFileNameX();
             boolean success = fileOrDir.renameTo(new File(fileOrDir.getParent() + File.separator + new String(fileNameX, "UTF-8")));
