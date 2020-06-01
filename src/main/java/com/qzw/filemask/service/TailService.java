@@ -98,7 +98,7 @@ public class TailService {
             String targetName = String.valueOf(sequence);
             String targetPath = fileOrDir.getParent() + File.separatorChar + targetName;
             boolean b = fileOrDir.renameTo(new File(targetPath));
-            log.info("文件名称是否加密成功:{}", b);
+            log.info("文件名称是否加密成功:{},{}", b, fileOrDir.getPath());
         }
     }
 
@@ -153,7 +153,7 @@ public class TailService {
         //IO操作完成后才可以执行重命名操作
         if (StringUtils.isNotBlank(targetPath)) {
             boolean b = fileOrDir.renameTo(new File(targetPath));
-            log.info("文件名称是否解密成功:{}", b);
+            log.info("文件名称是否解密成功:{},{}", b, fileOrDir.getPath());
         }
     }
 
