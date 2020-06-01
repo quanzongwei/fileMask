@@ -11,7 +11,6 @@ import com.qzw.filemask.service.status.OperationLockStatusService;
 import com.qzw.filemask.service.status.StopCommandStatusService;
 import com.qzw.filemask.util.PasswordUtil;
 import com.qzw.filemask.util.PrivateDataUtils;
-import com.qzw.filemask.util.ThreadPoolUtil;
 import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
@@ -19,6 +18,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 主界面工作流程服务(页面交互,异步刷新,统计展示等等逻辑)
@@ -112,7 +112,7 @@ public class WorkFlowService {
 
     private static void asyncRefreshDialog(JDialog fileInfoDialog, JTextArea runningDialogTextArea, boolean isEncryptOperation, JLabel runningDialogLabel) {
         String magicWord = getOperationType(isEncryptOperation);
-        ExecutorService executorService = ThreadPoolUtil.getExecutorService();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.submit(() -> {
             while (true) {
                 refreshLabel(runningDialogLabel, isEncryptOperation);
@@ -166,7 +166,7 @@ public class WorkFlowService {
 
     private static void asyncRunActualTaskThread(String targetFileOrDir, JButton stopCommandBtn, AbstractFileEncoder fileEncoder, ChooseTypeEnum chooseTypeEnum, boolean isEncryptOperation) {
         String magicWord = getOperationType(isEncryptOperation);
-        ExecutorService executorService = ThreadPoolUtil.getExecutorService();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.submit(() -> {
             // 计算文件信息
             try {
