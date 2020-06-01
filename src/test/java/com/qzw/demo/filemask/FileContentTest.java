@@ -5,7 +5,7 @@ import com.qzw.filemask.fileencoder.FileContentEncoder;
 import com.qzw.filemask.model.TailModel;
 import com.qzw.filemask.service.TailService;
 import com.qzw.filemask.util.ByteUtil;
-import com.qzw.filemask.util.PasswordUtil;
+import com.qzw.filemask.service.PasswordService;
 import com.qzw.filemask.util.TestUtil;
 import org.junit.Assert;
 import org.junit.Before;
@@ -43,9 +43,9 @@ public class FileContentTest {
     public void fileContentTest() throws IOException {
         GlobalPasswordHolder.setPassword(password);
         System.out.println("pass:" + GlobalPasswordHolder.getPassword());
-        System.out.println("md51:" + base64(PasswordUtil.getMd51ForFileAuthentication()));
-        System.out.println("md523:" + base64(PasswordUtil.getMd523ForContentEncrypt()));
-        System.out.println("md545:" + base64(PasswordUtil.getMd545ForUuidEncrypt()));
+        System.out.println("md51:" + base64(PasswordService.getMd51ForFileAuthentication()));
+        System.out.println("md523:" + base64(PasswordService.getMd523ForContentEncrypt()));
+        System.out.println("md545:" + base64(PasswordService.getMd545ForUuidEncrypt()));
         System.out.println("uuid:" + TestUtil.uuid);
 
         FileContentEncoder contentEncoder = new FileContentEncoder();
@@ -63,7 +63,7 @@ public class FileContentTest {
         System.out.println();
         try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
             TailModel model = TailService.getExistsTailModelInfo(raf);
-            Assert.assertEquals(base64(PasswordUtil.getMd51ForFileAuthentication()), base64(model.getBelongUserMd516()));
+            Assert.assertEquals(base64(PasswordService.getMd51ForFileAuthentication()), base64(model.getBelongUserMd516()));
             Assert.assertEquals(ByteUtil.byteToHex(model.getEncodeType16()), getHexFlagString(false, false, true));
             Assert.assertEquals(new String(model.getUuid32()), TestUtil.uuid);
             Assert.assertEquals(base64(model.getHead4()), base64(new byte[]{0, 0, 0, 0}));

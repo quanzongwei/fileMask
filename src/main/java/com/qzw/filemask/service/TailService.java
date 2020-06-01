@@ -74,7 +74,7 @@ public class TailService {
             //存在
             else {
                 TailModel tailModel = getExistsTailModelInfo(raf);
-                boolean isCurrentUser = TailService.isCurrentUser(tailModel.getBelongUserMd516(), PasswordUtil.getMd51ForFileAuthentication());
+                boolean isCurrentUser = TailService.isCurrentUser(tailModel.getBelongUserMd516(), PasswordService.getMd51ForFileAuthentication());
                 if (!isCurrentUser) {
                     log.info("文件认证用户失败,{}", fileOrDir);
                     return;
@@ -93,7 +93,7 @@ public class TailService {
 
         //IO操作完成后才可以执行重命名操作
         if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE)) {
-            Integer sequence = PrivateDataUtils.getAutoIncrementSequence4ParentDir(fileOrDir);
+            Integer sequence = PrivateDataService.getAutoIncrementSequence4ParentDir(fileOrDir);
             //私有数据文件重命名
             String targetName = String.valueOf(sequence);
             String targetPath = fileOrDir.getParent() + File.separatorChar + targetName;
@@ -125,7 +125,7 @@ public class TailService {
                 return;
             }
             TailModel model = getExistsTailModelInfo(raf);
-            boolean currentUser = isCurrentUser(model.getBelongUserMd516(), PasswordUtil.getMd51ForFileAuthentication());
+            boolean currentUser = isCurrentUser(model.getBelongUserMd516(), PasswordService.getMd51ForFileAuthentication());
             if (!currentUser) {
                 log.info("文件用户认证失败,解密操作不成功,{}", fileOrDir.getPath());
                 return;
@@ -167,14 +167,14 @@ public class TailService {
     private static void encryptOrDecryptDirectoryName(File fileOrDir, boolean ifEncodeOperation) throws IOException {
         // 加密
         if (ifEncodeOperation) {
-            Integer sequence = PrivateDataUtils.getAutoIncrementSequence4ParentDir(fileOrDir);
-            File existsPrivateDataFile = PrivateDataUtils.getPrivateDataFileReleaseV2(fileOrDir, fileOrDir.getName());
+            Integer sequence = PrivateDataService.getAutoIncrementSequence4ParentDir(fileOrDir);
+            File existsPrivateDataFile = PrivateDataService.getPrivateDataFileReleaseV2(fileOrDir, fileOrDir.getName());
             if (existsPrivateDataFile.exists()) {
                 log.info("文件夹已加密成功,无需重复加密,{}", fileOrDir);
                 return;
             }
 
-            File privateDataFile = PrivateDataUtils.getPrivateDataFileReleaseV2(fileOrDir, sequence);
+            File privateDataFile = PrivateDataService.getPrivateDataFileReleaseV2(fileOrDir, sequence);
             if (!privateDataFile.exists()) {
                 try {
                     privateDataFile.createNewFile();
@@ -206,7 +206,7 @@ public class TailService {
                 log.info("文件夹未加密,无需解密,{}", fileOrDir);
                 return;
             }
-            File privateDataFile = PrivateDataUtils.getPrivateDataFileReleaseV2(fileOrDir, Integer.valueOf(fileOrDir.getName()));
+            File privateDataFile = PrivateDataService.getPrivateDataFileReleaseV2(fileOrDir, Integer.valueOf(fileOrDir.getName()));
             if (!privateDataFile.exists()) {
                 log.info("文件夹未加密,无需解密,{}", fileOrDir);
                 return;
@@ -215,7 +215,7 @@ public class TailService {
             try (RandomAccessFile raf = new RandomAccessFile(privateDataFile, "rw")) {
                 model = getExistsTailModelInfo(raf);
             }
-            boolean isCurrentUser = TailService.isCurrentUser(model.getBelongUserMd516(), PasswordUtil.getMd51ForFileAuthentication());
+            boolean isCurrentUser = TailService.isCurrentUser(model.getBelongUserMd516(), PasswordService.getMd51ForFileAuthentication());
             if (!isCurrentUser) {
                 log.info("当前文件夹已被其他用户加密,解密失败,{}", fileOrDir);
                 return;
@@ -309,7 +309,7 @@ public class TailService {
             if (StringUtils.isBlank(uuid)) {
                 uuid = UUID.randomUUID().toString().replaceAll("-", "");
             }
-            byte[] md51 = PasswordUtil.getMd51ForFileAuthentication();
+            byte[] md51 = PasswordService.getMd51ForFileAuthentication();
             model.setBelongUserMd516(md51);
             model.setEncodeType16(new byte[TailModel.ENCODE_TYPE_FLAG_16]);
             model.setUuid32(uuid.getBytes());
@@ -384,10 +384,10 @@ public class TailService {
         raf.seek(length);
         raf.write(model.getBelongUserMd516());
         raf.write(model.getEncodeType16());
-        raf.write(EncryptUtil.encryptUuid(PasswordUtil.getMd545ForUuidEncrypt(), model.getUuid32()));
-        raf.write(EncryptUtil.encryptContent(model.getUuid32(), PasswordUtil.getMd523ForContentEncrypt(), model.getHead4()));
+        raf.write(EncryptUtil.encryptUuid(PasswordService.getMd545ForUuidEncrypt(), model.getUuid32()));
+        raf.write(EncryptUtil.encryptContent(model.getUuid32(), PasswordService.getMd523ForContentEncrypt(), model.getHead4()));
         if (model.getFileNameX() != null && model.getFileNameX().length > 0) {
-            raf.write(EncryptUtil.encryptContent(model.getUuid32(), PasswordUtil.getMd523ForContentEncrypt(), model.getFileNameX()));
+            raf.write(EncryptUtil.encryptContent(model.getUuid32(), PasswordService.getMd523ForContentEncrypt(), model.getFileNameX()));
         }
         // 这个很重要,一定是writeLong才会占用四个字节
         raf.writeLong(length);
@@ -416,9 +416,9 @@ public class TailService {
             raf.seek(0 + i * SIZE_1024);
             raf.read(bBlock, 0, SIZE_1024);
             if (isEncodeOperation) {
-                bBlock = EncryptUtil.encryptContent(originUuidBytes, PasswordUtil.getMd523ForContentEncrypt(), bBlock);
+                bBlock = EncryptUtil.encryptContent(originUuidBytes, PasswordService.getMd523ForContentEncrypt(), bBlock);
             } else {
-                bBlock = EncryptUtil.decryptContent(originUuidBytes, PasswordUtil.getMd523ForContentEncrypt(), bBlock);
+                bBlock = EncryptUtil.decryptContent(originUuidBytes, PasswordService.getMd523ForContentEncrypt(), bBlock);
             }
             raf.seek(0 + i * SIZE_1024);
             raf.write(bBlock);
@@ -439,9 +439,9 @@ public class TailService {
             raf.seek(0 + blockNum * SIZE_1024);
             raf.read(bRemain, 0, remain.intValue());
             if (isEncodeOperation) {
-                bRemain = EncryptUtil.encryptContent(originUuidBytes, PasswordUtil.getMd523ForContentEncrypt(), bRemain);
+                bRemain = EncryptUtil.encryptContent(originUuidBytes, PasswordService.getMd523ForContentEncrypt(), bRemain);
             } else {
-                bRemain = EncryptUtil.decryptContent(originUuidBytes, PasswordUtil.getMd523ForContentEncrypt(), bRemain);
+                bRemain = EncryptUtil.decryptContent(originUuidBytes, PasswordService.getMd523ForContentEncrypt(), bRemain);
             }
             raf.seek(0 + blockNum * SIZE_1024);
             raf.write(bRemain);
@@ -479,10 +479,10 @@ public class TailService {
 
         model.setBelongUserMd516(userMd5);
         model.setEncodeType16(encodeType16);
-        byte[] originUuid32 = EncryptUtil.decryptUuid(PasswordUtil.getMd545ForUuidEncrypt(), uuid32);
+        byte[] originUuid32 = EncryptUtil.decryptUuid(PasswordService.getMd545ForUuidEncrypt(), uuid32);
         model.setUuid32(originUuid32);
-        model.setHead4(EncryptUtil.decryptContent(originUuid32, PasswordUtil.getMd523ForContentEncrypt(), head4));
-        model.setFileNameX(EncryptUtil.decryptContent(originUuid32, PasswordUtil.getMd523ForContentEncrypt(), fileNameX));
+        model.setHead4(EncryptUtil.decryptContent(originUuid32, PasswordService.getMd523ForContentEncrypt(), head4));
+        model.setFileNameX(EncryptUtil.decryptContent(originUuid32, PasswordService.getMd523ForContentEncrypt(), fileNameX));
         model.setOriginTextSize8(originSize8);
         model.setTailFlag16(tailFlag16);
 

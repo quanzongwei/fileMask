@@ -9,8 +9,6 @@ import com.qzw.filemask.model.TailModel;
 import com.qzw.filemask.service.status.ComputingStatusService;
 import com.qzw.filemask.service.status.OperationLockStatusService;
 import com.qzw.filemask.service.status.StopCommandStatusService;
-import com.qzw.filemask.util.PasswordUtil;
-import com.qzw.filemask.util.PrivateDataUtils;
 import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
@@ -222,7 +220,7 @@ public class WorkFlowService {
             fileEncoder = new FileContentEncoder();
         }
         FileEncoderTypeEnum fileEncoderType = fileEncoder.getFileEncoderType();
-        if (PrivateDataUtils.isFileMaskFile(file)) {
+        if (PrivateDataService.isFileMaskFile(file)) {
             return;
         }
         if (chooseTypeEnum.equals(ChooseTypeEnum.FILE_ONLY)) {
@@ -291,7 +289,7 @@ public class WorkFlowService {
                 //存在
                 else {
                     TailModel tailModel = TailService.getExistsTailModelInfo(raf);
-                    boolean isCurrentUser = TailService.isCurrentUser(tailModel.getBelongUserMd516(), PasswordUtil.getMd51ForFileAuthentication());
+                    boolean isCurrentUser = TailService.isCurrentUser(tailModel.getBelongUserMd516(), PasswordService.getMd51ForFileAuthentication());
                     boolean hasEncryptedByTypeOrConflict = TailService.isEncryptedByTypeOrConflict(tailModel, fileEncoderType);
                     byte[] encodeTypeFlagByte = tailModel.getEncodeType16();
                     byte flag = encodeTypeFlagByte[fileEncoderType.getPosition()];

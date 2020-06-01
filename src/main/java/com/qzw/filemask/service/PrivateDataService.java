@@ -1,4 +1,4 @@
-package com.qzw.filemask.util;
+package com.qzw.filemask.service;
 
 import com.qzw.filemask.constant.Constants;
 import lombok.extern.log4j.Log4j2;
@@ -14,7 +14,7 @@ import java.io.RandomAccessFile;
  * @date 2020/3/3
  */
 @Log4j2
-public class PrivateDataUtils {
+public class PrivateDataService {
     /**
      * 获取目标文件对应的私有数据文件夹
      */

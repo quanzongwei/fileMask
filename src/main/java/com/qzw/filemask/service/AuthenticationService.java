@@ -1,6 +1,7 @@
-package com.qzw.filemask.util;
+package com.qzw.filemask.service;
 
 import com.qzw.filemask.constant.Constants;
+import com.qzw.filemask.util.MD5Utils;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
@@ -13,7 +14,7 @@ import java.util.Arrays;
  * @date 2020/3/7
  */
 @Log4j2
-public class AuthenticationUtils {
+public class AuthenticationService {
 
 
     /**

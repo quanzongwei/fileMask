@@ -8,7 +8,7 @@ import com.qzw.filemask.interfaces.FileEncoderType;
 import com.qzw.filemask.service.StatisticsService;
 import com.qzw.filemask.service.TailService;
 import com.qzw.filemask.service.status.StopCommandStatusService;
-import com.qzw.filemask.util.PrivateDataUtils;
+import com.qzw.filemask.service.PrivateDataService;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
@@ -34,7 +34,7 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
             if (!fileOrDir.exists()) {
                 throw new MaskException(MaskExceptionEnum.FILE_NOT_EXISTS.getType(), "文件或者文件夹不存在,加密失败," + fileOrDir.getPath());
             }
-            if (PrivateDataUtils.isFileMaskFile(fileOrDir)) {
+            if (PrivateDataService.isFileMaskFile(fileOrDir)) {
                 log.info("私有数据文件无需处理, {}", fileOrDir.getPath());
                 return;
             }
@@ -50,7 +50,7 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
                 File[] files = fileOrDir.listFiles();
                 if (files != null && files.length > 0) {
                     for (File file : files) {
-                        if (PrivateDataUtils.isFileMaskFile(file)) {
+                        if (PrivateDataService.isFileMaskFile(file)) {
                             log.info("私有数据文件无需处理, {}", file.getPath());
                             continue;
                         }
@@ -100,7 +100,7 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
             if (!fileOrDir.exists()) {
                 throw new MaskException(MaskExceptionEnum.FILE_NOT_EXISTS.getType(), "文件或者文件夹不存在,解密失败, " + fileOrDir.getPath());
             }
-            if (PrivateDataUtils.isFileMaskFile(fileOrDir)) {
+            if (PrivateDataService.isFileMaskFile(fileOrDir)) {
                 log.info("私有数据文件无需处理,{}", fileOrDir.getPath());
                 return;
             }
@@ -116,7 +116,7 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
                 File[] files = fileOrDir.listFiles();
                 if (files != null && files.length > 0) {
                     for (File file : files) {
-                        if (PrivateDataUtils.isFileMaskFile(file)) {
+                        if (PrivateDataService.isFileMaskFile(file)) {
                             log.info("私有数据文件无需处理, {}", file.getPath());
                             continue;
                         }
@@ -195,7 +195,7 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
 
 
     public void executeDecrypt(File fileOrDir) {
-        if (PrivateDataUtils.isFileMaskFile(fileOrDir)) {
+        if (PrivateDataService.isFileMaskFile(fileOrDir)) {
             log.info("私有数据文件无需处理,{}", fileOrDir.getPath());
             return;
         }

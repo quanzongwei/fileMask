@@ -5,8 +5,8 @@ import com.qzw.filemask.fileencoder.FileHeaderEncoder;
 import com.qzw.filemask.model.TailModel;
 import com.qzw.filemask.service.TailService;
 import com.qzw.filemask.util.ByteUtil;
-import com.qzw.filemask.util.PasswordUtil;
-import com.qzw.filemask.util.PrivateDataUtils;
+import com.qzw.filemask.service.PasswordService;
+import com.qzw.filemask.service.PrivateDataService;
 import com.qzw.filemask.util.TestUtil;
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,7 +37,7 @@ public class FileHeadTest {
             parent.mkdir();
         }
         File file = new File(filename);
-        File privateDataDir = PrivateDataUtils.getPrivateDataDir(file);
+        File privateDataDir = PrivateDataService.getPrivateDataDir(file);
         if (privateDataDir.exists()) {
             privateDataDir.delete();
         }
@@ -51,9 +51,9 @@ public class FileHeadTest {
     public void fileHeadTest() throws IOException {
         GlobalPasswordHolder.setPassword(password);
         System.out.println("pass:" + GlobalPasswordHolder.getPassword());
-        System.out.println("md51:" + base64(PasswordUtil.getMd51ForFileAuthentication()));
-        System.out.println("md523:" + base64(PasswordUtil.getMd523ForContentEncrypt()));
-        System.out.println("md545:" + base64(PasswordUtil.getMd545ForUuidEncrypt()));
+        System.out.println("md51:" + base64(PasswordService.getMd51ForFileAuthentication()));
+        System.out.println("md523:" + base64(PasswordService.getMd523ForContentEncrypt()));
+        System.out.println("md545:" + base64(PasswordService.getMd545ForUuidEncrypt()));
         System.out.println("uuid:" + TestUtil.uuid);
 
         FileHeaderEncoder headEncoder = new FileHeaderEncoder();
@@ -70,7 +70,7 @@ public class FileHeadTest {
         System.out.println();
         try (RandomAccessFile raf = new RandomAccessFile(file, "rw")) {
             TailModel model = TailService.getExistsTailModelInfo(raf);
-            Assert.assertEquals(base64(PasswordUtil.getMd51ForFileAuthentication()), base64(model.getBelongUserMd516()));
+            Assert.assertEquals(base64(PasswordService.getMd51ForFileAuthentication()), base64(model.getBelongUserMd516()));
             Assert.assertEquals(ByteUtil.byteToHex(model.getEncodeType16()), getHexFlagString(false, true, false));
             Assert.assertEquals(new String(model.getUuid32()), TestUtil.uuid);
             Assert.assertTrue(Arrays.equals(model.getHead4(), Arrays.copyOfRange(headContent.getBytes("UTF-8"), 0, 4)));

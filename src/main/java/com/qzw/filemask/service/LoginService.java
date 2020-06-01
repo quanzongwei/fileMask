@@ -1,7 +1,6 @@
 package com.qzw.filemask.service;
 
 import com.qzw.filemask.component.GlobalPasswordHolder;
-import com.qzw.filemask.util.AuthenticationUtils;
 
 import javax.swing.*;
 
@@ -16,9 +15,9 @@ public class LoginService {
      */
     public static void doLogin(JFrame f) {
         //第一次启用该软件,初始化密码
-        if (!AuthenticationUtils.isExistUserPassword()) {
+        if (!AuthenticationService.isExistUserPassword()) {
             String password = passwordInitializationDialog(f);
-            AuthenticationUtils.setUserMd5Byte(password);
+            AuthenticationService.setUserMd5Byte(password);
             GlobalPasswordHolder.setPassword(password);
             return;
         }
@@ -36,7 +35,7 @@ public class LoginService {
         if (password == null || password.equals("")) {
             nullCHeck(f, 1);
         } else {
-            if (!AuthenticationUtils.isCurrentUser(password)) {
+            if (!AuthenticationService.isCurrentUser(password)) {
                 JOptionPane.showConfirmDialog(f, "对不起密码错误,请重新输入", "提示", JOptionPane.DEFAULT_OPTION);
                 authentication(f);
             }

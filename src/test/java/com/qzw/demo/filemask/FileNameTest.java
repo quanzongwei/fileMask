@@ -5,8 +5,8 @@ import com.qzw.filemask.fileencoder.FileOrDirNameEncoder;
 import com.qzw.filemask.model.TailModel;
 import com.qzw.filemask.service.TailService;
 import com.qzw.filemask.util.ByteUtil;
-import com.qzw.filemask.util.PasswordUtil;
-import com.qzw.filemask.util.PrivateDataUtils;
+import com.qzw.filemask.service.PasswordService;
+import com.qzw.filemask.service.PrivateDataService;
 import com.qzw.filemask.util.TestUtil;
 import org.junit.Assert;
 import org.junit.Before;
@@ -35,7 +35,7 @@ public class FileNameTest {
             parent.mkdir();
         }
         File file = new File(filename);
-        File privateDataDir = PrivateDataUtils.getPrivateDataDir(file);
+        File privateDataDir = PrivateDataService.getPrivateDataDir(file);
         if (privateDataDir.exists()) {
             privateDataDir.delete();
         }
@@ -49,9 +49,9 @@ public class FileNameTest {
     public void fileNameTest() throws IOException {
         GlobalPasswordHolder.setPassword(password);
         System.out.println("pass:" + GlobalPasswordHolder.getPassword());
-        System.out.println("md51:" + base64(PasswordUtil.getMd51ForFileAuthentication()));
-        System.out.println("md523:" + base64(PasswordUtil.getMd523ForContentEncrypt()));
-        System.out.println("md545:" + base64(PasswordUtil.getMd545ForUuidEncrypt()));
+        System.out.println("md51:" + base64(PasswordService.getMd51ForFileAuthentication()));
+        System.out.println("md523:" + base64(PasswordService.getMd523ForContentEncrypt()));
+        System.out.println("md545:" + base64(PasswordService.getMd545ForUuidEncrypt()));
         System.out.println("uuid:" + TestUtil.uuid);
 
         FileOrDirNameEncoder nameEncoder = new FileOrDirNameEncoder();
@@ -67,11 +67,11 @@ public class FileNameTest {
         nameEncoder.executeEncrypt(file);
 
         System.out.println();
-        Integer sequence = PrivateDataUtils.getAutoIncrementSequence4ParentDir(file);
+        Integer sequence = PrivateDataService.getAutoIncrementSequence4ParentDir(file);
         sequence--;
         try (RandomAccessFile raf = new RandomAccessFile(file.getParent() + File.separatorChar + sequence, "rw")) {
             TailModel model = TailService.getExistsTailModelInfo(raf);
-            Assert.assertEquals(base64(PasswordUtil.getMd51ForFileAuthentication()), base64(model.getBelongUserMd516()));
+            Assert.assertEquals(base64(PasswordService.getMd51ForFileAuthentication()), base64(model.getBelongUserMd516()));
             Assert.assertEquals(ByteUtil.byteToHex(model.getEncodeType16()), getHexFlagString(true, false, false));
             Assert.assertEquals(new String(model.getUuid32()), TestUtil.uuid);
             Assert.assertEquals(base64(model.getHead4()), base64(new byte[]{0, 0, 0, 0}));
