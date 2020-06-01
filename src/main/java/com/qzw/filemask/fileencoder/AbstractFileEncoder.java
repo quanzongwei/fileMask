@@ -73,6 +73,9 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
                         //cascade directory
                         if (file.isDirectory()) {
                             encodeFileOrDir(file, ChooseTypeEnum.CASCADE_DIR);
+                            if (ifReceiveStopCommand()) {
+                                return;
+                            }
                             continue;
                         }
                         executeEncrypt(file);
@@ -136,6 +139,9 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
                         //cascade directory
                         if (file.isDirectory()) {
                             decodeFileOrDir(file, ChooseTypeEnum.CASCADE_DIR);
+                            if (ifReceiveStopCommand()) {
+                                return;
+                            }
                             continue;
                         }
                         executeDecrypt(file);
