@@ -1,7 +1,7 @@
 package com.qzw.filemask.util;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/5/16
  */
 public class EncryptUtil {

@@ -4,7 +4,7 @@ package com.qzw.filemask.service.status;
  * 操作锁状态服务
  * 场景: 所有的加密和解密必须获取到该锁才能执行
  *
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/6/1
  */
 public class OperationLockStatusService {

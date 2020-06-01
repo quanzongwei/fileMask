@@ -3,7 +3,7 @@ package com.qzw.filemask.util;
 /**
  * 展示优化
  *
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/6/1
  */
 public class DisplayInHumanUtils {

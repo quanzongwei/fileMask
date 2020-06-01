@@ -17,7 +17,7 @@ import java.io.RandomAccessFile;
 import java.util.Base64;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/5/16
  */
 public class FileContentTest {

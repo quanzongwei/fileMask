@@ -3,7 +3,7 @@ package com.qzw.filemask.util;
 /**
  * 仅用于单元测试
  *
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/5/16
  */
 public class TestUtil {

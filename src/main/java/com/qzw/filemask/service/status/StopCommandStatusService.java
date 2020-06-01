@@ -4,7 +4,7 @@ package com.qzw.filemask.service.status;
  * 停止运行命令状态服务
  * 场景: 程序接收到用户提前停止运行的命令后,在安全点终止程序运行
  *
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/6/1
  */
 public class StopCommandStatusService {

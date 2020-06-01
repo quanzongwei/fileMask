@@ -5,7 +5,7 @@ import com.qzw.filemask.component.GlobalPasswordHolder;
 import javax.swing.*;
 
 /**
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/3/15
  */
 public class LoginService {

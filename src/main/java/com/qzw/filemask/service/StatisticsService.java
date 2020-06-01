@@ -8,7 +8,7 @@ import java.math.BigDecimal;
  * 数据统计服务
  * 场景:用于统计文件处理进度
  *
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/5/22
  */
 

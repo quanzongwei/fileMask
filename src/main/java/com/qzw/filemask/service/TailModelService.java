@@ -26,7 +26,7 @@ import java.util.UUID;
  * <p>
  * 注: 如果加密方式为文件头部加密且文件数据长度<4,则使用全文加密
  *
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/5/13
  */
 @Data

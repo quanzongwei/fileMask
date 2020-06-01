@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 /**
  * 主界面工作流程服务(页面交互,异步刷新,统计展示等等逻辑)
  *
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/6/1
  */
 @Log4j2

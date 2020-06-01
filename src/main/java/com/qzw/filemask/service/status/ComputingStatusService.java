@@ -6,7 +6,7 @@ package com.qzw.filemask.service.status;
  * 0. 计算状态: 计算待加密或解密文件总数
  * 1. 加密/解密状态: 正式开始加密和解密
  *
- * @author BG388892
+ * @author quanzongwei
  * @date 2020/6/1
  */
 public class ComputingStatusService {
