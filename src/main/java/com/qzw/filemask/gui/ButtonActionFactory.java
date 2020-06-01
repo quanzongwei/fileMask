@@ -2,11 +2,11 @@ package com.qzw.filemask.gui;
 
 import com.qzw.filemask.FileMaskMain;
 import com.qzw.filemask.enums.ChooseTypeEnum;
-import com.qzw.filemask.enums.FileEncoderTypeEnum;
 import com.qzw.filemask.fileencoder.AbstractFileEncoder;
 import com.qzw.filemask.fileencoder.FileContentEncoder;
 import com.qzw.filemask.fileencoder.FileHeaderEncoder;
 import com.qzw.filemask.fileencoder.FileOrDirNameEncoder;
+import com.qzw.filemask.service.WorkFlowService;
 import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
@@ -20,8 +20,6 @@ import java.io.File;
 @Log4j2
 public class ButtonActionFactory {
 
-    private static JTextArea ta = FileMaskMain.ta;
-    private static JFrame f = FileMaskMain.f;
     private static JFileChooser jFileChooser = new JFileChooser();
 
     /**
@@ -119,25 +117,7 @@ public class ButtonActionFactory {
      * 加密
      */
     private static void doEncrypt(String targetFileOrDir, AbstractFileEncoder fileEncoder, ChooseTypeEnum chooseTypeEnum) {
-        long begin = System.currentTimeMillis();
-        if (targetFileOrDir == null) {
-            // 用户点击取消按钮, 取消加密
-            return;
-        }
-        if (!isValidPath(targetFileOrDir)) {
-            JOptionPane.showConfirmDialog(f, "加密路径太短, 请重新选择则!", "提示", JOptionPane.DEFAULT_OPTION);
-            return;
-        }
-        try {
-            fileEncoder.encodeFileOrDir(new File(targetFileOrDir), chooseTypeEnum);
-        } catch (Exception ex) {
-            log.info("加密异常", ex);
-            ta.append("加异异常:" + ex.getMessage() + "\r\n");
-            JOptionPane.showConfirmDialog(f, "加密出错!!!", "提示", JOptionPane.DEFAULT_OPTION);
-            return;
-        }
-        ta.append("加密成功,耗时:" + (System.currentTimeMillis() - begin) + "ms; 文件名: " + targetFileOrDir + "\r\n");
-        JOptionPane.showConfirmDialog(f, "加密成功!", "提示", JOptionPane.DEFAULT_OPTION);
+        WorkFlowService.doEncryptOrDecrypt(targetFileOrDir, fileEncoder, chooseTypeEnum, true);
     }
 
     /**
@@ -170,37 +150,8 @@ public class ButtonActionFactory {
         });
     }
 
-    /**
-     * 解密
-     */
     private static void doDecrypt(String targetFileOrDir, ChooseTypeEnum chooseTypeEnum) {
-        long begin = System.currentTimeMillis();
-        if (targetFileOrDir == null) {
-            // 用户点击取消按钮, 取消加密
-            return;
-        }
-        if (!isValidPath(targetFileOrDir)) {
-            JOptionPane.showConfirmDialog(f, "解密路径不合法, 请重新选择!", "提示", JOptionPane.DEFAULT_OPTION);
-            return;
-        }
-        try {
-            //方式三
-            new AbstractFileEncoder(){
-                @Override
-                public FileEncoderTypeEnum getFileEncoderType() {
-                    //解密用不到这个参数
-                    return null;
-                }
-            }.decodeFileOrDir(new File(targetFileOrDir), chooseTypeEnum);
-
-        } catch (Exception ex) {
-            log.info("解密出错", ex);
-            ta.append("解密出错:" + ex.getMessage() + "\r\n");
-            JOptionPane.showConfirmDialog(f, "加密出错!!!", "提示", JOptionPane.DEFAULT_OPTION);
-            return;
-        }
-        ta.append("解密成功,耗时:" + (System.currentTimeMillis() - begin) + "ms; 文件名: " + targetFileOrDir + "\r\n");
-        JOptionPane.showConfirmDialog(f, "解密成功!", "提示", JOptionPane.DEFAULT_OPTION);
+        WorkFlowService.doEncryptOrDecrypt(targetFileOrDir, null, chooseTypeEnum, false);
     }
 
     /**
@@ -228,16 +179,5 @@ public class ButtonActionFactory {
         } else {
             return null;
         }
-    }
-
-    /**
-     * 判断选择路径是否合法
-     * 为了系统安全, C:\ D:\ E:\ F:\ 这类长度太短的路径不支持加密
-     */
-    private static boolean isValidPath(String targetPath) {
-        if (targetPath.length() <= 3) {
-            return false;
-        }
-        return true;
     }
 }

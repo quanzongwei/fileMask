@@ -36,9 +36,9 @@ public class TailService {
     /**
      * 已经加密标志
      */
-    static byte ENCODED_FLAG = (byte) 0x01;
+    public static byte ENCODED_FLAG = (byte) 0x01;
 
-    static int SIZE_1024 = 1024;
+    private static int SIZE_1024 = 1024 * 64;
     /**
      * 文件头部加密阈值,小于阈值的切换为文件内容加密
      */
@@ -257,7 +257,7 @@ public class TailService {
     /**
      * 判断是否已经加密过或者加密类型冲突
      */
-    private static boolean isEncryptedByTypeOrConflict(TailModel model, FileEncoderTypeEnum fileEncoderType) throws IOException {
+    public static boolean isEncryptedByTypeOrConflict(TailModel model, FileEncoderTypeEnum fileEncoderType) throws IOException {
         byte[] encodeTypeFlagByte = model.getEncodeType16();
         byte flag = encodeTypeFlagByte[fileEncoderType.getPosition()];
         if (flag == ENCODED_FLAG) {
@@ -346,6 +346,9 @@ public class TailService {
         }
         //文件全文加密
         if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_CONTENT_ENCODE)) {
+            //[统计] 设置文件是否是全文加密
+            StatisticsService.setIfCurrentFileExecuteContentEncrypt(true);
+
             //设置标记位
             type16[FileEncoderTypeEnum.FILE_CONTENT_ENCODE.getPosition()] = ENCODED_FLAG;
             model.setEncodeType16(type16);
@@ -394,6 +397,9 @@ public class TailService {
         long blockNum = length / SIZE_1024;
         Long remain = length % SIZE_1024;
         for (long i = 0; i < blockNum; i++) {
+
+            long begin = System.currentTimeMillis();
+
             byte[] bBlock = new byte[SIZE_1024];
             raf.seek(0 + i * SIZE_1024);
             raf.read(bBlock, 0, SIZE_1024);
@@ -404,9 +410,19 @@ public class TailService {
             }
             raf.seek(0 + i * SIZE_1024);
             raf.write(bBlock);
+            long end = System.currentTimeMillis();
+            //[统计] 增加所有文件字节数据已加密总时间
+            StatisticsService.setDoneFileTotalBytesSpendTime(StatisticsService.getDoneFileTotalBytesSpendTime() + (end - begin));
+            //[统计] 增加所有文件已加密大小
+            StatisticsService.setDoneFileTotalBytes(StatisticsService.getDoneFileTotalBytes() + bBlock.length);
+            //[统计] 增加当前文件已加密大小
+            StatisticsService.setCurrentFileCompletedBytes(StatisticsService.getCurrentFileCompletedBytes() + bBlock.length);
         }
         // 尾部数据处理
         if (remain > 0) {
+
+            long begin = System.currentTimeMillis();
+
             byte[] bRemain = new byte[remain.intValue()];
             raf.seek(0 + blockNum * SIZE_1024);
             raf.read(bRemain, 0, remain.intValue());
@@ -417,6 +433,13 @@ public class TailService {
             }
             raf.seek(0 + blockNum * SIZE_1024);
             raf.write(bRemain);
+            long end = System.currentTimeMillis();
+            //[统计] 增加所有文件字节数据已加密总时间
+            StatisticsService.setDoneFileTotalBytesSpendTime(StatisticsService.getDoneFileTotalBytesSpendTime() + (end - begin));
+            //[统计] 增加所有文件已加密大小
+            StatisticsService.setDoneFileTotalBytes(StatisticsService.getDoneFileTotalBytes() + bRemain.length);
+            //[统计] 增加当前文件已加密大小
+            StatisticsService.setCurrentFileCompletedBytes(StatisticsService.getCurrentFileCompletedBytes() + bRemain.length);
         }
     }
 
@@ -457,7 +480,7 @@ public class TailService {
     /**
      * 是否是当前用户
      */
-    private static boolean isCurrentUser(byte[] belongUserMd516, byte[] md51ForFileAuthentication) {
+    public static boolean isCurrentUser(byte[] belongUserMd516, byte[] md51ForFileAuthentication) {
         return Arrays.equals(belongUserMd516, md51ForFileAuthentication);
     }
 }
