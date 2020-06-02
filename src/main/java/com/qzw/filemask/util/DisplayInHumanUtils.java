@@ -68,6 +68,9 @@ public class DisplayInHumanUtils {
         if (secPart > 0L) {
             s += milliPart + "毫秒";
         }
+        if (s.equals("")) {
+            s = "0毫秒";
+        }
         return s;
     }
 
