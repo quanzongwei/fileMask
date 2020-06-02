@@ -328,9 +328,6 @@ public class WorkFlowService {
         if (targetPath.length() <= 3) {
             return false;
         }
-        if (!targetPath.contains("测试")) {
-            return false;
-        }
         return true;
     }
 }

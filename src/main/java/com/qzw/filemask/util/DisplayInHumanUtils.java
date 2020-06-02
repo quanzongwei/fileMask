@@ -33,7 +33,7 @@ public class DisplayInHumanUtils {
             s += secPart + "秒";
         }
         if (s.equals("")) {
-            s = "0字节";
+            s = "0秒";
         }
         return s;
     }
