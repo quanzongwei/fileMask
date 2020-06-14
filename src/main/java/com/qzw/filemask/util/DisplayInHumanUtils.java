@@ -88,7 +88,7 @@ public class DisplayInHumanUtils {
 
         String s = "";
         if (gPart > 0L) {
-            s += gPart + "G";
+            s += "," + gPart + "G";
         }
         if (mPart > 0L) {
             s += ","+mPart + "M";
@@ -100,8 +100,9 @@ public class DisplayInHumanUtils {
             s += ","+bPart + "字节";
         }
         if (s.equals("")) {
-            s = "0字节";
+            s = ",0字节";
         }
+        s = s.substring(1);
         return s;
     }
 }
