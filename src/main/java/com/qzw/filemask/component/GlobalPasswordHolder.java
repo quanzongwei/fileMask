@@ -6,6 +6,7 @@ package com.qzw.filemask.component;
  * @date 2020/1/18
  */
 public class GlobalPasswordHolder {
+
     private static String password;
 
     public static String getPassword() {
