@@ -1,6 +1,6 @@
 ## 下载地址
 ### 最新版本(release-v3)
-链接：[https://pan.baidu.com/s/1o9eVy25g8o81OfqOkxa-sQ](https://pan.baidu.com/s/1o9eVy25g8o81OfqOkxa-sQ)  
+链接：[https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw](https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw)  
 提取码：8888
 ## 一 fileMask软件简介
 该软件主要专注于文件和文件夹的加密和解密
