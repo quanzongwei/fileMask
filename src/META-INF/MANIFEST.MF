@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Main-Class: com.qzw.filemask.FileMaskMain
+Class-Path: lib/jgoodies-common-1.8.1.jar lib/log4j-slf4j-impl-2.9.0.jar
+  lib/hamcrest-core-1.3.jar lib/looks-2.2.2.jar lib/slf4j-api-1.7.21.jar
+  lib/log4j-api-2.9.0.jar lib/log4j-core-2.9.0.jar lib/junit-4.12.jar li
+ b/commons-lang3-3.7.jar lib/disruptor-3.3.5.jar lib/lombok-1.18.10.jar
+
