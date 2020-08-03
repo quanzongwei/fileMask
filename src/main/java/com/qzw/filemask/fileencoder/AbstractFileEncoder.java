@@ -160,6 +160,10 @@ public abstract class AbstractFileEncoder implements FileEncoderType {
 
 
     public void executeEncrypt(File fileOrDir) {
+        if (PrivateDataService.isFileMaskFile(fileOrDir)) {
+            log.info("私有数据文件无需处理,{}", fileOrDir.getPath());
+            return;
+        }
         FileEncoderTypeEnum fileEncoderType = getFileEncoderType();
         if (fileOrDir.isDirectory() && !fileEncoderType.isSupportEncryptDir()) {
             //加密方式不支持加密文件夹, 直接跳过, 不需要任何日志
