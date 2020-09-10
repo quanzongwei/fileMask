@@ -3,7 +3,10 @@
 链接：[https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw](https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw)  
 提取码：8888
 ## 一 fileMask软件简介
-该软件主要专注于文件和文件夹的加密和解密
+该软件主要专注于文件和文件夹的加密和解密  
+
+开发语言: java  
+开发周期: 7个月(2019年11月-2020年6月)
 
 ## 二 软件特点
 号称是世界上最简洁，最快速，最安全，用户体验最好,最富有思想的文件和文件夹加密软件
