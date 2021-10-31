@@ -1,4 +1,4 @@
-## 下载地址
+## 下载地址(windows系统可直接运行)
 ### 最新版本(release-v3)
 链接：[https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw](https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw)  
 提取码：8888
