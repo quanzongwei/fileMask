@@ -13,11 +13,11 @@
 ## 二 软件主界面
 ### 2.1 首次运行
 
-![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/DBB1C99B7E5B47C79464FA4ED2A443D6/53495)  
+![image](https://ucc.alicdn.com/pic/developer-ecology/631fdfdb488b4b87bf28899a83624ab6.png)  
 首次运行需要输入用户密码，并且确认密码。请牢记您的密码，当一个文件被加密后，只有持有该密码的用户才能解密。
 
 ### 2.2 主界面
-![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/76C85FBED91F4E87852303EA4BD551B4/53506)  
+![image](https://ucc.alicdn.com/pic/developer-ecology/35f22fb1f4bf45e3bcb2ef17c9c5ea3c.png)  
 
 
 #### 2.2.1 加密类型
@@ -41,15 +41,15 @@
 
 ### 2.3 菜单栏
 菜单栏中有对应的使用帮助文档
-![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/F341D5AF42D34FFAA154F6F22573AFE8/53527)  
+![image](https://ucc.alicdn.com/pic/developer-ecology/c45e2189ef574060a286b7fc59058844.png)  
   
 
 联系作者菜单项中可以找到项目源码和作者联系方式
-![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/0D7D900993F641378997E35B87638036/54372)  
+![image](https://ucc.alicdn.com/pic/developer-ecology/bd4efc624f3f4056a9586d188dde5472.png)  
 
 ### 2.4 加密/解密处理进度
 这个是作者非常满意的一个功能,如下所示:
-![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/2A394BD9973B4A63A05F02E9DC73C5E0/54348)  
+![image](https://ucc.alicdn.com/pic/developer-ecology/b95fafb9c6dc4ea09189f897feb9ccfd.png)  
 参数解释:  
 1. 展示扫描文件总数和总大小
 2. 展示已处理文件总数和已耗时间
