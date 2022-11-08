@@ -13,6 +13,8 @@
 
 ## 三 软件界面
 ![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/E5409C9FFF384967A40C06716A110B0D/54346)  
+![image](https://ucc.alicdn.com/pic/developer-ecology/ea2b5de3c56f46f1b08d9f805ebc58ca.png)  
+
 ## 四 加密类型
 ### 4.1 三种加密类型
 * <strong><font color=#FF0000> 类型一: 文件名称加密 </font></strong>   
