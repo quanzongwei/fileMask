@@ -44,7 +44,7 @@
 ![image](https://ucc.alicdn.com/pic/developer-ecology/c45e2189ef574060a286b7fc59058844.png)  
   
 
-联系作者菜单项中可以找到项目源码和作者联系方式
+联系作者菜单项中可以找到项目源码和作者联系方式  
 ![image](https://ucc.alicdn.com/pic/developer-ecology/bd4efc624f3f4056a9586d188dde5472.png)  
 
 ### 2.4 加密/解密处理进度
