@@ -12,8 +12,7 @@
 界面简洁，功能强大，算法绝对安全(欢迎进行学术性交流)，用户体验良好(支持加密进度展示、随时停止、加解密支持幂等性), 具有思想和灵魂的文件和文件夹加密软件。  软件中一个不经意的小细节，就有可能是一个不错的小创意。
 
 ## 三 软件界面
-![image](https://note.youdao.com/yws/public/resource/9f8f257b581764f512dc7722bc66607c/xmlnote/E5409C9FFF384967A40C06716A110B0D/54346)  
-![image](https://ucc.alicdn.com/pic/developer-ecology/ea2b5de3c56f46f1b08d9f805ebc58ca.png)  
+![image](https://ucc.alicdn.com/pic/developer-ecology/04ba1db2b4164f209da6386d1de80089.png)  
 
 ## 四 加密类型
 ### 4.1 三种加密类型
