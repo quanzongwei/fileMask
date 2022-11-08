@@ -1,5 +1,5 @@
 ## 一 软件目录结构
-解压fileMask.rar文件，软件目录如下所示:
+解压fileMask.rar文件，软件目录如下所示:  
 ![image](https://github.com/quanzongwei/markdown-picture/blob/main/%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95.png)
 
 * authentication目录存放用户认证信息
@@ -48,7 +48,7 @@
 ![image](https://github.com/quanzongwei/markdown-picture/blob/main/%E8%81%94%E7%B3%BB%E4%BD%9C%E8%80%85.png)  
 
 ### 2.4 加密/解密处理进度
-这个是作者非常满意的一个功能,如下所示:
+这个是作者非常满意的一个功能,如下所示:  
 ![image](https://github.com/quanzongwei/markdown-picture/blob/main/%E8%BF%9B%E5%BA%A6%E6%98%BE%E7%A4%BA.png)  
 参数解释:  
 1. 展示扫描文件总数和总大小
