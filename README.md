@@ -1,8 +1,10 @@
 ## 下载地址
-### windows系统最新版本(release-v3)
+### For windows 系统
+版本号：release-v3
 链接：[https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw](https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw)  
 提取码：8888
-### mac系统最新版本(release-v1)
+### For mac 系统
+版本号：1.0
 链接：[https://pan.baidu.com/s/1Sn6Vbzd_1hoIHbXvfXWqbA?pwd=8888](https://pan.baidu.com/s/1Sn6Vbzd_1hoIHbXvfXWqbA?pwd=8888)  
 提取码：8888
 ## 一 fileMask软件简介
