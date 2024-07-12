@@ -50,7 +50,6 @@ public class PlatformService {
      */
     public static void setLookAndFeelByPlatform(String platform) {
         try {
-            log.info(PlatformContext.CURRENT_PLATFORM + PlatformEnum.WINDOWS.name());
             if (PlatformEnum.WINDOWS.name().equals(platform)) {
                 UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
                 PlasticLookAndFeel.setPlasticTheme(new DesertBluer());
