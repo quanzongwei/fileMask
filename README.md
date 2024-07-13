@@ -1,23 +1,12 @@
 ## 下载地址
-### For windows 系统  
 
-<strong><font color=#FF0000> 版本：1.1 </font></strong>   
-更新日期：2024-07-13  
-链接：https://pan.baidu.com/s/1bxjqE549-Tke-3eSh0rmlw?pwd=8811  
-提取码：8811  
 
-<strong><font color=#FF0000> 版本：1.0 </font></strong>   
-链接：[https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw](https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw)   
-提取码：8888
-### For mac 系统
-<strong><font color=#FF0000> 版本：1.1 </font></strong>   
-链接：https://pan.baidu.com/s/1MRSOc1dP4_V3B1fpxak3_w?pwd=6611  
-提取码：6611  
+| 操作系统        | 最新版本  | 下载地址（百度云）   | 下载地址（阿里云） | 更新日期       |
+|-------------|-------|-------------|-------------|------------|
+| windows     | v1.1  | https://pan.baidu.com/s/1bxjqE549-Tke-3eSh0rmlw?pwd=8811 | todo | 2024-07-13 |
+| mac         | v1.1  | https://pan.baidu.com/s/1MRSOc1dP4_V3B1fpxak3_w?pwd=6611 | todo | 2020-07-01|
 
-<strong><font color=#FF0000> 版本：1.0 </font></strong>   
-链接：[https://pan.baidu.com/s/1Sn6Vbzd_1hoIHbXvfXWqbA?pwd=8888](https://pan.baidu.com/s/1Sn6Vbzd_1hoIHbXvfXWqbA?pwd=8888)  
-提取码：8888  
-注：mac系统软件安装完成后，若提示【“fileMask”已损坏，无法打开。 您应该将它移到废纸篓。】，一般不是软件本身的问题，而是Mac启用了安全机制，默认只信任Mac App Store下载的软件以及拥有开发者ID签名的软件，请按照以下文章步骤操作即可：[mac安装应用提示已损坏，打不开。您应该将它移到废纸娄问题解决](https://zhuanlan.zhihu.com/p/617123498)  
+注：mac系统软件安装完成后，若提示【“fileMask”已损坏，无法打开。 您应该将它移到废纸篓。】，一般不是软件本身的问题，而是Mac启用了安全机制，默认只信任Mac App Store下载的软件以及拥有开发者ID签名的软件，请按照以下文章步骤操作即可：[mac安装应用提示已损坏，打不开。您应该将它移到废纸娄问题解决](https://zhuanlan.zhihu.com/p/617123498)
 
 ## 一 fileMask软件简介
 该软件主要专注于文件和文件夹的加密和解密  
