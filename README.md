@@ -10,6 +10,10 @@
 链接：[https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw](https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw)   
 提取码：8888
 ### For mac 系统
+<strong><font color=#FF0000> 版本：1.1 </font></strong>   
+链接：https://pan.baidu.com/s/1MRSOc1dP4_V3B1fpxak3_w?pwd=6611  
+提取码：6611  
+
 <strong><font color=#FF0000> 版本：1.0 </font></strong>   
 链接：[https://pan.baidu.com/s/1Sn6Vbzd_1hoIHbXvfXWqbA?pwd=8888](https://pan.baidu.com/s/1Sn6Vbzd_1hoIHbXvfXWqbA?pwd=8888)  
 提取码：8888  
