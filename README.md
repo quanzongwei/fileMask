@@ -62,4 +62,4 @@
 ## 九 更多阅读 
 1. [Part 1 软件使用教程](https://github.com/quanzongwei/fileMask/blob/master/Part%20%E2%85%A0%20%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.md)
 2. [Part 2 核心加密思想](https://github.com/quanzongwei/fileMask/blob/master/Part%20%E2%85%A1%20%E6%A0%B8%E5%BF%83%E5%8A%A0%E5%AF%86%E6%80%9D%E6%83%B3.md)
-3. [Part 3 软件使用教程](https://github.com/quanzongwei/fileMask/blob/master/Part%203%20%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%E8%AE%B0%E5%BD%95.md)
+3. [Part 3 版本升级记录](https://github.com/quanzongwei/fileMask/blob/master/Part%203%20%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%E8%AE%B0%E5%BD%95.md)
