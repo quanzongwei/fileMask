@@ -35,13 +35,15 @@ public class LoginService {
         if (password == null || password.equals("")) {
             nullCHeck(f, 1);
         } else {
+            //认证不成功，重新认证
             if (!AuthenticationService.isCurrentUser(password)) {
                 JOptionPane.showConfirmDialog(f, "对不起密码错误,请重新输入", "提示", JOptionPane.DEFAULT_OPTION);
                 authentication(f);
+            } else {
+                //认证成功,设置全局密码
+                GlobalPasswordHolder.setPassword(password);
             }
         }
-        //认证成功,设置全局密码
-        GlobalPasswordHolder.setPassword(password);
     }
 
     /**

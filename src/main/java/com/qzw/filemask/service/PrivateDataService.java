@@ -10,6 +10,7 @@ import java.io.RandomAccessFile;
 /**
  * fileMask私有数据
  * 作用: 用于保存加密后的秘钥, 或者被加密信息的原文
+ *
  * @author quanzongwei
  * @date 2020/3/3
  */
@@ -52,7 +53,9 @@ public class PrivateDataService {
      * 判断文件是否是私有数据文件
      */
     public static boolean isFileMaskFile(File file) {
-        boolean fileMask = file.getPath().contains(Constants.PRIVATE_DATA_DIR) || file.getPath().contains(Constants.PRAVATE_String);
+        boolean fileMask = file.getPath().contains(Constants.PRIVATE_DATA_DIR)
+                || file.getPath().contains(Constants.PRAVATE_String)
+                || file.getPath().contains(Constants.FILE_MASK_AUTHENTICATION_NAME);
         if (fileMask) {
             return true;
         }

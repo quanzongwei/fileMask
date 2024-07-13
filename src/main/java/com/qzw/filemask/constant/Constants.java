@@ -15,7 +15,7 @@ public class Constants {
     /**
      * 认证信息所在文件夹
      */
-    public static String AUTH_DIR_NAME = File.separatorChar + "authentication";
+    public static final String FILE_MASK_AUTHENTICATION_NAME = "fileMaskAuthentication";
 
 
     /**

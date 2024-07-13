@@ -1,11 +1,12 @@
 package com.qzw.filemask;
 
-import com.jgoodies.looks.plastic.PlasticLookAndFeel;
-import com.jgoodies.looks.plastic.theme.DesertBluer;
+import com.qzw.filemask.component.PlatformContext;
+import com.qzw.filemask.enums.PlatformEnum;
 import com.qzw.filemask.gui.ButtonActionFactory;
 import com.qzw.filemask.gui.MenuActionFactory;
 import com.qzw.filemask.gui.PanelFactory;
 import com.qzw.filemask.service.LoginService;
+import com.qzw.filemask.service.PlatformService;
 import lombok.extern.log4j.Log4j2;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ import java.awt.*;
 
 /**
  * fileMask main class
+ *
  * @author quanzongwei
  * @date 2020/1/3
  */
@@ -143,7 +145,10 @@ public class FileMaskMain {
         JMenuItem menuItem4Contact = new JMenuItem("联系作者");
 
         menuFile.add(menuItem4Exit);
-        menuHelp.add(menuItem4Help);
+        //windows定制逻辑
+        if (PlatformEnum.WINDOWS.name().equals(PlatformContext.CURRENT_PLATFORM)) {
+            menuHelp.add(menuItem4Help);
+        }
         menuHelp.add(menuItem4Contact);
 
         menuBar.add(menuFile);
@@ -177,17 +182,6 @@ public class FileMaskMain {
      * 设置样式
      */
     private static void setLookAndFeel() {
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-            PlasticLookAndFeel.setPlasticTheme(new DesertBluer());
-            //设置观感
-            UIManager.setLookAndFeel("com.jgoodies.looks.windows.WindowsLookAndFeel");
-            //UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
-            //UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticLookAndFeel");
-            //UIManager.setLookAndFeel("com.jgoodies.looks.plastic.Plastic3DLookAndFeel");
-            //UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
-        } catch (Exception e) {
-            log.error("UI样式设置出错", e);
-        }
+        PlatformService.setLookAndFeelByPlatform(PlatformContext.CURRENT_PLATFORM);
     }
 }

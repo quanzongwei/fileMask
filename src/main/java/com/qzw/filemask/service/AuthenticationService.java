@@ -1,5 +1,6 @@
 package com.qzw.filemask.service;
 
+import com.qzw.filemask.component.PlatformContext;
 import com.qzw.filemask.constant.Constants;
 import com.qzw.filemask.util.MD5Utils;
 import lombok.extern.log4j.Log4j2;
@@ -10,6 +11,7 @@ import java.util.Arrays;
 
 /**
  * 登录认证
+ *
  * @author quanzongwei
  * @date 2020/3/7
  */
@@ -92,6 +94,6 @@ public class AuthenticationService {
     }
 
     private static String getAuthDirName() {
-        return System.getProperty("user.dir") + Constants.AUTH_DIR_NAME;
+        return PlatformService.getAuthDirNameByPlatform(PlatformContext.CURRENT_PLATFORM);
     }
 }

@@ -87,8 +87,9 @@ public class MenuActionFactory {
             jTextPane.setText("<html>\n" +
                     "" +
                     "<h2 align=\"center\">作者邮箱: <font color=\"red\">552114141@qq.com</font></h2>\n" +
-                    "<h2 align=\"center\">作者微信: <font color=\"red\">quanzongwei</font></h2>\n"+
+                    "<h2 align=\"center\">作者微信: <font color=\"red\">quanzongwei</font></h2>\n" +
                     "<h4 align=\"center\">github repository: <font color=\"red\">https://github.com/quanzongwei/fileMask</font></h4>\n" +
+                    "<h5 align=\"right\">版本号: <font color=\"red\">1.1 </font></h5>\n" +
                     "</p>" +
                     "</html>");
 
