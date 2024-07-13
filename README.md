@@ -1,5 +1,9 @@
 ## 下载地址
-### For windows 系统
+### For windows 系统  
+版本：1.0  
+链接：https://pan.baidu.com/s/1bxjqE549-Tke-3eSh0rmlw?pwd=8811
+提取码：8811
+
 版本：1.0
 链接：[https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw](https://pan.baidu.com/s/1IoM6dZGE2Exn0UtmII2Uvw)  
 提取码：8888
