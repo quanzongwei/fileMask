@@ -2,7 +2,7 @@
 ### For windows 系统  
 
 <strong><font color=#FF0000> 版本：1.1 </font></strong>   
-更新日期：20240713
+更新日期：2024-07-13  
 链接：https://pan.baidu.com/s/1bxjqE549-Tke-3eSh0rmlw?pwd=8811  
 提取码：8811  
 
