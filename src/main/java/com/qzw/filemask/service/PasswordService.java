@@ -16,10 +16,17 @@ public class PasswordService {
      */
     private static String getPassword() {
         String password = GlobalPasswordHolder.getPassword();
-        if (password == null) {
+        if (isEmptyPassword(password)) {
             throw new MaskException(MaskExceptionEnum.PASSWORD_NOT_EXISTS);
         }
         return GlobalPasswordHolder.getPassword();
+    }
+
+    /**
+     * 判断密码是否为空
+     */
+    public static boolean isEmptyPassword(String password) {
+        return password == null || password.equals("");
     }
 
 

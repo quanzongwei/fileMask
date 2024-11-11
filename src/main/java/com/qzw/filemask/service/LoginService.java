@@ -32,7 +32,7 @@ public class LoginService {
      */
     private static void authentication(JFrame f) {
         String password = authenticationDialogV2(f);
-        if (isEmptyPassword(password)) {
+        if (PasswordService.isEmptyPassword(password)) {
             nullCHeck(f, 1);
         } else {
             //认证不成功，重新认证
@@ -81,7 +81,7 @@ public class LoginService {
      */
     private static String passwordInitializationDialogV2(JFrame f) {
         String passwordFirst = getPasswordFromDialog(f, "首次使用请设置密码");
-        if (isEmptyPassword(passwordFirst)) {
+        if (PasswordService.isEmptyPassword(passwordFirst)) {
             return nullCHeck(f, 0);
         } else {
             if (!isValidPassword(passwordFirst)) {
@@ -89,7 +89,7 @@ public class LoginService {
                 return passwordInitializationDialogV2(f);
             }
             String passwordSecond = getPasswordFromDialog(f, "请再次确认密码");
-            if (isEmptyPassword(passwordSecond)) {
+            if (PasswordService.isEmptyPassword(passwordSecond)) {
                 return nullCHeck(f, 0);
             } else {
                 if (!passwordFirst.equals(passwordSecond)) {
@@ -109,7 +109,7 @@ public class LoginService {
     @Deprecated
     private static String authenticationDialog(JFrame f) {
         String password = JOptionPane.showInputDialog(f, "请输入密码:");
-        if (isEmptyPassword(password)) {
+        if (PasswordService.isEmptyPassword(password)) {
             return nullCHeck(f, 1);
         }
         if (!isValidPassword(password)) {
@@ -127,7 +127,7 @@ public class LoginService {
      */
     private static String authenticationDialogV2(JFrame f) {
         String password = getPasswordFromDialog(f, "请输入密码");
-        if (isEmptyPassword(password)) {
+        if (PasswordService.isEmptyPassword(password)) {
             return nullCHeck(f, 1);
         }
         if (!isValidPassword(password)) {
@@ -176,14 +176,7 @@ public class LoginService {
         }
         return false;
     }
-
-    /**
-     * 判断密码是否为空
-     */
-    public static boolean isEmptyPassword(String password) {
-        return password == null || password.equals("");
-    }
-
+    
     /**
      * 不合法输入检查
      *
