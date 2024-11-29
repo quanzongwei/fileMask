@@ -1,6 +1,7 @@
 package com.qzw.filemask.service;
 
 import com.qzw.filemask.constant.Constants;
+import com.qzw.filemask.util.RandomStrUtils;
 import lombok.extern.log4j.Log4j2;
 
 import java.io.File;
@@ -64,6 +65,7 @@ public class PrivateDataService {
 
     /**
      * 同步方法,获取目标文件所在文件夹对应的自增Id
+     * 使用场景：父类加密名称 FM{sequence}XXXXX
      */
     public static synchronized Integer getAutoIncrementSequence4ParentDir(File fileOrDir) {
         String fmvalueFile = getPrivateDataDir(fileOrDir).getPath() + File.separatorChar + Constants.FILE_NAME_4_AUTO_INCREMENT_SEQUENCE;
@@ -82,5 +84,27 @@ public class PrivateDataService {
             log.info("获取文件下唯一自增值出错,path:{},exception:{}", fileOrDir.getPath(), e.getMessage());
         }
         return null;
+    }
+
+    /**
+     * 获取加密文件夹名称前缀
+     *
+     * @return
+     */
+    public static synchronized String getEncryptedDirNameFromSequenceAndBase64RandomStr(File fileOrDir) {
+        Integer sequence = getAutoIncrementSequence4ParentDir(fileOrDir);
+        if (sequence == null) {
+            // unreachable
+            sequence = 0;
+        }
+        // 文件夹名称加密（随机数长度和数量的关系 5=10亿，4=1千万）
+        return Constants.FILE_MASK_PREFIX_NAME_FOR_NAME_ENCRYPT + sequence + RandomStrUtils.generateBase64RandomString(Constants.DIRECTORY_SUFFIX_LENGTH);
+    }
+
+    /**
+     * 获取加密文件名称前缀
+     */
+    public static synchronized String getEncryptedFileNameFromUuid() {
+        return Constants.FILE_MASK_PREFIX_NAME_FOR_NAME_ENCRYPT + RandomStrUtils.generateUUIDBase64String();
     }
 }

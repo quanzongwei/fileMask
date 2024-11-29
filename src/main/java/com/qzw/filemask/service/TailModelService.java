@@ -1,11 +1,13 @@
 package com.qzw.filemask.service;
 
+import com.qzw.filemask.constant.Constants;
 import com.qzw.filemask.enums.FileEncoderTypeEnum;
 import com.qzw.filemask.model.TailModel;
 import com.qzw.filemask.util.*;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -93,10 +95,8 @@ public class TailModelService {
 
         //IO操作完成后才可以执行重命名操作
         if (fileEncoderType.equals(FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE)) {
-            Integer sequence = PrivateDataService.getAutoIncrementSequence4ParentDir(fileOrDir);
-            //私有数据文件重命名
-            String targetName = String.valueOf(sequence);
-            String targetPath = fileOrDir.getParent() + File.separatorChar + targetName;
+            String encryptedFileNameFromUuid = PrivateDataService.getEncryptedFileNameFromUuid();
+            String targetPath = fileOrDir.getParent() + File.separatorChar + encryptedFileNameFromUuid;
             boolean b = fileOrDir.renameTo(new File(targetPath));
             log.info("文件名称是否加密成功:{},{}", b, fileOrDir.getPath());
         }
@@ -113,7 +113,7 @@ public class TailModelService {
             try {
                 encryptOrDecryptDirectoryName(fileOrDir, false);
             } catch (IOException e) {
-                log.info("加解文件夹失败,{}", fileOrDir);
+                log.info("解密文件夹失败,{}", fileOrDir);
             }
             return;
         }
@@ -167,14 +167,14 @@ public class TailModelService {
     private static void encryptOrDecryptDirectoryName(File fileOrDir, boolean ifEncodeOperation) throws IOException {
         // 加密
         if (ifEncodeOperation) {
-            Integer sequence = PrivateDataService.getAutoIncrementSequence4ParentDir(fileOrDir);
+            String encryptedDirName = PrivateDataService.getEncryptedDirNameFromSequenceAndBase64RandomStr(fileOrDir);
             File existsPrivateDataFile = PrivateDataService.getPrivateDataFileReleaseV2(fileOrDir, fileOrDir.getName());
             if (existsPrivateDataFile.exists()) {
                 log.info("文件夹已加密成功,无需重复加密,{}", fileOrDir);
                 return;
             }
 
-            File privateDataFile = PrivateDataService.getPrivateDataFileReleaseV2(fileOrDir, sequence);
+            File privateDataFile = PrivateDataService.getPrivateDataFileReleaseV2(fileOrDir, encryptedDirName);
             if (!privateDataFile.exists()) {
                 try {
                     privateDataFile.createNewFile();
@@ -182,15 +182,19 @@ public class TailModelService {
                     log.info("创建私有数据文件失败,{}", fileOrDir);
                     return;
                 }
+            } else {
+                // fixed since v1.2
+                log.info("已存在同名私有数据文件,不执行加密{}", fileOrDir);
+                return;
             }
 
             try (RandomAccessFile raf = new RandomAccessFile(privateDataFile, "rw")) {
                 TailModelService.doEncryptFileAndResetTailModel(fileOrDir, raf, FileEncoderTypeEnum.FILE_OR_DIR_NAME_ENCODE, true);
             } catch (Exception ex) {
-                log.info("私有数据文件设置重命名数据失败,{}", fileOrDir);
+                log.info("私有数据文件保存加密文件夹名称失败,{}", fileOrDir);
                 return;
             }
-            boolean success = fileOrDir.renameTo(new File(fileOrDir.getParent() + File.separator + sequence));
+            boolean success = fileOrDir.renameTo(new File(fileOrDir.getParent() + File.separator + encryptedDirName));
             if (!success) {
                 log.info("源文件重命名失败,{}", fileOrDir);
                 //同时删除私有数据文件
@@ -199,14 +203,13 @@ public class TailModelService {
         }
         //解密
         else {
-            //目前只有数字命名才可能是加密后的文件夹名称
-            try {
-                Integer.valueOf(fileOrDir.getName());
-            } catch (Exception ex) {
-                log.info("文件夹未加密,无需解密,{}", fileOrDir);
+            //目前只有FM开头或数字命名才可能是加密后的文件夹名称（数字是为了兼容历史逻辑）
+            if (!(NumberUtils.isCreatable(fileOrDir.getName())
+                    || fileOrDir.getName().startsWith(Constants.FILE_MASK_PREFIX_NAME_FOR_NAME_ENCRYPT))) {
+                log.info("非加密文件夹,无需解密,{}", fileOrDir);
                 return;
             }
-            File privateDataFile = PrivateDataService.getPrivateDataFileReleaseV2(fileOrDir, Integer.valueOf(fileOrDir.getName()));
+            File privateDataFile = PrivateDataService.getPrivateDataFileReleaseV2(fileOrDir, fileOrDir.getName());
             if (!privateDataFile.exists()) {
                 log.info("文件夹未加密,无需解密,{}", fileOrDir);
                 return;

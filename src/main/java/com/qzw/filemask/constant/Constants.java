@@ -26,6 +26,14 @@ public class Constants {
      * 文件名称加密后的前缀
      */
     public static final String FILE_MASK_PREFIX = "nDFile";
+    /**
+     * 文件、文件夹名称加密前缀
+     */
+    public static final String FILE_MASK_PREFIX_NAME_FOR_NAME_ENCRYPT = "FM";
+    /**
+     * 加密文件夹后缀名长度
+     */
+    public static final int DIRECTORY_SUFFIX_LENGTH = 5;
 
 
     /**
