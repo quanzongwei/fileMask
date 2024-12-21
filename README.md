@@ -3,7 +3,7 @@
 
 | 操作系统        | 最新版本  | 下载地址(推荐百度云)   | 下载地址(github) | 更新日期 |
 |--------|--------|-------------|-------------|------------|
-| windows     | v1.2  | https://pan.baidu.com/s/1_NvicvS_jA7ycjoi35QjTw?pwd=8812 | [fileMask-v1.1.rar](https://github.com/quanzongwei/fileMask/releases/download/fileMask-v1.1-binary/fileMask-v1.1.rar) | 2024-07-13 |
+| windows     | v1.2  | https://pan.baidu.com/s/1_NvicvS_jA7ycjoi35QjTw?pwd=8812 | [fileMask-v1.2.rar](https://github.com/quanzongwei/fileMask/releases/download/fileMask-v1.2-binary/fileMask-v1.2.rar) | 2024-12-21 |
 | mac         | v1.1  | https://pan.baidu.com/s/1MRSOc1dP4_V3B1fpxak3_w?pwd=6611 |  [fileMask-v1.1.dmg](https://github.com/quanzongwei/fileMask/releases/download/fileMask-v1.1-binary/fileMask-v1.1.dmg) | 2024-07-13|
 
 注：mac系统软件安装完成后，若提示【“fileMask”已损坏，无法打开。 您应该将它移到废纸篓。】，一般不是软件本身的问题，而是Mac启用了安全机制，默认只信任Mac App Store下载的软件以及拥有开发者ID签名的软件，请按照以下文章步骤操作即可：[mac安装应用提示已损坏，打不开。您应该将它移到废纸娄问题解决](https://zhuanlan.zhihu.com/p/617123498)
