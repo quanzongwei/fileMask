@@ -1,6 +1,7 @@
 package com.qzw.filemask.gui;
 
 import com.qzw.filemask.FileMaskMain;
+import com.qzw.filemask.component.PlatformContext;
 import com.qzw.filemask.constant.Constants;
 import lombok.extern.log4j.Log4j2;
 
@@ -89,7 +90,11 @@ public class MenuActionFactory {
                     "<h2 align=\"center\">作者邮箱: <font color=\"red\">552114141@qq.com</font></h2>\n" +
                     "<h2 align=\"center\">作者微信: <font color=\"red\">quanzongwei</font></h2>\n" +
                     "<h4 align=\"center\">github repository: <font color=\"red\">https://github.com/quanzongwei/fileMask</font></h4>\n" +
-                    "<h5 align=\"right\">版本号: <font color=\"red\">1.1 </font></h5>\n" +
+                    "<h5 align=\"right\">版本号: <font color=\"red\">"
+                    +
+                    PlatformContext.VERSION_12
+                    +
+                    "</font></h5>\n" +
                     "</p>" +
                     "</html>");
 

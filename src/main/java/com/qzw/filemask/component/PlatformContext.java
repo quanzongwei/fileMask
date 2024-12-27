@@ -13,4 +13,8 @@ public class PlatformContext {
      * WINDOWS、MAC
      */
     public static String CURRENT_PLATFORM = "MAC";
+
+    public static String VERSION_12 = "1.2 ";
+    public static String VERSION_11 = "1.1 ";
+    public static String VERSION_10 = "1.0 ";
 }
