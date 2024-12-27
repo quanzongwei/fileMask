@@ -6,7 +6,9 @@
 | windows     | v1.2 | https://pan.baidu.com/s/1_NvicvS_jA7ycjoi35QjTw?pwd=8812 | [fileMask-v1.2.rar](https://github.com/quanzongwei/fileMask/releases/download/fileMask-v1.2-binary/fileMask-v1.2.rar) | 2024-12-21 |
 | mac         | v1.2 | https://pan.baidu.com/s/1Deu1luaT-HGgcbqpFZiyXw?pwd=6612 | [fileMask-v1.2.dmg](https://github.com/quanzongwei/fileMask/releases/download/fileMask-v1.2-binary/fileMask-v1.2.dmg) | 2024-12-27|
 
-注：mac系统软件安装完成后，若提示【“fileMask”已损坏，无法打开。 您应该将它移到废纸篓。】，一般不是软件本身的问题，而是Mac启用了安全机制，默认只信任Mac App Store下载的软件以及拥有开发者ID签名的软件，请按照以下文章步骤操作即可：  1、[macOS 提示：“应用程序” 已损坏，无法打开的解决方法总结](https://sysin.org/blog/macos-if-crashes-when-opening/)   2、[mac安装应用提示已损坏，打不开。您应该将它移到废纸娄问题解决](https://zhuanlan.zhihu.com/p/617123498)
+注：mac系统软件安装完成后，若提示【“fileMask”已损坏，无法打开。 您应该将它移到废纸篓。】，一般不是软件本身的问题，而是Mac启用了安全机制，默认只信任Mac App Store下载的软件以及拥有开发者ID签名的软件，请按照以下文章步骤操作即可：  
+1、[macOS 提示：“应用程序” 已损坏，无法打开的解决方法总结](https://sysin.org/blog/macos-if-crashes-when-opening/)   
+2、[mac安装应用提示已损坏，打不开。您应该将它移到废纸娄问题解决](https://zhuanlan.zhihu.com/p/617123498)
 ## 一 fileMask软件简介
 该软件主要专注于文件和文件夹的加密和解密  
 
