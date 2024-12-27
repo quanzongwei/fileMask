@@ -61,8 +61,16 @@
 **<font color=#ff0000>接着</font>**，如果其他用户会尝试猜测文件类型，然后使用对应的软件直接打开，那么此时使用类型二（文件头部加密），此时，文件无法被打开。例如，我们对mp4文件使用类型二（文件头部加密），那么即使该文件，被拖入到视频播放软件也是无法打开的
 
 **<font color=#ff0000>然后</font>**，如果您是公司高管，军政要员，需要极高安全性的加密，此时可以使用类型三（全文加密）进行加密，该方式，无法通过任何手段进行解密（包括暴力破解），速度相对于类型一和类型二，较慢，单文件预计耗时（100M耗时1秒，1G耗时10秒，12G耗时4分钟）。但是，相对于市场上其他的全文加密软件，作者使用了很巧妙的思路和方法，最大化的提高了加密的速度
+## 九 donate
 
-## 九 更多阅读 
+> Donate to fileMask:
+
+
+| 微信                                                      | 支付宝                                                     |
+|---------------------------------------------------------|---------------------------------------------------------|
+| <img src="static/wechat.jpeg" width="300" height="350"> | <img src="static/alipay.jpeg" width="300" height="350"> |
+
+## 十 更多阅读 
 1. [Part 1 软件使用教程](https://github.com/quanzongwei/fileMask/blob/master/Part%201%20%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.md)
 2. [Part 2 核心加密思想](https://github.com/quanzongwei/fileMask/blob/master/Part%202%20%E6%A0%B8%E5%BF%83%E5%8A%A0%E5%AF%86%E6%80%9D%E6%83%B3.md)
 3. [Part 3 版本升级记录](https://github.com/quanzongwei/fileMask/blob/master/Part%203%20%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%E8%AE%B0%E5%BD%95.md)
