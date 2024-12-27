@@ -63,12 +63,12 @@
 **<font color=#ff0000>然后</font>**，如果您是公司高管，军政要员，需要极高安全性的加密，此时可以使用类型三（全文加密）进行加密，该方式，无法通过任何手段进行解密（包括暴力破解），速度相对于类型一和类型二，较慢，单文件预计耗时（100M耗时1秒，1G耗时10秒，12G耗时4分钟）。但是，相对于市场上其他的全文加密软件，作者使用了很巧妙的思路和方法，最大化的提高了加密的速度
 ## 九 donate
 
-> Donate to fileMask:
+> welcome to Donate to fileMask:
 
 
 | 微信                                                      | 支付宝                                                     |
 |---------------------------------------------------------|---------------------------------------------------------|
-| <img src="https://github.com/quanzongwei/markdown-picture/blob/main/weixin_donate_v2.jpg" width="300" height="350"> | <img src="https://github.com/quanzongwei/markdown-picture/blob/main/alipay_donate_v2.png" width="300" height="350"> |
+| <img src="https://github.com/quanzongwei/markdown-picture/blob/main/alipay_donate_v2.png.jpg" width="300" height="350"> | <img src="https://github.com/quanzongwei/markdown-picture/blob/main/weixin_donate_v2" width="300" height="350"> |
 
 ## 十 更多阅读 
 1. [Part 1 软件使用教程](https://github.com/quanzongwei/fileMask/blob/master/Part%201%20%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.md)
