@@ -1,6 +1,6 @@
 
 ## v1.2
-日期：20241221 
+日期：20241227 
 
 升级内容： 
    1. 输入框支持密码隐藏
@@ -13,6 +13,12 @@
     更新日期：2024-12-21  
     链接：https://pan.baidu.com/s/1_NvicvS_jA7ycjoi35QjTw?pwd=8812
     提取码：8812
+
+    For mac 系统
+    更新日期：2024-12-27
+    版本：1.2   
+    链接：https://pan.baidu.com/s/1Deu1luaT-HGgcbqpFZiyXw?pwd=6612  
+    提取码：6612
    
 ## v1.1 
 日期：20240712  
