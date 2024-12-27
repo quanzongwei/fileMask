@@ -68,7 +68,7 @@
 
 | 微信                                                      | 支付宝                                                     |
 |---------------------------------------------------------|---------------------------------------------------------|
-| <img src="https://github.com/quanzongwei/markdown-picture/blob/main/alipay_donate_v2.png.jpg" width="300" height="350"> | <img src="https://github.com/quanzongwei/markdown-picture/blob/main/weixin_donate_v2" width="300" height="350"> |
+| <img src="https://github.com/quanzongwei/markdown-picture/blob/main/alipay_donate_v2.png" width="300" height="350"> | <img src="https://github.com/quanzongwei/markdown-picture/blob/main/weixin_donate_v2.jpg" width="300" height="350"> |
 
 ## 十 更多阅读 
 1. [Part 1 软件使用教程](https://github.com/quanzongwei/fileMask/blob/master/Part%201%20%E8%BD%AF%E4%BB%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B.md)
