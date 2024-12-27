@@ -68,7 +68,7 @@
 3. [Part 3 版本升级记录](https://github.com/quanzongwei/fileMask/blob/master/Part%203%20%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7%E8%AE%B0%E5%BD%95.md)
 ## 十 捐赠
 
-> welcome to donate to fileMask:
+> welcome to donate to fileMask
 
 
 | 微信                                                      | 支付宝                                                     |
