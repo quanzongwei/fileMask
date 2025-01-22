@@ -19,7 +19,11 @@
 界面简洁，功能强大，算法绝对安全(欢迎进行学术性交流)，用户体验良好(支持加密进度展示、随时停止、加解密支持幂等性), 具有思想和灵魂的文件和文件夹加密软件。  软件中一个不经意的小细节，就有可能是一个不错的小创意
 
 ## 三 软件界面
+### 3.1 windows系统（主页）
 ![image](https://github.com/quanzongwei/markdown-picture/blob/main/%E7%AE%80%E4%BB%8B-%E4%B8%BB%E7%95%8C%E9%9D%A2.png)  
+### 3.2 mac系统（进度页）
+<img src="https://github.com/quanzongwei/markdown-picture/blob/main/mac-进度页_975px.png" alt="your_image" style="width:636px; height:632px;" />
+
 
 ## 四 加密类型
 ### 4.1 三种加密类型
